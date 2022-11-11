@@ -46,6 +46,16 @@ namespace CourseWorkOS
         }
 
         public User() { }
+
+        public User(char[] user_login)
+        {
+            this.user_login = new char[LOGIN_SIZE];
+
+            for (int i = 0; i < user_login.Length; i++)
+            {
+                this.user_login[i] = user_login[i];
+            }
+        }
         
         //ДОБАВИТЬ ПРОВЕКУ НА ПУСТОТУ
         public static char[] transformPasswordIntoHash(string pass)

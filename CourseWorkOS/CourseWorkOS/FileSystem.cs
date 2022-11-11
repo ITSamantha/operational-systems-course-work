@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace CourseWorkOS
 {
@@ -75,39 +76,40 @@ namespace CourseWorkOS
                     Console.Write("Все индексные дескрипторы заняты.");
                     return false;
                 }
-                //КОГДА БОЛЬШЕ 10 КЛАСТЕРОВ ТОЖЕ ОБРАБОТАТЬ!
+
                 int[] ID_clusters;
 
                 byte[] new_files_bytes;
 
                 int cluster_number = (int)Math.Ceiling(((double)bytes.Length / (double)superblock.cluster_size));
 
+                if (cluster_number > 10)
+                {
+                    //MessageBox.Show("Размер файла слишком большой. Невозможно записать.");
+                    return false;
+                }
+
                 getFreeClustersAddressesAndBytes(cluster_number,out ID_clusters,out new_files_bytes);
                 
                 setStateOfClustersInBitmap(ID_clusters,  true, new_files_bytes);
-
-                superblock.amount_of_free_clusters-=(uint)ID_clusters.Length;
-
-                int ID_inode;
+                
+                uint ID_inode;
 
                 byte inode_byte;
-                
-
-                //ЗАПИСЬ В КОРНЕВОМ КАТАЛОГЕ
 
                 //ЗАПИСЬ ACCESS_RULES
 
                 getFreeInodeId(out ID_inode,out inode_byte);
 
                 setStateOfInodeInBitmap(ID_inode, true, inode_byte);
-
-                superblock.amount_of_free_inodes--;
-
+                
                 Inode inode = new Inode(user.ID_owner, user.ID_group, (ushort)248/*!!!!*/, (uint)bytes.Length, (uint)cluster_number,
                     (uint)DateTime.Now.Second, (uint)DateTime.Now.Second, ID_clusters);//ДОДЕЛАТЬ СЕКУНДЫ
                 
                 Cluster[] clusters = getClusterArrFromBytesArr(bytes, (ushort)cluster_number);
 
+                RootCatalogRow root = new RootCatalogRow(file_name, extention, ID_inode);
+                
                 using (BinaryWriter writer = new BinaryWriter(File.Open(SYSTEM_FILE_NAME, FileMode.Open)))
                 {
                     superblock.binaryWritingToFile(writer);
@@ -115,14 +117,29 @@ namespace CourseWorkOS
                     writer.BaseStream.Seek(calculateWhereToCome(writer.BaseStream.Position, superblock.ilist_offset + ID_inode*Superblock.OS_INODE_SIZE), SeekOrigin.Current);
 
                     inode.binaryWritingToFile(writer);
+
+                    writer.BaseStream.Seek(calculateWhereToCome(writer.BaseStream.Position, superblock.root_offset + (superblock.amount_of_inodes-superblock.amount_of_free_inodes)* Superblock.OS_ROOT_ROW_SIZE), SeekOrigin.Current);
+
+                    root.binaryWritingToFile(writer);
+
+                    superblock.amount_of_free_inodes--;
+
+                    superblock.amount_of_free_clusters -= (uint)ID_clusters.Length;
+
+                    writer.BaseStream.Seek(calculateWhereToCome(writer.BaseStream.Position, 0), SeekOrigin.Current);
+
+                    superblock.binaryWritingToFile(writer);
                     
-                    for(int i = 0; i < ID_clusters.Length; i++)
+                    for (int i = 0; i < ID_clusters.Length; i++)
                     {
-                        writer.BaseStream.Seek(calculateWhereToCome(writer.BaseStream.Position, superblock.data_offset + ID_clusters[i] * 512), SeekOrigin.Current);
+                        writer.BaseStream.Seek(calculateWhereToCome(writer.BaseStream.Position, superblock.data_offset + ID_clusters[i] * superblock.cluster_size), SeekOrigin.Current);
 
                         clusters[i].binaryWritingToFile(writer);
                     }
                 }
+
+                
+
                 return true;
             }
             catch (Exception e)
@@ -152,7 +169,7 @@ namespace CourseWorkOS
             }
             else
             {
-                Console.WriteLine("Такого файла не существует.");
+                MessageBox.Show("Такого файла не существует.");
                 return;
             }
         }
@@ -377,7 +394,7 @@ namespace CourseWorkOS
         }
 
         //Поиск свободного inode
-        public void getFreeInodeId(out int ID_inode, out byte inode_byte)
+        public void getFreeInodeId(out uint ID_inode, out byte inode_byte)
         {
             ID_inode = inode_byte = 0;
 
@@ -396,7 +413,7 @@ namespace CourseWorkOS
                     {
                         if (!bits[7-j])
                         {
-                            ID_inode = i * 8 + j;
+                            ID_inode = (uint)(i * 8 + j);
                             inode_byte = b;
                             return;
                         }
@@ -437,17 +454,17 @@ namespace CourseWorkOS
         }
 
         //Установка значений битов в битовой карте inode
-        public bool setStateOfInodeInBitmap(int inode_id, bool isBusy, byte inode_byte)
+        public bool setStateOfInodeInBitmap(uint inode_id, bool isBusy, byte inode_byte)
         {
             try
             {
                 BitArray bits = new BitArray((new byte[] { inode_byte }));
 
-                int byte_number = inode_id / 8;
+                uint byte_number = inode_id / 8;
 
-                int position = inode_id % 8;
+                uint position = inode_id % 8;
 
-                bits[7 - position] = isBusy;
+                bits[(int)(7 - position)] = isBusy;
 
                 using (BinaryWriter writer = new BinaryWriter(File.Open(SYSTEM_FILE_NAME, FileMode.Open)))
                 {
@@ -515,13 +532,59 @@ namespace CourseWorkOS
                 Console.WriteLine("Exception happened: "+e);
             }
         }
-
-
-
+        
         //Удаление пользователя системы
-        public void deleteUserFS(ushort owner_id, ushort group_id, string user_login, string password, bool role = false)
+        public void deleteUserFS(ushort UID)
         {
+            var users = getUsersArray();
+
+            int position = 0;
+
+            if(users!= null)
+            {
+                using (BinaryWriter writer = new BinaryWriter(File.Open(SYSTEM_FILE_NAME, FileMode.Open)))
+                {
+                    for (int i = 0; i < users.Length; i++)
+                    {
+                        if (users[i].ID_owner == UID)
+                        {
+                            superblock.amount_of_users--;
+                        }
+                        else
+                        {
+                            writer.BaseStream.Seek(calculateWhereToCome(writer.BaseStream.Position,
+                            superblock.users_offset + position * Superblock.OS_USER_INFO_SIZE), SeekOrigin.Current);
+                            users[i].binaryWritingToFile(writer);
+                            position++;
+                        }
+                    }
+                }
+                
+            }
+            else
+            {
+                MessageBox.Show("Список пользователей пуст.");
+            }
+        }
+
+        public RootCatalogRow[] getAllRootCatalogRows()
+        {
+            var amount_of_files = superblock.amount_of_inodes - superblock.amount_of_free_inodes;
+
+            var root_catalog_rows = new RootCatalogRow[amount_of_files];
+
+            using (BinaryReader reader = new BinaryReader(File.Open(SYSTEM_FILE_NAME, FileMode.Open)))
+            {
+                reader.BaseStream.Seek(calculateWhereToCome(reader.BaseStream.Position,
+                            superblock.root_offset), SeekOrigin.Current);
+
+                for (int i = 0; i < amount_of_files; i++)
+                {
+                    root_catalog_rows[i] = RootCatalogRow.loadRootRowFromBinaryFile(reader);
+                }
+            }
             
+            return root_catalog_rows;
         }
 
 
@@ -574,6 +637,160 @@ namespace CourseWorkOS
             }
         }
 
+        /*public RootCatalogRow isBusyName(string old_file, string old_extention, string new_file, string new_extention)
+        {
 
+        }*/
+
+        //Проверка, есть ли файл с таким именем
+        public bool checkIfTheSameFileNames(string new_file_name)
+        {
+            using (BinaryReader reader = new BinaryReader(File.Open(SYSTEM_FILE_NAME, FileMode.Open)))
+            {
+
+                var amount_of_files = superblock.amount_of_inodes - superblock.amount_of_free_inodes;
+
+                reader.BaseStream.Seek(calculateWhereToCome(reader.BaseStream.Position,
+                    superblock.root_offset), SeekOrigin.Current);
+
+                for (short i = 0; i < amount_of_files; i++)
+                {
+                    var root_row = RootCatalogRow.loadRootRowFromBinaryFile(reader);
+
+                    if (new_file_name == RootCatalogRow.createFileName(root_row))
+                    {
+                        return true;
+                    }
+
+                }
+            }
+            return false;
+        }
+
+        //Переименование файла
+        public int renameFile(string old_name,string new_name,bool isWithExtention)
+        {
+            int position = -1;
+
+            //!!!!!Проверка прав доступа
+            
+            if (checkIfTheSameFileNames(new_name)||old_name == new_name)
+            {
+                MessageBox.Show($"Файл с именем {new_name} уже существует или было введено идентичное имя файла.","Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return position;
+            }
+
+            RootCatalogRow root_row;
+
+            findExactFile(old_name,out position,out root_row);
+            
+            root_row = new RootCatalogRow(isWithExtention ? new_name.Split('.')[0].ToCharArray() : new_name.ToCharArray(),
+                isWithExtention ? new_name.Split('.')[1].ToCharArray() : new char[0], root_row.inode_number);
+
+            if (position != -1)
+            {
+                using (BinaryWriter writer = new BinaryWriter(File.Open(SYSTEM_FILE_NAME, FileMode.Open)))
+                {
+                    writer.BaseStream.Seek(calculateWhereToCome(writer.BaseStream.Position,
+                         superblock.root_offset + position * Superblock.OS_ROOT_ROW_SIZE), SeekOrigin.Current);
+
+                    root_row.binaryWritingToFile(writer);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Данный файл не найден.");
+            }
+            return position;
+        }
+
+        //Найти файл в корневом каталоге
+        public void findExactFile(string file,out int position, out RootCatalogRow root)
+        {
+            root = new RootCatalogRow();
+
+            position = -1;
+
+            using (BinaryReader reader = new BinaryReader(File.Open(SYSTEM_FILE_NAME, FileMode.Open)))
+            {
+
+                var amount_of_files = superblock.amount_of_inodes - superblock.amount_of_free_inodes;
+
+                reader.BaseStream.Seek(calculateWhereToCome(reader.BaseStream.Position,
+                    superblock.root_offset), SeekOrigin.Current);
+
+                for (short i = 0; i < amount_of_files; i++)
+                {
+                    root= RootCatalogRow.loadRootRowFromBinaryFile(reader);
+
+                    if (file == RootCatalogRow.createFileName(root))
+                    {
+                        position = i;
+
+                        break;
+                    }
+                }
+            }
+        }
+
+        public void copyFile(string file_name ,bool isWithExtention)
+        {
+            uint inode_number;
+
+            Inode inode;
+
+            RootCatalogRow root;
+
+            int position;
+
+            byte[] bytes;
+
+            findExactFile(file_name, out position, out root);
+
+            //Проверка ,занят ли айнод?
+
+            //Проверка на существование такого же файла с тем же названием!
+            position = 0;
+
+            using (BinaryReader reader = new BinaryReader(File.Open(SYSTEM_FILE_NAME, FileMode.Open)))
+            {
+                reader.BaseStream.Seek(calculateWhereToCome(reader.BaseStream.Position,
+                    superblock.ilist_offset + root.inode_number*Superblock.OS_INODE_SIZE), SeekOrigin.Current);
+
+                inode = Inode.loadInodeFromBinaryFile(reader);
+
+                bytes = new byte[inode.size_in_bytes];
+
+                for(int i = 0; i < inode.addr.Length; i++)
+                {
+                    if (inode.addr[i] != -1)
+                    {
+                        reader.BaseStream.Seek(calculateWhereToCome(reader.BaseStream.Position,
+                    superblock.data_offset + inode.addr[i] * superblock.cluster_size), SeekOrigin.Current);
+
+                        Cluster cluster = Cluster.loadClusterFromBinaryFile(reader, superblock.cluster_size);
+
+                        for (int j = 0; j < superblock.cluster_size; j++)
+                        {
+                            if (position >= inode.size_in_bytes)
+                            {
+                                break;
+                            }
+                            bytes[position] = cluster.bytes[j];
+                            position++;
+                        }
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+            
+            //ПРОВЕРКА НА ВМЕСТИМОСТЬ ИМЕНИ ПРИ ДОБАВЛЕНИИ COPY
+            createFile(isWithExtention ? $"{file_name.Split('.')[0]}_copy".ToCharArray() : $"{file_name}_copy".ToCharArray(),
+                isWithExtention ? file_name.Split('.')[1].ToCharArray() : new char[0], bytes);
+        }
     }
 }

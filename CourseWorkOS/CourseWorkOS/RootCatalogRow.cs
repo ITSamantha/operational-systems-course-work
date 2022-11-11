@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CourseWorkOS
 {
-    class RootCatalogRow
+    public class RootCatalogRow
     {
         public char[] file_name { get; set; }
         //
@@ -87,7 +87,33 @@ namespace CourseWorkOS
             return root;
         }
 
-        
-    
-}
+        public static string createFileName(RootCatalogRow file)
+        {
+            StringBuilder s = new StringBuilder();
+
+            for (int j = 0; j < file.file_name.Length; j++)
+            {
+                if (file.file_name[j] != '\0')
+                {
+                    s.Append(file.file_name[j]);
+                }
+            }
+
+            for (int j = 0; j < file.file_extention.Length; j++)
+            {
+                if (file.file_extention[j] != '\0')
+                {
+                    if (j == 0)
+                    {
+                        s.Append('.');
+                    }
+                    s.Append(file.file_extention[j]);
+                }
+            }
+            return $"{s.ToString()}";
+        }
+
+
+
+    }
 }

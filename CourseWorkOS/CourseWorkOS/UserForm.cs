@@ -19,6 +19,8 @@ namespace CourseWorkOS
             this.Text = mode == 0 ? "Samantha: Регистрация пользователя" : "Samantha: Авторизация пользователя";
          
             this.enterFS_B.Text = mode == 0 ? "Регистрация" : "Авторизация пользователя";
+
+            this.role_GB.Visible= mode == 0 ? true:false;
         }
 
         private void enterFS_B_Click(object sender, EventArgs e)
@@ -29,6 +31,11 @@ namespace CourseWorkOS
         private void cancel_B_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.No;//
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }
