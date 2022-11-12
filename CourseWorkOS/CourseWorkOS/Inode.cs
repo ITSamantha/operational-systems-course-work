@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CourseWorkOS
 {
-    class Inode
+    public class Inode
     {//ФУНКЦИЯ ВРЕМЕНИ ДОПИСАТЬ1
         public ushort ID_owner { get; set; }
 

@@ -4,7 +4,7 @@ using System.Collections;
 namespace CourseWorkOS
 {
     
-    class AccessRules
+    public class AccessRules
     {
         public bool r_u { get; set; }//Чтение для владельца!
         public bool w_u { get; set; }//Запись для владельца

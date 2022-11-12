@@ -49,6 +49,12 @@
     <Compile Include="AccessRules.cs" />
     <Compile Include="Cluster.cs" />
     <Compile Include="Converter.cs" />
+    <Compile Include="FileInformation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FileInformation.Designer.cs">
+      <DependentUpon>FileInformation.cs</DependentUpon>
+    </Compile>
     <Compile Include="FileSystem.cs" />
     <Compile Include="Entry.cs">
       <SubType>Form</SubType>
@@ -89,6 +95,9 @@
     </Compile>
     <EmbeddedResource Include="Entry.resx">
       <DependentUpon>Entry.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FileInformation.resx">
+      <DependentUpon>FileInformation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

@@ -25,6 +25,8 @@ namespace CourseWorkOS
 
         public const string BYTE = " байт";
 
+        public const string FS_FILE = "Samantha:Файл";
+
         //Константы
 
         public const string SYSTEM_FILE_NAME = "data.bin";
@@ -48,7 +50,7 @@ namespace CourseWorkOS
             
             free_L.Text = $"Данные:{(uint)(FileSystem.superblock.amount_of_free_clusters*FileSystem.superblock.cluster_size) / MB_SIZE} Мб свободно из {free_place} Мб";
 
-            FileSystem.createFile(new char[] { 'f', 'i', 'l', 'e' }, new char[] { 't', 'x', 't' }, new byte[1024]);
+            //FileSystem.createFile(new char[] { 'f', 'i', 'l', 'e' }, new char[] { 't', 'x', 't' }, new byte[1024]);
             /*
                        for (int i = 0; i < 50; i++)
                         {
@@ -145,7 +147,7 @@ namespace CourseWorkOS
         }
 
 
-        public bool formRegistarionOrAutorizationUser(byte mode,bool isAdmin=false)
+        public bool formRegistarionOrAutorizationUser(byte mode)
         {
             UserForm form = new UserForm(mode);//0 - регистрация, 1 - авторизация
 
@@ -328,26 +330,20 @@ namespace CourseWorkOS
             var files = FileSystem.getAllRootCatalogRows();
 
             file_panel.Controls.Clear();
-
-
+            
             file_panel.RowStyles.Clear();
 
-            file_panel.RowCount = (int)Math.Ceiling((double)(files.Length / 5));
+            file_panel.RowCount = (int)Math.Ceiling((double)(files.Length / 5))+1;
 
             Button[] buttons = new Button[files.Length];
             
             for (int i = 0; i < files.Length; i++)
             {
-                if (i % 5 == 0)
+                if (i <file_panel.RowCount)
                 {
                     file_panel.RowStyles.Add(new RowStyle(SizeType.Absolute, 90));
                 }
-
-                if (i % 1000 == 0)
-                {
-                    MessageBox.Show("1000");
-                }
-
+                
                 Button file_obj = createFileObj();
                 
                 file_obj.ContextMenuStrip = contextMenuForFile;
@@ -362,6 +358,7 @@ namespace CourseWorkOS
             };
             Invoke(action);
             
+
             free_L.Text = $"Данные:{(uint)(FileSystem.superblock.amount_of_free_clusters * FileSystem.superblock.cluster_size) / MB_SIZE} Мб свободно из {free_place} Мб";
 
         }
@@ -403,6 +400,7 @@ namespace CourseWorkOS
         }
 
         //Обработка события нажатия на кнопку "Перименовать файл"
+        //ПЕРЕДЕЛАТЬ ФУНКЦИЮ
         private void renameItem_Click(object sender, EventArgs e)
         {
             //НЕ ЗАБУДЬ В NAME_FILE ДОДЕЛАТЬ ПРОВЕРКУ ДЛИНЫ НАЗВАНИЯ И РАСШИРЕНИЯ
@@ -427,6 +425,117 @@ namespace CourseWorkOS
             FileSystem.copyFile((((sender as ToolStripMenuItem).Owner as ContextMenuStrip).SourceControl as Button).Text, true);//НЕ ЗАБУДЬ ДОДЕЛАТЬ ПРОВЕРКУ НА РАСШИЕРНИЕ
             showFiles();
            
+        }
+
+        private void createToolStripMenuItem_Click(object sender, EventArgs e)//Также продумать access!!!
+        {
+            var fl = createPropertyFileForm(0,DateTime.Now, DateTime.Now);
+
+            var result = fl.ShowDialog();
+
+            if (result != DialogResult.Cancel)
+            {
+                var access = formAccess(fl.r_u.Checked, fl.w_u.Checked, fl.x_u.Checked, fl.r_g.Checked, fl.w_g.Checked,
+                    fl.x_g.Checked, fl.r_o.Checked, fl.w_o.Checked, fl.x_o.Checked, fl.onlyReadCB.Checked, fl.hidenCB.Checked, fl.systemCB.Checked);
+
+                FileSystem.createFile(result == DialogResult.Yes ? fl.file_name_TB.Text.Split('.')[0].ToCharArray() : fl.file_name_TB.Text.ToCharArray(),
+                result == DialogResult.Yes ? fl.file_name_TB.Text.Split('.')[1].ToCharArray() : new char[0], new byte[0], access);
+
+                showFiles();
+            }
+        }
+
+        private FileInformation createPropertyFileForm(uint size,DateTime creation,DateTime change,string file_name="",AccessRules access = null)
+        {
+            FileInformation fl = new FileInformation();
+
+            fl.file_name_TB.Text = file_name;
+
+            fl.ownerUID_TB.Text = FileSystem.user.ID_owner.ToString();
+
+            var users = FileSystem.getUsersArray();
+
+            for (int i = 0; i < users.Length; i++)
+            {
+                if (users[i].ID_owner == FileSystem.user.ID_owner)
+                {
+                    fl.owner_TB.Text = new string(users[i].user_login);
+                    break;
+                }
+            }
+
+            fl.ownerGUID_TB.Text = FileSystem.user.ID_group.ToString();
+
+            var groups = FileSystem.getGroupsArray();
+
+            for (int i = 0; i < groups.Length; i++)
+            {
+                if (groups[i].ID_group == FileSystem.user.ID_group)
+                {
+                    fl.group_TB.Text = new string(groups[i].group_name);
+                    break;
+                }
+            }
+
+            fl.size_TB.Text = $"{size} байт";
+
+            fl.createTB.Text = creation.ToString();
+
+            fl.changeTB.Text = change.ToString();
+
+            if(access!= null)
+            {
+                fl.onlyReadCB.Checked = access.read_only_file;
+                fl.hidenCB.Checked = access.hidden_file;
+                fl.systemCB.Checked = access.system_file;
+                fl.r_u.Checked = access.r_u;
+                fl.w_u.Checked = access.w_u;
+                fl.x_u.Checked = access.x_u;
+                fl.r_g.Checked = access.r_g;
+                fl.w_g.Checked = access.w_g;
+                fl.x_g.Checked = access.x_g;
+                fl.r_o.Checked = access.r_o;
+                fl.w_o.Checked = access.w_o;
+                fl.x_o.Checked = access.x_o;
+            }
+
+            return fl;
+            
+        }
+
+        private AccessRules formAccess(bool r_u, bool w_u, bool x_u, bool r_g, bool w_g, bool x_g,
+            bool r_o,bool w_o,bool x_o, bool read_only,bool hidden,bool sys)
+        { 
+            AccessRules access = new AccessRules();
+            access.r_u = r_u;
+            access.r_g = r_g;
+            access.r_o = r_o;
+            access.w_u = w_u;
+            access.w_g = w_g;
+            access.w_o = w_o;
+            access.x_u = x_u;
+            access.x_g = x_g;
+            access.x_o = x_o;
+            access.read_only_file = read_only;
+            access.hidden_file = hidden;
+            access.system_file = sys;
+            return access;
+        }
+
+        private void propertiesItem_Click(object sender, EventArgs e)
+        {
+            int position;
+
+            RootCatalogRow root;
+
+            FileSystem.findExactFile((((sender as ToolStripMenuItem).Owner as ContextMenuStrip).SourceControl as Button).Text,out position,out root);
+
+            var inode = FileSystem.getInodeByNumber(root.inode_number);
+
+            var fl = createPropertyFileForm(inode.size_in_bytes, Converter.GetDateTime(inode.datetime_of_creation), 
+                Converter.GetDateTime(inode.datetime_of_last_modification), RootCatalogRow.createFileName(root),new AccessRules(inode.access_rules));
+
+            fl.ShowDialog();
         }
     }
 }

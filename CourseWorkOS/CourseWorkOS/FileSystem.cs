@@ -62,7 +62,7 @@ namespace CourseWorkOS
 
         //ЧТО ЗАПИСАТЬ В BYTE, ЕСЛИ ФАЙЛ ПУСТ?
         //Создание файла
-        public bool createFile(char[] file_name, char[] extention, byte[] bytes)
+        public bool createFile(char[] file_name, char[] extention, byte[] bytes,AccessRules rules)//ПРОДУМАТЬ ИЗМЕНЕНИЕ ФАЙЛА
         {
             try
             {
@@ -96,15 +96,13 @@ namespace CourseWorkOS
                 uint ID_inode;
 
                 byte inode_byte;
-
-                //ЗАПИСЬ ACCESS_RULES
-
+                
                 getFreeInodeId(out ID_inode,out inode_byte);
 
                 setStateOfInodeInBitmap(ID_inode, true, inode_byte);
                 
-                Inode inode = new Inode(user.ID_owner, user.ID_group, (ushort)248/*!!!!*/, (uint)bytes.Length, (uint)cluster_number,
-                    (uint)DateTime.Now.Second, (uint)DateTime.Now.Second, ID_clusters);//ДОДЕЛАТЬ СЕКУНДЫ
+                Inode inode = new Inode(user.ID_owner, user.ID_group, rules.getAccessRulesForFile(), (uint)bytes.Length, (uint)cluster_number,
+                    Converter.getSeconds(DateTime.Now), Converter.getSeconds(DateTime.Now), ID_clusters);//Обрати внимание на даты!!!
                 
                 Cluster[] clusters = getClusterArrFromBytesArr(bytes, (ushort)cluster_number);
 
@@ -137,9 +135,7 @@ namespace CourseWorkOS
                         clusters[i].binaryWritingToFile(writer);
                     }
                 }
-
                 
-
                 return true;
             }
             catch (Exception e)
@@ -733,11 +729,23 @@ namespace CourseWorkOS
                 }
             }
         }
+        
+        public Inode getInodeByNumber(uint number)
+        {
+            Inode inode;
+            //Проверка на пустоту!!!
+            using (BinaryReader reader = new BinaryReader(File.Open(SYSTEM_FILE_NAME, FileMode.Open)))
+            {
+                reader.BaseStream.Seek(calculateWhereToCome(reader.BaseStream.Position,
+                    superblock.ilist_offset + number * Superblock.OS_INODE_SIZE), SeekOrigin.Current);
+
+                inode = Inode.loadInodeFromBinaryFile(reader);
+            }
+                return inode;
+        }
 
         public void copyFile(string file_name ,bool isWithExtention)
         {
-            uint inode_number;
-
             Inode inode;
 
             RootCatalogRow root;
@@ -790,7 +798,12 @@ namespace CourseWorkOS
             
             //ПРОВЕРКА НА ВМЕСТИМОСТЬ ИМЕНИ ПРИ ДОБАВЛЕНИИ COPY
             createFile(isWithExtention ? $"{file_name.Split('.')[0]}_copy".ToCharArray() : $"{file_name}_copy".ToCharArray(),
-                isWithExtention ? file_name.Split('.')[1].ToCharArray() : new char[0], bytes);
+                isWithExtention ? file_name.Split('.')[1].ToCharArray() : new char[0], bytes,new AccessRules(inode.access_rules));
+        }
+
+        public void deleteFile(string file_name)
+        {
+
         }
     }
 }

@@ -30,12 +30,12 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groups_B = new System.Windows.Forms.Button();
             this.users_B = new System.Windows.Forms.Button();
@@ -96,7 +96,7 @@
             this.MAIN_GUID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GROUP_NAME = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenuFileSystem = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.создатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuForFile = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -104,9 +104,12 @@
             this.copyItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renameItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.user_change_B = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.free_L = new System.Windows.Forms.Label();
+            this.contextMenuForUser = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.сменитьПользователяToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.user_change_B = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.main_control.SuspendLayout();
             this.work_with_FS_TP.SuspendLayout();
@@ -135,6 +138,7 @@
             this.contextMenuFileSystem.SuspendLayout();
             this.contextMenuForFile.SuspendLayout();
             this.panel3.SuspendLayout();
+            this.contextMenuForUser.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -253,15 +257,16 @@
             this.file_panel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 145F));
             this.file_panel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 145F));
             this.file_panel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 265F));
+            this.file_panel.ContextMenuStrip = this.contextMenuFileSystem;
             this.file_panel.Location = new System.Drawing.Point(0, 0);
             this.file_panel.Margin = new System.Windows.Forms.Padding(0);
             this.file_panel.Name = "file_panel";
-            this.file_panel.RowCount = 5;
+            this.file_panel.RowCount = 1;
             this.file_panel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 90F));
-            this.file_panel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 90F));
-            this.file_panel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 90F));
-            this.file_panel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 90F));
-            this.file_panel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 90F));
+            this.file_panel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.file_panel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.file_panel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.file_panel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.file_panel.Size = new System.Drawing.Size(845, 533);
             this.file_panel.TabIndex = 0;
             // 
@@ -763,33 +768,33 @@
             this.user_DG.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders;
             this.user_DG.BackgroundColor = System.Drawing.Color.Lavender;
             this.user_DG.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.user_DG.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.user_DG.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
             this.user_DG.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.user_DG.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.UID,
             this.GUID,
             this.LOGIN,
             this.ROLE});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.user_DG.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.user_DG.DefaultCellStyle = dataGridViewCellStyle14;
             this.user_DG.Location = new System.Drawing.Point(25, 29);
             this.user_DG.Name = "user_DG";
             this.user_DG.RowHeadersWidth = 75;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.user_DG.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.user_DG.RowsDefaultCellStyle = dataGridViewCellStyle15;
             this.user_DG.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.user_DG.Size = new System.Drawing.Size(714, 439);
             this.user_DG.TabIndex = 0;
@@ -879,31 +884,31 @@
             this.group_DG.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders;
             this.group_DG.BackgroundColor = System.Drawing.Color.Lavender;
             this.group_DG.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.group_DG.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.group_DG.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
             this.group_DG.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.group_DG.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.MAIN_GUID,
             this.GROUP_NAME});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.group_DG.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle17.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.group_DG.DefaultCellStyle = dataGridViewCellStyle17;
             this.group_DG.Location = new System.Drawing.Point(24, 29);
             this.group_DG.Name = "group_DG";
             this.group_DG.RowHeadersWidth = 75;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.group_DG.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle18.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.group_DG.RowsDefaultCellStyle = dataGridViewCellStyle18;
             this.group_DG.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.group_DG.Size = new System.Drawing.Size(714, 439);
             this.group_DG.TabIndex = 2;
@@ -924,15 +929,16 @@
             // 
             this.contextMenuFileSystem.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.contextMenuFileSystem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.создатьToolStripMenuItem});
+            this.createToolStripMenuItem});
             this.contextMenuFileSystem.Name = "contextMenuFileSystem";
-            this.contextMenuFileSystem.Size = new System.Drawing.Size(133, 28);
+            this.contextMenuFileSystem.Size = new System.Drawing.Size(170, 28);
             // 
-            // создатьToolStripMenuItem
+            // createToolStripMenuItem
             // 
-            this.создатьToolStripMenuItem.Name = "создатьToolStripMenuItem";
-            this.создатьToolStripMenuItem.Size = new System.Drawing.Size(132, 24);
-            this.создатьToolStripMenuItem.Text = "Создать";
+            this.createToolStripMenuItem.Name = "createToolStripMenuItem";
+            this.createToolStripMenuItem.Size = new System.Drawing.Size(169, 24);
+            this.createToolStripMenuItem.Text = "Создать файл";
+            this.createToolStripMenuItem.Click += new System.EventHandler(this.createToolStripMenuItem_Click);
             // 
             // contextMenuForFile
             // 
@@ -966,6 +972,7 @@
             this.propertiesItem.Name = "propertiesItem";
             this.propertiesItem.Size = new System.Drawing.Size(183, 24);
             this.propertiesItem.Text = "Свойства";
+            this.propertiesItem.Click += new System.EventHandler(this.propertiesItem_Click);
             // 
             // copyItem
             // 
@@ -987,20 +994,6 @@
             this.renameItem.Text = "Переименовать";
             this.renameItem.Click += new System.EventHandler(this.renameItem_Click);
             // 
-            // user_change_B
-            // 
-            this.user_change_B.BackColor = System.Drawing.Color.Lavender;
-            this.user_change_B.FlatAppearance.BorderSize = 0;
-            this.user_change_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.user_change_B.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.user_change_B.Image = global::CourseWorkOS.Properties.Resources.login;
-            this.user_change_B.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.user_change_B.Location = new System.Drawing.Point(664, 0);
-            this.user_change_B.Name = "user_change_B";
-            this.user_change_B.Size = new System.Drawing.Size(218, 36);
-            this.user_change_B.TabIndex = 11;
-            this.user_change_B.UseVisualStyleBackColor = false;
-            // 
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.Lavender;
@@ -1020,6 +1013,42 @@
             this.free_L.Size = new System.Drawing.Size(258, 28);
             this.free_L.TabIndex = 0;
             this.free_L.Text = "label2";
+            // 
+            // contextMenuForUser
+            // 
+            this.contextMenuForUser.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.contextMenuForUser.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.сменитьПользователяToolStripMenuItem,
+            this.выходToolStripMenuItem});
+            this.contextMenuForUser.Name = "contextMenuForUser";
+            this.contextMenuForUser.Size = new System.Drawing.Size(233, 52);
+            // 
+            // сменитьПользователяToolStripMenuItem
+            // 
+            this.сменитьПользователяToolStripMenuItem.Name = "сменитьПользователяToolStripMenuItem";
+            this.сменитьПользователяToolStripMenuItem.Size = new System.Drawing.Size(232, 24);
+            this.сменитьПользователяToolStripMenuItem.Text = "Сменить пользователя";
+            // 
+            // выходToolStripMenuItem
+            // 
+            this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
+            this.выходToolStripMenuItem.Size = new System.Drawing.Size(232, 24);
+            this.выходToolStripMenuItem.Text = "Выход";
+            // 
+            // user_change_B
+            // 
+            this.user_change_B.BackColor = System.Drawing.Color.Lavender;
+            this.user_change_B.ContextMenuStrip = this.contextMenuForUser;
+            this.user_change_B.FlatAppearance.BorderSize = 0;
+            this.user_change_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.user_change_B.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.user_change_B.Image = global::CourseWorkOS.Properties.Resources.login;
+            this.user_change_B.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.user_change_B.Location = new System.Drawing.Point(664, 0);
+            this.user_change_B.Name = "user_change_B";
+            this.user_change_B.Size = new System.Drawing.Size(218, 36);
+            this.user_change_B.TabIndex = 11;
+            this.user_change_B.UseVisualStyleBackColor = false;
             // 
             // MainForm
             // 
@@ -1079,6 +1108,7 @@
             this.contextMenuFileSystem.ResumeLayout(false);
             this.contextMenuForFile.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
+            this.contextMenuForUser.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1145,7 +1175,7 @@
         private System.Windows.Forms.TabPage work_with_FS_TP;
         public System.Windows.Forms.TableLayoutPanel file_panel;
         private System.Windows.Forms.ContextMenuStrip contextMenuFileSystem;
-        private System.Windows.Forms.ToolStripMenuItem создатьToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem createToolStripMenuItem;
         public System.Windows.Forms.ContextMenuStrip contextMenuForFile;
         private System.Windows.Forms.ToolStripMenuItem openItem;
         private System.Windows.Forms.ToolStripMenuItem changeItem;
@@ -1156,5 +1186,8 @@
         private System.Windows.Forms.Button user_change_B;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label free_L;
+        private System.Windows.Forms.ContextMenuStrip contextMenuForUser;
+        private System.Windows.Forms.ToolStripMenuItem сменитьПользователяToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem выходToolStripMenuItem;
     }
 }
