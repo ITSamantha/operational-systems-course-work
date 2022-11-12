@@ -172,6 +172,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.enterFS_B);
             this.Name = "SystemCreationParams";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Samantha:Создание файловой системы";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

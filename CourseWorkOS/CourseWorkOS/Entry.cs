@@ -1,12 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CourseWorkOS
@@ -14,36 +6,43 @@ namespace CourseWorkOS
     public partial class entryForm : Form
     {
 
-        public short work_mode { get; set; }
+        public short work_mode { get; set; } = NO_FS_MODE;
+
+        public const byte CREATE_FS_MODE = 2;
+
+        public const byte ENTER_FS_MODE = 1;
+
+        public const short NO_FS_MODE = -1;
+
+        public const byte EXIT_FS_MODE = 0;
 
         public entryForm()
         {
-            work_mode = -1;
-
             InitializeComponent();
         }
 
         private void createFS_B_Click(object sender, EventArgs e)
         {
-            setMode(2);
+            setMode(CREATE_FS_MODE);
         }
 
         private void enterFS_B_Click(object sender, EventArgs e)
         {
-            setMode(1);//!
+            setMode(ENTER_FS_MODE);
         }
 
         private void entryForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (work_mode == -1)
+            if (work_mode == NO_FS_MODE)
             {
-                setMode(0);
+                setMode(EXIT_FS_MODE);
             }
         }
 
         private void setMode(short mode)
         {
             this.work_mode = mode;
+
             Close();
         }
     

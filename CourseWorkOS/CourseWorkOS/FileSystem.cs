@@ -13,10 +13,13 @@ namespace CourseWorkOS
     {
         public const string SYSTEM_FILE_NAME = "data.bin";
 
+        public const byte MAX_CLUSTER_AMOUNT = 10;
+
         public Superblock superblock;
 
         public User user = new User();
 
+        //Создать ФС
         public void createFileSystem(ushort cluster_size= 512 ,uint fs_size= 4294967295)
         {
             using (var fs1 = new FileStream(FileSystem.SYSTEM_FILE_NAME, FileMode.Create, FileAccess.Write, FileShare.None))
@@ -31,9 +34,7 @@ namespace CourseWorkOS
             byte[] cluster_bitmap = new byte[bit_size];
 
             byte[] inode_bitmap = new byte[bit_size];
-
-            //!!!!Тут регистрация пользователя
-
+            
             using (BinaryWriter writer = new BinaryWriter(File.Open(SYSTEM_FILE_NAME, FileMode.OpenOrCreate)))
             {
                 superblock.binaryWritingToFile(writer);
@@ -42,6 +43,7 @@ namespace CourseWorkOS
             }
         }
 
+        //Загрузить ФС из файла
         public bool loadFileSystemFromFile()
         {
             try
@@ -66,14 +68,19 @@ namespace CourseWorkOS
         {
             try
             {
+                if (checkIfTheSameFileNames(RootCatalogRow.createFileName(new RootCatalogRow(file_name,extention,0))))
+                {
+                    MessageBox.Show("Файл с таким именем существует","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    return false;
+                }
                 if (superblock.amount_of_free_clusters == 0)
                 {
-                    Console.Write("Все кластеры заняты.");
+                    Console.Write("Все кластеры заняты.","Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
                 if (superblock.amount_of_free_inodes == 0)
                 {
-                    Console.Write("Все индексные дескрипторы заняты.");
+                    Console.Write("Все индексные дескрипторы заняты.","Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
 
@@ -83,9 +90,9 @@ namespace CourseWorkOS
 
                 int cluster_number = (int)Math.Ceiling(((double)bytes.Length / (double)superblock.cluster_size));
 
-                if (cluster_number > 10)
+                if (cluster_number > MAX_CLUSTER_AMOUNT)
                 {
-                    //MessageBox.Show("Размер файла слишком большой. Невозможно записать.");
+                    MessageBox.Show("Размер файла слишком большой. Невозможно записать.","Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
 
@@ -116,7 +123,8 @@ namespace CourseWorkOS
 
                     inode.binaryWritingToFile(writer);
 
-                    writer.BaseStream.Seek(calculateWhereToCome(writer.BaseStream.Position, superblock.root_offset + (superblock.amount_of_inodes-superblock.amount_of_free_inodes)* Superblock.OS_ROOT_ROW_SIZE), SeekOrigin.Current);
+                    writer.BaseStream.Seek(calculateWhereToCome(writer.BaseStream.Position, 
+                        superblock.root_offset + (superblock.amount_of_inodes-superblock.amount_of_free_inodes)* Superblock.OS_ROOT_ROW_SIZE), SeekOrigin.Current);
 
                     root.binaryWritingToFile(writer);
 
@@ -130,12 +138,12 @@ namespace CourseWorkOS
                     
                     for (int i = 0; i < ID_clusters.Length; i++)
                     {
-                        writer.BaseStream.Seek(calculateWhereToCome(writer.BaseStream.Position, superblock.data_offset + ID_clusters[i] * superblock.cluster_size), SeekOrigin.Current);
+                        writer.BaseStream.Seek(calculateWhereToCome(writer.BaseStream.Position, 
+                            superblock.data_offset + ID_clusters[i] * superblock.cluster_size), SeekOrigin.Current);
 
                         clusters[i].binaryWritingToFile(writer);
                     }
                 }
-                
                 return true;
             }
             catch (Exception e)
@@ -144,8 +152,7 @@ namespace CourseWorkOS
                 return false;
             }
         }
-
-
+        
         //Изменение файла, зная номер айнода
         public void editFileWithInode(uint inode_number,byte[] new_bytes)
         {
@@ -215,8 +222,7 @@ namespace CourseWorkOS
 
         }
 
-
-
+        
         //Считка файла, зная номер айнода
         public byte[] readFileWithInode(uint inode_number)
         {
@@ -369,7 +375,8 @@ namespace CourseWorkOS
                     }
                     using (BinaryWriter writer = new BinaryWriter(File.Open(SYSTEM_FILE_NAME, FileMode.Open)))
                     {
-                        writer.BaseStream.Seek(calculateWhereToCome(writer.BaseStream.Position, superblock.cluster_bitmap_offset + cluster_number), SeekOrigin.Current);
+                        writer.BaseStream.Seek(calculateWhereToCome(writer.BaseStream.Position, 
+                            superblock.cluster_bitmap_offset + cluster_number), SeekOrigin.Current);
 
                         byte[] new_byte = new byte[1];
 
@@ -426,7 +433,8 @@ namespace CourseWorkOS
             {
                 using (BinaryReader reader = new BinaryReader(File.Open(SYSTEM_FILE_NAME, FileMode.Open)))
                 {
-                    reader.BaseStream.Seek(calculateWhereToCome(reader.BaseStream.Position, superblock.inode_bitmap_offset+inode_number/8), SeekOrigin.Current);
+                    reader.BaseStream.Seek(calculateWhereToCome(reader.BaseStream.Position, 
+                        superblock.inode_bitmap_offset+inode_number/8), SeekOrigin.Current);
                     
                      byte b = reader.ReadByte();
                             
@@ -482,8 +490,7 @@ namespace CourseWorkOS
         }
 
         public long calculateWhereToCome(long current_position, long next_position) => next_position - current_position;
-
-
+        
         //Создание пользователя системы
         public void createUserFS(string user_login, string password, bool role = false)
         {
@@ -491,19 +498,16 @@ namespace CourseWorkOS
             {
                 int owner_id = -1;
 
-                if (superblock.amount_of_users != 0)
+                
+                using (BinaryReader reader = new BinaryReader(File.Open(SYSTEM_FILE_NAME, FileMode.Open)))
                 {
-                    using (BinaryReader reader = new BinaryReader(File.Open(SYSTEM_FILE_NAME, FileMode.Open)))
-                    {
-                        reader.BaseStream.Seek(calculateWhereToCome(reader.BaseStream.Position, 
-                            superblock.users_offset+(superblock.amount_of_users-1)*Superblock.OS_USER_INFO_SIZE), SeekOrigin.Current);
+                    reader.BaseStream.Seek(calculateWhereToCome(reader.BaseStream.Position, 
+                        superblock.users_offset+(superblock.amount_of_users-1)*Superblock.OS_USER_INFO_SIZE), SeekOrigin.Current);
 
-                        User last_user = User.loadUserFromBinaryFile(reader);
+                    User last_user = User.loadUserFromBinaryFile(reader);
 
-                        owner_id = last_user.ID_owner;
-                    }
+                    owner_id = last_user.ID_owner;
                 }
-                else { role = true; }//Первый пользователь автоматически становится администратором
                 
                 ushort group_id = createGroupFS(user_login,true);
 
@@ -530,7 +534,7 @@ namespace CourseWorkOS
         }
         
         //Удаление пользователя системы
-        public void deleteUserFS(ushort UID)
+        public void deleteUserFS(ushort UID)//ОБРАТИ ВНИМАНИЕ НА ФАЙЛЫ ПОЛЬЗОВАТЕЛЯ ПРИ УДАЛЕНИИ
         {
             var users = getUsersArray();
 
@@ -632,12 +636,7 @@ namespace CourseWorkOS
                 return 0;
             }
         }
-
-        /*public RootCatalogRow isBusyName(string old_file, string old_extention, string new_file, string new_extention)
-        {
-
-        }*/
-
+        
         //Проверка, есть ли файл с таким именем
         public bool checkIfTheSameFileNames(string new_file_name)
         {
@@ -657,7 +656,6 @@ namespace CourseWorkOS
                     {
                         return true;
                     }
-
                 }
             }
             return false;
@@ -746,8 +744,6 @@ namespace CourseWorkOS
 
         public void copyFile(string file_name ,bool isWithExtention)
         {
-            Inode inode;
-
             RootCatalogRow root;
 
             int position;
@@ -756,6 +752,8 @@ namespace CourseWorkOS
 
             findExactFile(file_name, out position, out root);
 
+            var inode = getInodeByNumber(root.inode_number);
+
             //Проверка ,занят ли айнод?
 
             //Проверка на существование такого же файла с тем же названием!
@@ -763,11 +761,6 @@ namespace CourseWorkOS
 
             using (BinaryReader reader = new BinaryReader(File.Open(SYSTEM_FILE_NAME, FileMode.Open)))
             {
-                reader.BaseStream.Seek(calculateWhereToCome(reader.BaseStream.Position,
-                    superblock.ilist_offset + root.inode_number*Superblock.OS_INODE_SIZE), SeekOrigin.Current);
-
-                inode = Inode.loadInodeFromBinaryFile(reader);
-
                 bytes = new byte[inode.size_in_bytes];
 
                 for(int i = 0; i < inode.addr.Length; i++)
@@ -801,6 +794,7 @@ namespace CourseWorkOS
                 isWithExtention ? file_name.Split('.')[1].ToCharArray() : new char[0], bytes,new AccessRules(inode.access_rules));
         }
 
+        //Удаление файла
         public void deleteFile(string file_name)
         {
 

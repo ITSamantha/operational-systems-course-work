@@ -97,6 +97,7 @@
             this.Controls.Add(this.ok_B);
             this.Controls.Add(this.groupBox1);
             this.Name = "Name_File";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Samantha: Название файла";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CourseWorkOS
 {
-    public class Group//
+    public class Group
     {
         public ushort ID_group { get; set; }
 

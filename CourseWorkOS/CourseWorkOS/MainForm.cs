@@ -51,12 +51,11 @@ namespace CourseWorkOS
             free_L.Text = $"Данные:{(uint)(FileSystem.superblock.amount_of_free_clusters*FileSystem.superblock.cluster_size) / MB_SIZE} Мб свободно из {free_place} Мб";
 
             //FileSystem.createFile(new char[] { 'f', 'i', 'l', 'e' }, new char[] { 't', 'x', 't' }, new byte[1024]);
-            /*
-                       for (int i = 0; i < 50; i++)
+            
+                       /*for (int i = 0; i < 1000; i++)
                         {
-                            FileSystem.createFile(new char[] { 'f','i','l','e'}, new char[] { 't','x','t' }, new byte[512]);
-                        }
-                        MessageBox.Show("yes");*/
+                            FileSystem.createFile(new char[] { 'f','i','l','e'}, new char[] { 't','x','t' }, new byte[512],new AccessRules(1));
+                        }*/
 
 
 
@@ -183,6 +182,7 @@ namespace CourseWorkOS
                                 }
                             }
                         }
+
                         FileSystem.createUserFS(form.login_TB.Text, form.password_TB.Text,form.isAdmin.Checked);
                         MessageBox.Show($"Пользователь {form.login_TB.Text} успешно зарегистрирован:)",
                             "Регистрация пройдена успешно", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -331,25 +331,22 @@ namespace CourseWorkOS
 
             file_panel.Controls.Clear();
             
+            file_panel.RowCount = (int)Math.Ceiling((double)files.Length / 5.0);
+
             file_panel.RowStyles.Clear();
 
-            file_panel.RowCount = (int)Math.Ceiling((double)(files.Length / 5))+1;
+            
 
             Button[] buttons = new Button[files.Length];
             
             for (int i = 0; i < files.Length; i++)
             {
-                if (i <file_panel.RowCount)
-                {
-                    file_panel.RowStyles.Add(new RowStyle(SizeType.Absolute, 90));
-                }
-                
                 Button file_obj = createFileObj();
                 
                 file_obj.ContextMenuStrip = contextMenuForFile;
 
                 file_obj.Text = RootCatalogRow.createFileName(files[i]);
-
+                
                 buttons[i] = file_obj; 
             }
             
@@ -357,6 +354,8 @@ namespace CourseWorkOS
                 file_panel.Controls.AddRange(buttons);
             };
             Invoke(action);
+
+            
             
 
             free_L.Text = $"Данные:{(uint)(FileSystem.superblock.amount_of_free_clusters * FileSystem.superblock.cluster_size) / MB_SIZE} Мб свободно из {free_place} Мб";
@@ -376,7 +375,7 @@ namespace CourseWorkOS
 
             file_obj.TextAlign = ContentAlignment.BottomCenter;
 
-            file_obj.Size = new Size(150, 150);
+            file_obj.Size = new Size(145, 100);
 
             file_obj.FlatStyle = FlatStyle.Flat;
 
@@ -422,11 +421,13 @@ namespace CourseWorkOS
 
         private void copyItem_Click(object sender, EventArgs e)
         {
-            FileSystem.copyFile((((sender as ToolStripMenuItem).Owner as ContextMenuStrip).SourceControl as Button).Text, true);//НЕ ЗАБУДЬ ДОДЕЛАТЬ ПРОВЕРКУ НА РАСШИЕРНИЕ
+            var text = (((sender as ToolStripMenuItem).Owner as ContextMenuStrip).SourceControl as Button).Text;
+            FileSystem.copyFile(text, text.Contains('.'));//НЕ ЗАБУДЬ ДОДЕЛАТЬ ПРОВЕРКУ НА РАСШИЕРНИЕ
             showFiles();
            
         }
 
+        //ВЫНЕСТИ ПЕРЕМЕННЫЕ В КОНСТАНТЫ!!!!!!!!
         private void createToolStripMenuItem_Click(object sender, EventArgs e)//Также продумать access!!!
         {
             var fl = createPropertyFileForm(0,DateTime.Now, DateTime.Now);
@@ -455,7 +456,7 @@ namespace CourseWorkOS
 
             var users = FileSystem.getUsersArray();
 
-            for (int i = 0; i < users.Length; i++)
+            for (int i = 0; i < users.Length; i++)//ИСПРАВИТЬ !!!!!!
             {
                 if (users[i].ID_owner == FileSystem.user.ID_owner)
                 {

@@ -30,12 +30,12 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle36 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groups_B = new System.Windows.Forms.Button();
             this.users_B = new System.Windows.Forms.Button();
@@ -152,7 +152,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(146, 626);
+            this.panel1.Size = new System.Drawing.Size(153, 639);
             this.panel1.TabIndex = 0;
             // 
             // groups_B
@@ -165,7 +165,7 @@
             this.groups_B.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.groups_B.Location = new System.Drawing.Point(0, 225);
             this.groups_B.Name = "groups_B";
-            this.groups_B.Size = new System.Drawing.Size(146, 75);
+            this.groups_B.Size = new System.Drawing.Size(153, 75);
             this.groups_B.TabIndex = 3;
             this.groups_B.Text = "Работа с группами";
             this.groups_B.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -182,7 +182,7 @@
             this.users_B.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.users_B.Location = new System.Drawing.Point(0, 150);
             this.users_B.Name = "users_B";
-            this.users_B.Size = new System.Drawing.Size(146, 75);
+            this.users_B.Size = new System.Drawing.Size(153, 75);
             this.users_B.TabIndex = 2;
             this.users_B.Text = "Работа с пользователями";
             this.users_B.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -199,7 +199,7 @@
             this.info_B.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.info_B.Location = new System.Drawing.Point(0, 75);
             this.info_B.Name = "info_B";
-            this.info_B.Size = new System.Drawing.Size(146, 75);
+            this.info_B.Size = new System.Drawing.Size(153, 75);
             this.info_B.TabIndex = 1;
             this.info_B.Text = "Сведения о файловой системе";
             this.info_B.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -216,7 +216,7 @@
             this.work_B.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.work_B.Location = new System.Drawing.Point(0, 0);
             this.work_B.Name = "work_B";
-            this.work_B.Size = new System.Drawing.Size(146, 75);
+            this.work_B.Size = new System.Drawing.Size(153, 75);
             this.work_B.TabIndex = 0;
             this.work_B.Text = "Работа с файловой системой";
             this.work_B.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -229,11 +229,11 @@
             this.main_control.Controls.Add(this.info_about_FS);
             this.main_control.Controls.Add(this.work_with_users_TP);
             this.main_control.Controls.Add(this.tabPage1);
-            this.main_control.Location = new System.Drawing.Point(149, 35);
+            this.main_control.Location = new System.Drawing.Point(149, 12);
             this.main_control.Name = "main_control";
             this.main_control.Padding = new System.Drawing.Point(0, 0);
             this.main_control.SelectedIndex = 0;
-            this.main_control.Size = new System.Drawing.Size(860, 559);
+            this.main_control.Size = new System.Drawing.Size(755, 590);
             this.main_control.TabIndex = 10;
             // 
             // work_with_FS_TP
@@ -242,7 +242,7 @@
             this.work_with_FS_TP.Location = new System.Drawing.Point(4, 22);
             this.work_with_FS_TP.Margin = new System.Windows.Forms.Padding(0);
             this.work_with_FS_TP.Name = "work_with_FS_TP";
-            this.work_with_FS_TP.Size = new System.Drawing.Size(852, 533);
+            this.work_with_FS_TP.Size = new System.Drawing.Size(747, 564);
             this.work_with_FS_TP.TabIndex = 0;
             this.work_with_FS_TP.Text = "tabPage1";
             this.work_with_FS_TP.UseVisualStyleBackColor = true;
@@ -256,18 +256,14 @@
             this.file_panel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 145F));
             this.file_panel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 145F));
             this.file_panel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 145F));
-            this.file_panel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 265F));
+            this.file_panel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 145F));
             this.file_panel.ContextMenuStrip = this.contextMenuFileSystem;
-            this.file_panel.Location = new System.Drawing.Point(0, 0);
+            this.file_panel.Location = new System.Drawing.Point(0, 4);
             this.file_panel.Margin = new System.Windows.Forms.Padding(0);
             this.file_panel.Name = "file_panel";
             this.file_panel.RowCount = 1;
             this.file_panel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 90F));
-            this.file_panel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.file_panel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.file_panel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.file_panel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.file_panel.Size = new System.Drawing.Size(845, 533);
+            this.file_panel.Size = new System.Drawing.Size(747, 577);
             this.file_panel.TabIndex = 0;
             // 
             // info_about_FS
@@ -768,33 +764,33 @@
             this.user_DG.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders;
             this.user_DG.BackgroundColor = System.Drawing.Color.Lavender;
             this.user_DG.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.user_DG.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle31.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle31.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle31.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle31.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle31.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle31.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle31.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.user_DG.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle31;
             this.user_DG.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.user_DG.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.UID,
             this.GUID,
             this.LOGIN,
             this.ROLE});
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.user_DG.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle32.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle32.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle32.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle32.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle32.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle32.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle32.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.user_DG.DefaultCellStyle = dataGridViewCellStyle32;
             this.user_DG.Location = new System.Drawing.Point(25, 29);
             this.user_DG.Name = "user_DG";
             this.user_DG.RowHeadersWidth = 75;
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.user_DG.RowsDefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle33.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.user_DG.RowsDefaultCellStyle = dataGridViewCellStyle33;
             this.user_DG.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.user_DG.Size = new System.Drawing.Size(714, 439);
             this.user_DG.TabIndex = 0;
@@ -884,31 +880,31 @@
             this.group_DG.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders;
             this.group_DG.BackgroundColor = System.Drawing.Color.Lavender;
             this.group_DG.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle16.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.group_DG.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle34.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle34.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle34.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle34.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle34.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle34.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle34.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.group_DG.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle34;
             this.group_DG.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.group_DG.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.MAIN_GUID,
             this.GROUP_NAME});
-            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle17.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.group_DG.DefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle35.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle35.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle35.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle35.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle35.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle35.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle35.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.group_DG.DefaultCellStyle = dataGridViewCellStyle35;
             this.group_DG.Location = new System.Drawing.Point(24, 29);
             this.group_DG.Name = "group_DG";
             this.group_DG.RowHeadersWidth = 75;
-            dataGridViewCellStyle18.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.group_DG.RowsDefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle36.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.group_DG.RowsDefaultCellStyle = dataGridViewCellStyle36;
             this.group_DG.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.group_DG.Size = new System.Drawing.Size(714, 439);
             this.group_DG.TabIndex = 2;
@@ -951,7 +947,7 @@
             this.deleteItem,
             this.renameItem});
             this.contextMenuForFile.Name = "contextMenuForFile";
-            this.contextMenuForFile.Size = new System.Drawing.Size(184, 170);
+            this.contextMenuForFile.Size = new System.Drawing.Size(184, 148);
             // 
             // openItem
             // 
@@ -998,19 +994,19 @@
             // 
             this.panel3.BackColor = System.Drawing.Color.Lavender;
             this.panel3.Controls.Add(this.free_L);
-            this.panel3.Location = new System.Drawing.Point(744, 593);
+            this.panel3.Location = new System.Drawing.Point(604, 601);
             this.panel3.Margin = new System.Windows.Forms.Padding(0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(265, 36);
+            this.panel3.Size = new System.Drawing.Size(299, 38);
             this.panel3.TabIndex = 12;
             // 
             // free_L
             // 
             this.free_L.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.free_L.Location = new System.Drawing.Point(0, 0);
+            this.free_L.Location = new System.Drawing.Point(4, 3);
             this.free_L.Margin = new System.Windows.Forms.Padding(0);
             this.free_L.Name = "free_L";
-            this.free_L.Size = new System.Drawing.Size(258, 28);
+            this.free_L.Size = new System.Drawing.Size(295, 28);
             this.free_L.TabIndex = 0;
             this.free_L.Text = "label2";
             // 
@@ -1044,9 +1040,9 @@
             this.user_change_B.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.user_change_B.Image = global::CourseWorkOS.Properties.Resources.login;
             this.user_change_B.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.user_change_B.Location = new System.Drawing.Point(664, 0);
+            this.user_change_B.Location = new System.Drawing.Point(675, 0);
             this.user_change_B.Name = "user_change_B";
-            this.user_change_B.Size = new System.Drawing.Size(218, 36);
+            this.user_change_B.Size = new System.Drawing.Size(229, 36);
             this.user_change_B.TabIndex = 11;
             this.user_change_B.UseVisualStyleBackColor = false;
             // 
@@ -1055,13 +1051,14 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.ClientSize = new System.Drawing.Size(1011, 626);
+            this.ClientSize = new System.Drawing.Size(901, 639);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.user_change_B);
             this.Controls.Add(this.main_control);
-            this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SamanthaOS";
             this.panel1.ResumeLayout(false);
             this.main_control.ResumeLayout(false);

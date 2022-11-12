@@ -21,13 +21,12 @@ namespace CourseWorkOS
             this.bytes = new byte[cluster_size];
         }
 
-        //Запись кластера в бинарный файл!
+        //Запись кластера в бинарный файл
         public bool binaryWritingToFile(BinaryWriter bw)
         {
             try
             {
                 bw.Write(this.bytes);
-                //bw.Write(Converter.convertFromCharIntoBytes(this.group_name));//Кодировка русских символов
                 return true;
             }
             catch (Exception e)
@@ -56,8 +55,6 @@ namespace CourseWorkOS
             }
             return cluster;
         }
-
-
-
+        
     }
 }
