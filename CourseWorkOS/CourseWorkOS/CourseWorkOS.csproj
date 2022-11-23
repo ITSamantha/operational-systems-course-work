@@ -63,6 +63,12 @@
       <DependentUpon>Entry.cs</DependentUpon>
     </Compile>
     <Compile Include="Group.cs" />
+    <Compile Include="GroupChoose.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GroupChoose.Designer.cs">
+      <DependentUpon>GroupChoose.cs</DependentUpon>
+    </Compile>
     <Compile Include="GroupWork.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,6 +116,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FileInformation.resx">
       <DependentUpon>FileInformation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GroupChoose.resx">
+      <DependentUpon>GroupChoose.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GroupWork.resx">
       <DependentUpon>GroupWork.cs</DependentUpon>

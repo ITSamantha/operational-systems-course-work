@@ -1433,16 +1433,53 @@ namespace CourseWorkOS
 
         public bool deleteGroup(ushort GUID)
         {
-            BinaryWriter writer = new BinaryWriter(file_stream);
+            
+            var groups = getGroupsArray();
 
-            superblock.amount_of_groups--;
+            if (groups != null)
+            {
+                BinaryWriter writer = new BinaryWriter(file_stream);
 
-            writer.BaseStream.Seek(calculateWhereToCome(writer.BaseStream.Position,
-               0), SeekOrigin.Current);
+                for (int i = 0; i < groups.Length; i++)
+                {
+                    if (groups[i].ID_group == GUID)
+                    {
+                        superblock.amount_of_groups--;
+                        continue;
+                    }
+                    writer.BaseStream.Seek(calculateWhereToCome(writer.BaseStream.Position, superblock.groups_offset+i*Superblock.OS_GROUP_INFO_SIZE), SeekOrigin.Current);
+                    groups[i].binaryWritingToFile(writer);
+                }
+                    
+                writer.BaseStream.Seek(calculateWhereToCome(writer.BaseStream.Position,
+                   0), SeekOrigin.Current);
 
-            superblock.binaryWritingToFile(writer);
+                superblock.binaryWritingToFile(writer);
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
 
         }
 
+        public User[] getUsersInGroup(ushort GUID)
+        {
+            var all_users = getUsersArray().ToList();
+
+            if (all_users != null)
+            {
+                for (int i = 0; i < all_users.Count; i++)
+                {
+                    if (all_users[i].ID_group != GUID)
+                    {
+                        all_users.Remove(all_users[i]);
+                    }
+                }
+            }
+            return all_users.ToArray();
+        }
     }
 }

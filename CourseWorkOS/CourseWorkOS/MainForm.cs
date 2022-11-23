@@ -918,7 +918,55 @@ namespace CourseWorkOS
         //Удаление группы
         private void delete_group_B_Click(object sender, EventArgs e)
         {
-            
+            if (FileSystem.superblock.amount_of_groups == 1)
+            {
+                MessageBox.Show("Данное действие недоступно. В системе должна быть хотя бы одна группа");
+                return;
+            }
+
+            if(MessageBox.Show("Вы уверены?Это действие нельзя будет отменить.", "Предупреждение", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                var users = FileSystem.getUsersInGroup((ushort)group_DG.SelectedRows[0].Cells[0].Value);
+
+                if (users != null)
+                {
+                    StringBuilder sb = new StringBuilder($"При удалении без группы останется {users.Length} пользователей: ");
+                    foreach(var us in users)
+                    {
+                        sb.Append($"{new string(us.user_login)}, ");
+                    }
+                    sb.Append("В следующем диалоговом окне Вам необходимо выбрать группу для этих пользователей.");
+
+                    MessageBox.Show(sb.ToString());
+
+                    GroupChoose form = new GroupChoose();
+
+                    var groups = FileSystem.getGroupsArray();
+
+                    if (groups != null)
+                    {
+                        foreach (var group in groups)
+                        {
+                            form.comboBox1.Items.Add(new string(group.group_name));
+                        }
+                    }
+
+                    if (form.ShowDialog() == DialogResult.OK)
+                    {
+                          //Для всех пользователей установить группу!  
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+                
+
+                FileSystem.deleteGroup();
+
+
+                
+            }
         }
     }
 }
