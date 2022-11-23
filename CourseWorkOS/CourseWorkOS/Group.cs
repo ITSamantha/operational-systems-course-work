@@ -16,12 +16,16 @@ namespace CourseWorkOS
         //Константы
 
         public const ushort GROUP_SIZE = 16;
-
-        //СМЕНА НАЗВАНИЯ ГРУППЫ
+        
         public Group(ushort iD_group, char[] group_name)
         {
             this.ID_group = iD_group;
 
+            formName(group_name);
+        }
+
+        public void formName(char[] group_name)
+        {
             this.group_name = new char[GROUP_SIZE];
 
             for (int i = 0; i < group_name.Length; i++)

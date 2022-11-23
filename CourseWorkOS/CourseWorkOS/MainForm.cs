@@ -688,6 +688,8 @@ namespace CourseWorkOS
             }
         }
 
+
+
         /*Работа с пользователями*/
 
         //Добавление пользователя
@@ -730,6 +732,8 @@ namespace CourseWorkOS
                 if (result == DialogResult.Yes)
                 {
                     FileSystem.deleteUserFS((ushort)user_DG.SelectedRows[0].Cells[0].Value);
+
+                    FileSystem.giveAllFilesToAdmin((ushort)user_DG.SelectedRows[0].Cells[0].Value);
 
                     MessageBox.Show("Пользователь успешно удален.");
 
@@ -860,10 +864,61 @@ namespace CourseWorkOS
             }
         }
 
+
+        /*Работа с группами*/
+
+        //Создание группы
         private void add_group_B_Click(object sender, EventArgs e)
         {
+            GroupWork gw = new GroupWork(0);
 
+            if (gw.ShowDialog() == DialogResult.OK)
+            {
+                if (gw.group_TB.Text.Trim() == String.Empty)
+                {
+                    MessageBox.Show("Вы не ввели название.");
+                    return;
+                }
+
+                if (FileSystem.checkIfTheSameGroupNames(gw.group_TB.Text))
+                {
+                    MessageBox.Show("Невозможно создать. Группа с таким названием уже существует.");
+                    return;
+                }
+
+                FileSystem.createGroupFS(gw.group_TB.Text);
+                loadGroupsToTable();
+            }
         }
-        
+
+        //Изменение группы
+        private void changeGroupB_Click(object sender, EventArgs e)
+        {
+            GroupWork gw = new GroupWork(1);
+
+            if (gw.ShowDialog() == DialogResult.OK)
+            {
+                if (gw.group_TB.Text.Trim() != String.Empty)
+                {
+                    if (FileSystem.checkIfTheSameGroupNames(gw.group_TB.Text))
+                    {
+                        MessageBox.Show("Невозможно изменить. Группа с таким названием уже существует.");
+                        return;
+                    }
+                    FileSystem.changeGroup(group_DG.SelectedRows[0].Cells[1].Value.ToString(), gw.group_TB.Text);
+                    loadGroupsToTable();
+                }
+                else
+                {
+                    MessageBox.Show("Вы не ввели новое название.");
+                }
+            }
+        }
+
+        //Удаление группы
+        private void delete_group_B_Click(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

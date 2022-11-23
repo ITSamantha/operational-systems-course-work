@@ -1106,21 +1106,31 @@ namespace CourseWorkOS
         }
 
         //При передаче прав или удалении пользователя, файлы переходят к админу
-        public void giveAllFilesToAdmin(ushort old_user_id,ushort new_user_id)
+        public void giveAllFilesToAdmin(ushort old_user_id)
         {
-            BinaryReader reader = new BinaryReader(this.file_stream);
-
             var roots = getAllRootCatalogRows();
 
-            Inode[] inodes = new Inode[roots.Length];
-            
-            for(int i = 0; i < inode.Length; i++)
-            {
-                inodes[i] = getInodeByNumber(roots[i].inode_number);
-            }
+            var admin = getAdmin();
 
-            reader.BaseStream.Seek(calculateWhereToCome(reader.BaseStream.Position,
-                            superblock.ilist_offset * Superblock.OS_USER_INFO_SIZE), SeekOrigin.Current);
+            BinaryWriter writer = new BinaryWriter(file_stream);
+
+            if (roots != null)
+            {
+                for (int i = 0; i < roots.Length; i++)
+                {
+                    var inode = getInodeByNumber(roots[i].inode_number);
+
+                    if (inode.ID_owner == old_user_id)
+                    {
+                        inode.ID_owner = admin.ID_owner;
+                        inode.ID_group = admin.ID_group;
+
+                        writer.BaseStream.Seek(calculateWhereToCome(writer.BaseStream.Position,
+                            superblock.ilist_offset + roots[i].inode_number * Superblock.OS_INODE_SIZE), SeekOrigin.Current);
+                        inode.binaryWritingToFile(writer);
+                    }
+                }
+            }
         }
 
 
@@ -1279,7 +1289,22 @@ namespace CourseWorkOS
             return -1;
         }
 
-
+        public User getAdmin()
+        {
+            var users =getUsersArray();
+            
+            if (users != null)
+            {
+                foreach(var user in users)
+                {
+                    if (user.user_role)
+                    {
+                        return user;
+                    }
+                }
+            }
+            return null;
+        }
 
         /*Работа с группами*/
 
@@ -1319,6 +1344,13 @@ namespace CourseWorkOS
         //Создание группы пользователей
         public int createGroupFS(string group_name)
         {
+            if (superblock.amount_of_groups == superblock.max_amount_of_groups)
+            {
+                MessageBox.Show("Максимальное количество групп достигнуто.");
+
+                return -1;
+            }
+
             try
             {
                 int group_id = -1;
@@ -1356,5 +1388,61 @@ namespace CourseWorkOS
                 return 0;
             }
         }
+
+        //Изменение названия группы
+        public bool changeGroup(string old_group_name,string new_group_name)
+        {
+            var GUID = getGUID(old_group_name);
+
+            Group group = new Group((ushort)GUID, new_group_name.ToCharArray());
+
+            int position = getGroupPosition(old_group_name);
+
+            if(position == -1)
+            {
+                return false;
+            }
+
+            BinaryWriter writer = new BinaryWriter(file_stream);
+
+            writer.BaseStream.Seek(calculateWhereToCome(writer.BaseStream.Position,
+               superblock.groups_offset+position*Superblock.OS_GROUP_INFO_SIZE), SeekOrigin.Current);
+
+            group.binaryWritingToFile(writer);
+            return true;
+        }
+
+        //Получить позицию группы в списке групп
+        public int getGroupPosition(string group_name)
+        {
+            var groups = getGroupsArray();
+
+            if (groups != null)
+            {
+                for (int i = 0; i < groups.Length; i++)
+                {
+                    if(groups[i].group_name.SequenceEqual(new Group(0, group_name.ToArray()).group_name))
+                    {
+                        return i;
+                    }
+                }
+            }
+            return -1;
+        }
+
+
+        public bool deleteGroup(ushort GUID)
+        {
+            BinaryWriter writer = new BinaryWriter(file_stream);
+
+            superblock.amount_of_groups--;
+
+            writer.BaseStream.Seek(calculateWhereToCome(writer.BaseStream.Position,
+               0), SeekOrigin.Current);
+
+            superblock.binaryWritingToFile(writer);
+
+        }
+
     }
 }

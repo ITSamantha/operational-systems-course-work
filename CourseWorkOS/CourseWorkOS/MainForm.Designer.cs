@@ -100,6 +100,10 @@
             this.сменитьПользователяToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.UID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GUID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LOGIN = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ADMIN = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groups_B = new System.Windows.Forms.Button();
             this.users_B = new System.Windows.Forms.Button();
             this.info_B = new System.Windows.Forms.Button();
@@ -112,10 +116,6 @@
             this.changeGroupB = new System.Windows.Forms.Button();
             this.delete_group_B = new System.Windows.Forms.Button();
             this.add_group_B = new System.Windows.Forms.Button();
-            this.UID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GUID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LOGIN = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ADMIN = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.main_control.SuspendLayout();
             this.work_with_FS_TP.SuspendLayout();
@@ -917,6 +917,30 @@
             this.выходToolStripMenuItem.Text = "Выход";
             this.выходToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
+            // UID
+            // 
+            this.UID.HeaderText = "UID";
+            this.UID.Name = "UID";
+            this.UID.ReadOnly = true;
+            // 
+            // GUID
+            // 
+            this.GUID.HeaderText = "GUID";
+            this.GUID.Name = "GUID";
+            this.GUID.ReadOnly = true;
+            // 
+            // LOGIN
+            // 
+            this.LOGIN.HeaderText = "LOGIN";
+            this.LOGIN.Name = "LOGIN";
+            this.LOGIN.ReadOnly = true;
+            // 
+            // ADMIN
+            // 
+            this.ADMIN.HeaderText = "ADMIN";
+            this.ADMIN.Name = "ADMIN";
+            this.ADMIN.ReadOnly = true;
+            // 
             // groups_B
             // 
             this.groups_B.Dock = System.Windows.Forms.DockStyle.Top;
@@ -1078,6 +1102,7 @@
             this.changeGroupB.TabIndex = 13;
             this.toolTip1.SetToolTip(this.changeGroupB, "Изменить");
             this.changeGroupB.UseVisualStyleBackColor = false;
+            this.changeGroupB.Click += new System.EventHandler(this.changeGroupB_Click);
             // 
             // delete_group_B
             // 
@@ -1092,6 +1117,7 @@
             this.delete_group_B.Size = new System.Drawing.Size(25, 25);
             this.delete_group_B.TabIndex = 12;
             this.delete_group_B.UseVisualStyleBackColor = false;
+            this.delete_group_B.Click += new System.EventHandler(this.delete_group_B_Click);
             // 
             // add_group_B
             // 
@@ -1107,30 +1133,6 @@
             this.add_group_B.TabIndex = 11;
             this.add_group_B.UseVisualStyleBackColor = false;
             this.add_group_B.Click += new System.EventHandler(this.add_group_B_Click);
-            // 
-            // UID
-            // 
-            this.UID.HeaderText = "UID";
-            this.UID.Name = "UID";
-            this.UID.ReadOnly = true;
-            // 
-            // GUID
-            // 
-            this.GUID.HeaderText = "GUID";
-            this.GUID.Name = "GUID";
-            this.GUID.ReadOnly = true;
-            // 
-            // LOGIN
-            // 
-            this.LOGIN.HeaderText = "LOGIN";
-            this.LOGIN.Name = "LOGIN";
-            this.LOGIN.ReadOnly = true;
-            // 
-            // ADMIN
-            // 
-            this.ADMIN.HeaderText = "ADMIN";
-            this.ADMIN.Name = "ADMIN";
-            this.ADMIN.ReadOnly = true;
             // 
             // MainForm
             // 
