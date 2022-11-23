@@ -16,11 +16,13 @@ namespace CourseWorkOS
         {
             InitializeComponent();
 
-            this.Text = mode == 0 ? "Samantha: Регистрация пользователя" : "Samantha: Авторизация пользователя";
-         
-            this.enterFS_B.Text = mode == 0 ? "Регистрация" : "Авторизация пользователя";
-
-            this.role_GB.Visible= mode == 0 ? true:false;
+            if (mode != 3)
+            {
+                this.Text = mode == 0 ? "Samantha: Регистрация пользователя" : "Samantha: Авторизация пользователя";
+                this.enterFS_B.Text = mode == 0 ? "Регистрация" : "Авторизация пользователя";
+                this.groupBox3.Visible = mode == 0  ? true : false;
+            }
+           
         }
 
         private void enterFS_B_Click(object sender, EventArgs e)
@@ -30,12 +32,12 @@ namespace CourseWorkOS
 
         private void cancel_B_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.No;//
+            DialogResult = DialogResult.No;
         }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
+        
+        private void login_TB_Leave(object sender, EventArgs e)
         {
-
+            comboBox1.Text = login_TB.Text;
         }
     }
 }

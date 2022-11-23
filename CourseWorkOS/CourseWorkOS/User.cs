@@ -33,12 +33,7 @@ namespace CourseWorkOS
 
             this.ID_group = iD_group;
 
-            this.user_login = new char[LOGIN_SIZE];
-
-            for(int i = 0; i < user_login.Length; i++)
-            {
-                this.user_login[i] =  user_login[i];
-            }
+            formUserLogin(user_login);
             
             this.hash_password = transformPasswordIntoHash(password);
 
@@ -48,6 +43,11 @@ namespace CourseWorkOS
         public User() { }
 
         public User(char[] user_login)
+        {
+            formUserLogin(user_login);
+        }
+
+        public void formUserLogin(char[] user_login)
         {
             this.user_login = new char[LOGIN_SIZE];
 

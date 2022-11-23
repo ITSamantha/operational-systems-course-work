@@ -76,6 +76,12 @@
     <Compile Include="Name_File.Designer.cs">
       <DependentUpon>Name_File.cs</DependentUpon>
     </Compile>
+    <Compile Include="OpenFile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OpenFile.Designer.cs">
+      <DependentUpon>OpenFile.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RootCatalogRow.cs" />
@@ -104,6 +110,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Name_File.resx">
       <DependentUpon>Name_File.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OpenFile.resx">
+      <DependentUpon>OpenFile.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -160,6 +169,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Sources\file.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Sources\admin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Sources\group.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Sources\password.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Sources\edit.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

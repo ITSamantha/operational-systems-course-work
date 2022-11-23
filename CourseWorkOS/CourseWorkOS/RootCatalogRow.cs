@@ -10,7 +10,7 @@ namespace CourseWorkOS
     public class RootCatalogRow
     {
         public char[] file_name { get; set; }
-        //
+
         public char[] file_extention { get; set; }
 
         public uint inode_number { get; set; }
@@ -103,17 +103,10 @@ namespace CourseWorkOS
             {
                 if (file.file_extention[j] != '\0')
                 {
-                    if (j == 0)
-                    {
-                        s.Append('.');
-                    }
                     s.Append(file.file_extention[j]);
                 }
             }
             return $"{s.ToString()}";
         }
-
-
-
     }
 }

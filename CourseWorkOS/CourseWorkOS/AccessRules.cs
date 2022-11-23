@@ -72,5 +72,6 @@ namespace CourseWorkOS
 
             return (ushort)(u_access + g_access + o_access + attributes);
         }
+        
     }
 }

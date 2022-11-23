@@ -10,22 +10,24 @@ using System.Windows.Forms;
 
 namespace CourseWorkOS
 {
-    public partial class Name_File : Form
+    public partial class OpenFile : Form
     {
-        public Name_File()
+        public OpenFile()
         {
             InitializeComponent();
         }
-        
+
         private void ok_B_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
-            
+
+            Close();
         }
 
         private void cancel_B_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
+
             Close();
         }
     }

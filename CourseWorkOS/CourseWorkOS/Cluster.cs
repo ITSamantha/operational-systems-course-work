@@ -46,8 +46,6 @@ namespace CourseWorkOS
                 byte[] data = reader.ReadBytes(cluster_size);
 
                 cluster.bytes = data;
-
-                //cluster.bytes = Converter.convertFromBytesIntoChar(data);
             }
             catch (Exception e)
             {

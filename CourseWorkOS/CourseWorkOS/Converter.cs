@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,5 +39,13 @@ namespace CourseWorkOS
             return dt;
         }
 
+        public static void getBaseAndExtention(string name, out string _ext,out string _base)
+        {
+            _ext = Path.GetExtension(name);
+            
+            _base = Path.GetFileNameWithoutExtension(name);
+            
+        }
+        
     }
 }

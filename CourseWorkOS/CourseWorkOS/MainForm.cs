@@ -42,23 +42,14 @@ namespace CourseWorkOS
             
             InitializeComponent();
 
-            user_change_B.Text = new string(FileSystem.user.user_login);
+            changeUser();
 
             free_place = (uint)(FileSystem.superblock.OS_size - FileSystem.superblock.amount_of_groups * Superblock.OS_GROUP_INFO_SIZE
                 - FileSystem.superblock.amount_of_users * Superblock.OS_USER_INFO_SIZE - FileSystem.superblock.amount_of_inodes * Superblock.OS_INODE_SIZE+
                 FileSystem.superblock.amount_of_inodes/4-Superblock.OS_SUPERBLOCK_SIZE - FileSystem.superblock.amount_of_inodes*Superblock.OS_ROOT_ROW_SIZE) / MB_SIZE;
             
             free_L.Text = $"Данные:{(uint)(FileSystem.superblock.amount_of_free_clusters*FileSystem.superblock.cluster_size) / MB_SIZE} Мб свободно из {free_place} Мб";
-
-            //FileSystem.createFile(new char[] { 'f', 'i', 'l', 'e' }, new char[] { 't', 'x', 't' }, new byte[1024]);
             
-                       /*for (int i = 0; i < 1000; i++)
-                        {
-                            FileSystem.createFile(new char[] { 'f','i','l','e'}, new char[] { 't','x','t' }, new byte[512],new AccessRules(1));
-                        }*/
-
-
-
         }
 
         private void work_B_Click(object sender, EventArgs e)
@@ -67,8 +58,7 @@ namespace CourseWorkOS
             
             showFiles();
         }
-
-
+        
         //Создание или вход в файловую систему
         public void firstWorkWithSystem()
         {
@@ -133,22 +123,32 @@ namespace CourseWorkOS
                 FileSystem.createFileSystem(ushort.Parse(scr.cluster_size_CB.Text),(uint)scr.FS_size.Value*MB_SIZE);
 
                 formRegistarionOrAutorizationUser(0);
-
-                using (BinaryReader reader = new BinaryReader(File.Open(SYSTEM_FILE_NAME, FileMode.Open)))
-                {
-                    reader.BaseStream.Seek(FileSystem.calculateWhereToCome(reader.BaseStream.Position,
-                        FileSystem.superblock.users_offset), SeekOrigin.Current);
-
-                    FileSystem.user = User.loadUserFromBinaryFile(reader);
-                }
+                
             }
             else { return; }
         }
 
-
+        public void changeUser()
+        {
+            user_change_B.Text = new string(FileSystem.user.user_login);
+        }
+        
         public bool formRegistarionOrAutorizationUser(byte mode)
         {
             UserForm form = new UserForm(mode);//0 - регистрация, 1 - авторизация
+
+            if(mode == 0)
+            {
+                var groups = FileSystem.getGroupsArray();
+
+                if (groups != null)
+                {
+                    foreach (var group in groups)
+                    {
+                        form.comboBox1.Items.Add(new string(group.group_name));
+                    }
+                }
+            }
 
             while (true)
             {
@@ -156,7 +156,7 @@ namespace CourseWorkOS
 
                 if (form.DialogResult != DialogResult.OK) { return false; }
 
-                if (form.login_TB.Text == String.Empty || form.password_TB.Text == String.Empty)//ПОЛЬЗОВАТЕЛЬ НА РУССКОМ?
+                if (form.login_TB.Text == String.Empty || form.password_TB.Text == String.Empty)
                 {
                     MessageBox.Show("Поле \"Логин\" и поле \"Пароль\" не могут быть пустымы.");
                 }
@@ -167,25 +167,30 @@ namespace CourseWorkOS
             {
                 case 0:
                     {
-                        var form_user = new User(form.login_TB.Text.ToCharArray());
-
-                        var users = FileSystem.getUsersArray();
-
-                        if (users!=null)
+                        if (FileSystem.checkIfTheSameLogin(form.login_TB.Text))
                         {
-                            foreach (var user in users)
-                            {
-                                if (user.user_login.SequenceEqual(form_user.user_login))
-                                {
-                                    MessageBox.Show("Пользователь с таким логином уже существует.", "Ошибка регистрации", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                    return false;
-                                }
-                            }
+                            MessageBox.Show("Пользователь с таким логином уже существует");
+                            return false;
                         }
 
-                        FileSystem.createUserFS(form.login_TB.Text, form.password_TB.Text,form.isAdmin.Checked);
+                        var group_id = FileSystem.checkIfTheSameGroupNames(form.comboBox1.Text) ? 
+                            FileSystem.getGUID(form.comboBox1.Text) : FileSystem.createGroupFS(form.comboBox1.Text);
+
+                        if (group_id == -1)
+                        {
+                            MessageBox.Show("Не удалось найти или создать группу.");
+                            return false;
+                        }
+                      
+                        var temp_user = FileSystem.createUserFS(form.login_TB.Text, form.password_TB.Text,(ushort)group_id,FileSystem.superblock.amount_of_users==0?true:false);
+
                         MessageBox.Show($"Пользователь {form.login_TB.Text} успешно зарегистрирован:)",
                             "Регистрация пройдена успешно", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        if (FileSystem.superblock.amount_of_users == 1)
+                        {
+                            FileSystem.user = temp_user;
+                        }
                         return true;
                     }
                 case 1:
@@ -206,7 +211,7 @@ namespace CourseWorkOS
                                     return true;
                                 }
                             }
-                            MessageBox.Show("Упс!Такой пользователь не найден!");
+                            MessageBox.Show("Упс!Такой пользователь не найден!Возможно, Вы неверно ввели пароль.");
                             return false;
                         }
                         catch(Exception e)
@@ -301,28 +306,6 @@ namespace CourseWorkOS
 
             user_amount_L.Text = USER_AMOUNT + users.Length.ToString();
         }
-
-        private void add_user_B_Click(object sender, EventArgs e)
-        {
-            formRegistarionOrAutorizationUser(0);
-
-            loadUsersToTable();
-        }
-
-        private void delete_user_B_Click(object sender, EventArgs e)
-        {
-            var result = MessageBox.Show("Вы уверены? Данный пользователь будет безвозвратно удален.", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
-            if (result == DialogResult.Yes)
-            {
-                //УДАЛЕНИЕ ОДНОИМЕННОЙ ГРУППЫ?
-                FileSystem.deleteUserFS((ushort)user_DG.SelectedRows[0].Cells[0].Value);
-
-                MessageBox.Show("Пользователь успешно удален.");
-
-                loadUsersToTable();
-            }
-        }
         
         private void showFiles()
         {
@@ -334,9 +317,7 @@ namespace CourseWorkOS
             file_panel.RowCount = (int)Math.Ceiling((double)files.Length / 5.0);
 
             file_panel.RowStyles.Clear();
-
             
-
             Button[] buttons = new Button[files.Length];
             
             for (int i = 0; i < files.Length; i++)
@@ -354,17 +335,11 @@ namespace CourseWorkOS
                 file_panel.Controls.AddRange(buttons);
             };
             Invoke(action);
-
             
-            
-
             free_L.Text = $"Данные:{(uint)(FileSystem.superblock.amount_of_free_clusters * FileSystem.superblock.cluster_size) / MB_SIZE} Мб свободно из {free_place} Мб";
 
         }
-
         
-
-
         private Button createFileObj(string text="default")
         {
             var file_obj = new Button();
@@ -390,47 +365,60 @@ namespace CourseWorkOS
 
         private void openItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show($"open {(((sender as ToolStripMenuItem).Owner as ContextMenuStrip).SourceControl as Button).Text}");
-        }
+            var file_name = (((sender as ToolStripMenuItem).Owner as ContextMenuStrip).SourceControl as Button).Text;
 
-        private void changeItem_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show($"change {(((sender as ToolStripMenuItem).Owner as ContextMenuStrip).SourceControl as Button).Text}");
-        }
+            OpenFile op = new OpenFile();
 
-        //Обработка события нажатия на кнопку "Перименовать файл"
-        //ПЕРЕДЕЛАТЬ ФУНКЦИЮ
-        private void renameItem_Click(object sender, EventArgs e)
-        {
-            //НЕ ЗАБУДЬ В NAME_FILE ДОДЕЛАТЬ ПРОВЕРКУ ДЛИНЫ НАЗВАНИЯ И РАСШИРЕНИЯ
-            Name_File name = new Name_File();
+            op.file_name.Text = file_name;
 
-            var result = name.ShowDialog();
+            op.text_TB.Text = new string(Converter.convertFromBytesIntoChar(FileSystem.readFile(file_name)));
+            
+            var result = op.ShowDialog();
 
             if (result != DialogResult.Cancel)
             {
-                var position = FileSystem.renameFile((((sender as ToolStripMenuItem).Owner as ContextMenuStrip).SourceControl as Button).Text, 
-                    name.file_name_TB.Text,result==DialogResult.Yes);
-
-                if (position != -1)
-                {
-                    file_panel.Controls[position].Text = name.file_name_TB.Text;
-                }
+                
             }
-        }
 
+        }
+        
         private void copyItem_Click(object sender, EventArgs e)
         {
             var text = (((sender as ToolStripMenuItem).Owner as ContextMenuStrip).SourceControl as Button).Text;
-            FileSystem.copyFile(text, text.Contains('.'));//НЕ ЗАБУДЬ ДОДЕЛАТЬ ПРОВЕРКУ НА РАСШИЕРНИЕ
-            showFiles();
-           
-        }
 
-        //ВЫНЕСТИ ПЕРЕМЕННЫЕ В КОНСТАНТЫ!!!!!!!!
-        private void createToolStripMenuItem_Click(object sender, EventArgs e)//Также продумать access!!!
+            Name_File nf = new Name_File();
+
+            var result = nf.ShowDialog();
+
+            if(result== DialogResult.Cancel)
+            {
+                return;
+            }
+
+            string _ext,_base;
+            
+            Converter.getBaseAndExtention(nf.file_name_TB.Text, out _ext, out _base);
+
+            if (!isExtNormal(_ext))
+            {
+                MessageBox.Show("Расширение должно содержать не более 5 символов (включая точку).");
+                return;
+            }
+
+            if (!isBaseNormal(_base))
+            {
+                MessageBox.Show("Имя файла должно содержать не более 20 символов.");
+                return;
+            }
+
+            FileSystem.copyFile(_ext,_base,text);
+
+            showFiles();
+        }
+        
+        private void createToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var fl = createPropertyFileForm(0,DateTime.Now, DateTime.Now);
+            var fl = createPropertyFileForm(0,DateTime.Now, DateTime.Now, FileSystem.user.ID_owner, FileSystem.user.ID_group);
 
             var result = fl.ShowDialog();
 
@@ -439,39 +427,75 @@ namespace CourseWorkOS
                 var access = formAccess(fl.r_u.Checked, fl.w_u.Checked, fl.x_u.Checked, fl.r_g.Checked, fl.w_g.Checked,
                     fl.x_g.Checked, fl.r_o.Checked, fl.w_o.Checked, fl.x_o.Checked, fl.onlyReadCB.Checked, fl.hidenCB.Checked, fl.systemCB.Checked);
 
-                FileSystem.createFile(result == DialogResult.Yes ? fl.file_name_TB.Text.Split('.')[0].ToCharArray() : fl.file_name_TB.Text.ToCharArray(),
-                result == DialogResult.Yes ? fl.file_name_TB.Text.Split('.')[1].ToCharArray() : new char[0], new byte[0], access);
+                string _ext;
+
+                string _base;
+                
+                Converter.getBaseAndExtention(fl.file_name_TB.Text,out _ext,out _base);
+
+                if (!isExtNormal(_ext))
+                {
+                    MessageBox.Show("Расширение должно содержать не более 5 символов (включая точку).");
+                    return;
+                }
+
+                if (!isBaseNormal(_base))
+                {
+                    MessageBox.Show("Имя файла должно содержать не более 20 символов.");
+                    return;
+                }
+
+                FileSystem.createFile(_base.ToCharArray(), _ext.ToCharArray(), new byte[0], access);
 
                 showFiles();
             }
         }
 
-        private FileInformation createPropertyFileForm(uint size,DateTime creation,DateTime change,string file_name="",AccessRules access = null)
+        public bool isExtNormal(string _ext)
+        {
+            if (_ext.Length > RootCatalogRow.EXTENTION_SIZE)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool isBaseNormal(string _base)
+        {
+            if (_base.Length > RootCatalogRow.NAME_SIZE)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private FileInformation createPropertyFileForm(uint size,DateTime creation,DateTime change,
+            ushort user_id, ushort group_id,string file_name="",AccessRules access = null)
         {
             FileInformation fl = new FileInformation();
 
             fl.file_name_TB.Text = file_name;
 
-            fl.ownerUID_TB.Text = FileSystem.user.ID_owner.ToString();
+            fl.ownerUID_TB.Text = user_id.ToString();
 
             var users = FileSystem.getUsersArray();
 
-            for (int i = 0; i < users.Length; i++)//ИСПРАВИТЬ !!!!!!
+            for (int i = 0; i < users.Length; i++)
             {
-                if (users[i].ID_owner == FileSystem.user.ID_owner)
+                if (users[i].ID_owner == user_id)
                 {
                     fl.owner_TB.Text = new string(users[i].user_login);
                     break;
                 }
             }
 
-            fl.ownerGUID_TB.Text = FileSystem.user.ID_group.ToString();
+            fl.ownerGUID_TB.Text = group_id.ToString();
 
             var groups = FileSystem.getGroupsArray();
 
             for (int i = 0; i < groups.Length; i++)
             {
-                if (groups[i].ID_group == FileSystem.user.ID_group)
+                if (groups[i].ID_group == group_id)
                 {
                     fl.group_TB.Text = new string(groups[i].group_name);
                     break;
@@ -525,18 +549,321 @@ namespace CourseWorkOS
 
         private void propertiesItem_Click(object sender, EventArgs e)
         {
-            int position;
+            workWithProperties((((sender as ToolStripMenuItem).Owner as ContextMenuStrip).SourceControl as Button).Text);
+        }
 
-            RootCatalogRow root;
+        private void workWithRulesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            workWithProperties((((sender as ToolStripMenuItem).Owner as ContextMenuStrip).SourceControl as Button).Text);
+        }
 
-            FileSystem.findExactFile((((sender as ToolStripMenuItem).Owner as ContextMenuStrip).SourceControl as Button).Text,out position,out root);
+        //Обработка события нажатия на кнопку "Перименовать файл"
+        private void renameItem_Click(object sender, EventArgs e)
+        {
+            workWithProperties((((sender as ToolStripMenuItem).Owner as ContextMenuStrip).SourceControl as Button).Text); 
+        }
+        
+        public void workWithProperties(string file_name)
+        {
+            int position = FileSystem.findRootPosition(file_name);
+
+            RootCatalogRow root =FileSystem.findRootRowByName(file_name);
+            
+            if (position == -1)
+            {
+                MessageBox.Show("Данный файл не существует.");
+                return;
+            }
 
             var inode = FileSystem.getInodeByNumber(root.inode_number);
 
-            var fl = createPropertyFileForm(inode.size_in_bytes, Converter.GetDateTime(inode.datetime_of_creation), 
-                Converter.GetDateTime(inode.datetime_of_last_modification), RootCatalogRow.createFileName(root),new AccessRules(inode.access_rules));
+            var fl = createPropertyFileForm(inode.size_in_bytes, Converter.GetDateTime(inode.datetime_of_creation),
+                Converter.GetDateTime(inode.datetime_of_last_modification), inode.ID_owner, inode.ID_group, RootCatalogRow.createFileName(root), new AccessRules(inode.access_rules));
 
-            fl.ShowDialog();
+            var access1 = formAccess(fl.r_u.Checked, fl.w_u.Checked, fl.x_u.Checked, fl.r_g.Checked, fl.w_g.Checked,
+                    fl.x_g.Checked, fl.r_o.Checked, fl.w_o.Checked, fl.x_o.Checked, fl.onlyReadCB.Checked, 
+                    fl.hidenCB.Checked, fl.systemCB.Checked).getAccessRulesForFile();
+
+            var result = fl.ShowDialog();
+
+            if (result != DialogResult.Cancel)
+            {
+                if (file_name != fl.file_name_TB.Text)
+                {
+                    string _ext;
+
+                    string _base;
+
+                    Converter.getBaseAndExtention(fl.file_name_TB.Text, out _ext, out _base);
+
+                    if (!isExtNormal(_ext))
+                    {
+                        MessageBox.Show("Расширение должно содержать не более 5 символов (включая точку).");
+                        return;
+                    }
+
+                    if (!isBaseNormal(_base))
+                    {
+                        MessageBox.Show("Имя файла должно содержать не более 20 символов.");
+                        return;
+                    }
+
+                    position = FileSystem.renameFile(position,root,inode,_base,_ext);
+
+                    if (position != -1)
+                    {
+                        file_panel.Controls[position].Text = fl.file_name_TB.Text;
+                    }
+                }
+
+                var access2 = formAccess(fl.r_u.Checked, fl.w_u.Checked, fl.x_u.Checked, fl.r_g.Checked, fl.w_g.Checked,
+                    fl.x_g.Checked, fl.r_o.Checked, fl.w_o.Checked, fl.x_o.Checked, fl.onlyReadCB.Checked, fl.hidenCB.Checked,
+                    fl.systemCB.Checked).getAccessRulesForFile();
+
+                if (access1 != access2)
+                {
+                    inode.access_rules = access2;
+
+                    FileSystem.changeAccessRules(root.inode_number, inode);
+                }
+            }
         }
+
+        private void changeUserToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            formRegistarionOrAutorizationUser(1);
+
+            changeUser();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Hide();
+
+            firstWorkWithSystem();
+
+            changeUser();
+
+            Show();
+        }
+
+        private void deleteItem_Click(object sender, EventArgs e)
+        {
+            if(FileSystem.deleteFile((((sender as ToolStripMenuItem).Owner as ContextMenuStrip).SourceControl as Button).Text))
+            {
+                showFiles();
+            }
+        }
+        
+        private void MainForm_Closed(object sender, EventArgs e)
+        {
+            FileSystem.file_stream.Close();
+        }
+        
+        //Дописать в конец файла
+        private void writeEndToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var file_name = (((sender as ToolStripMenuItem).Owner as ContextMenuStrip).SourceControl as Button).Text;
+
+            OpenFile op = new OpenFile();
+
+            op.file_name.Text = file_name;
+            
+            var result = op.ShowDialog();
+
+            if (op.DialogResult != DialogResult.Cancel)
+            {
+                if (op.text_TB.Text != String.Empty)
+                {
+                    if(FileSystem.writeEndFile(file_name, Converter.convertFromCharIntoBytes(op.text_TB.Text.ToCharArray())))
+                    {
+                        MessageBox.Show("Информация успешно дописана в конец файла.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Данные не были введены.");
+                    return;
+                }
+            }
+        }
+
+        /*Работа с пользователями*/
+
+        //Добавление пользователя
+        private void add_user_B_Click(object sender, EventArgs e)
+        {
+            if (FileSystem.superblock.amount_of_users == FileSystem.superblock.max_amount_of_users)
+            {
+                MessageBox.Show("Максимальное количество пользователей существует в системе. Невозможно добавить.");
+                return;
+            }
+            if (FileSystem.user.user_role)
+            {
+                formRegistarionOrAutorizationUser(0);
+
+                loadUsersToTable();
+            }
+            else
+            {
+                MessageBox.Show("Только администратор может добавлять пользователей", "Error");
+            }
+        }
+
+        //Удаление пользователя
+        private void delete_user_B_Click(object sender, EventArgs e)
+        {
+            if (FileSystem.superblock.amount_of_users == 1)
+            {
+                MessageBox.Show("Невозможно удалить. В системе должен быть хотя бы один пользователь.");
+                return;
+            }
+            if (user_DG.SelectedRows[0].Cells[3].Value.ToString().Equals("True"))
+            {
+                MessageBox.Show("Невозможно удалить администратора.Передайте права администратора какому-либо пользователю, а затем удалите пользователя.");
+                return;
+            }
+            if (FileSystem.user.user_role)
+            {
+                var result = MessageBox.Show("Вы уверены? Данный пользователь будет безвозвратно удален.", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (result == DialogResult.Yes)
+                {
+                    FileSystem.deleteUserFS((ushort)user_DG.SelectedRows[0].Cells[0].Value);
+
+                    MessageBox.Show("Пользователь успешно удален.");
+
+                    loadUsersToTable();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Необходимо быть администратором, чтобы удалять пользователей.");
+            }
+        }
+
+        //Передача прав администратора
+        private void setAdmin_B_Click(object sender, EventArgs e)
+        {
+            if (FileSystem.superblock.amount_of_users < 2)
+            {
+                MessageBox.Show("Данное действие недоступно. Количество пользователей должно быть не менее 2.");
+                return;
+            }
+
+            if(new string(FileSystem.user.user_login).SequenceEqual(user_DG.SelectedRows[0].Cells[2].Value.ToString()))
+            {
+                MessageBox.Show("Данное действие недоступно.Нельяз передать права самому себе.");
+                return;
+            }
+
+            if (FileSystem.user.user_role)
+            {
+                if (MessageBox.Show("Вы точно хотите передать права администратора другому пользователю?","Предупреждение",MessageBoxButtons.OKCancel) == DialogResult.OK)
+                {
+                    Name_File n = new Name_File();
+                    n.Text = "Введите пароль";
+                    n.groupBox1.Text = "Введите пароль администратора";
+
+                    if (n.ShowDialog() == DialogResult.OK)
+                    {
+                        if (User.transformPasswordIntoHash(n.file_name_TB.Text).SequenceEqual(FileSystem.user.hash_password))
+                        {
+                            FileSystem.user.user_role = false;
+                            FileSystem.setAdmin(new string(FileSystem.user.user_login), false);
+                            FileSystem.setAdmin(user_DG.SelectedRows[0].Cells[2].Value.ToString(), true);
+                            loadUsersToTable();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Вы неправильно ввели пароль.");
+                        }
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Данное действие доступно только администратору.");
+            }
+        }
+
+        //Изменение параметров пользователя
+        private void changeUserB_Click(object sender, EventArgs e)
+        {
+            bool isChanged = false;
+
+            if (FileSystem.user.user_role||user_DG.SelectedRows[0].Cells[2].Value.ToString().SequenceEqual(new string(FileSystem.user.user_login)))
+            {
+                UserForm form = new UserForm(3);
+                
+                var groups = FileSystem.getGroupsArray();
+
+                if (groups != null)
+                {
+                    foreach (var group in groups)
+                    {
+                        form.comboBox1.Items.Add(new string(group.group_name));
+                    }
+                }
+                User temp_user = FileSystem.getUserByName(user_DG.SelectedRows[0].Cells[2].Value.ToString());
+
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    if (form.login_TB.Text != String.Empty)
+                    {
+                        if (FileSystem.checkIfTheSameLogin(form.login_TB.Text))
+                        {
+                            MessageBox.Show("Пользователь с таким логином уже существует");
+                            return;
+                        }
+                        temp_user.formUserLogin(form.login_TB.Text.ToCharArray());
+                        isChanged = true;
+                    }
+                    if (form.password_TB.Text != String.Empty)
+                    {
+                        temp_user.hash_password = User.transformPasswordIntoHash(form.password_TB.Text);
+                        isChanged = true;
+                    }
+                    if (form.comboBox1.Text != String.Empty)
+                    {
+                        var group_id = FileSystem.checkIfTheSameGroupNames(form.comboBox1.Text) ?
+                            FileSystem.getGUID(form.comboBox1.Text) : FileSystem.createGroupFS(form.comboBox1.Text);
+
+                        if (group_id == -1)
+                        {
+                            MessageBox.Show("Не удалось найти или создать группу.");
+                            return;
+                        }
+                        temp_user.ID_group = (ushort)group_id;
+                        isChanged = true;
+                    }
+
+                    if (isChanged)
+                    {
+                        BinaryWriter writer = new BinaryWriter(FileSystem.file_stream);
+
+                        var position = (ushort)FileSystem.getUserPosition(user_DG.SelectedRows[0].Cells[2].Value.ToString());
+
+                        writer.BaseStream.Seek(FileSystem.calculateWhereToCome(writer.BaseStream.Position,
+                            FileSystem.superblock.users_offset + position * Superblock.OS_USER_INFO_SIZE), SeekOrigin.Current);
+
+                        temp_user.binaryWritingToFile(writer);
+
+                        FileSystem.user = FileSystem.getUserByName(new string(temp_user.user_login));
+                        loadUsersToTable();
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Для изменения профиля пользователя неоьходимо либо быть влдельцем аккаунта, либо администратором.");
+            }
+        }
+
+        private void add_group_B_Click(object sender, EventArgs e)
+        {
+
+        }
+        
     }
 }

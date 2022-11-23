@@ -347,6 +347,8 @@
             // x_g
             // 
             this.x_g.AutoSize = true;
+            this.x_g.Checked = true;
+            this.x_g.CheckState = System.Windows.Forms.CheckState.Checked;
             this.x_g.Location = new System.Drawing.Point(136, 82);
             this.x_g.Name = "x_g";
             this.x_g.Size = new System.Drawing.Size(15, 14);
@@ -356,6 +358,8 @@
             // x_u
             // 
             this.x_u.AutoSize = true;
+            this.x_u.Checked = true;
+            this.x_u.CheckState = System.Windows.Forms.CheckState.Checked;
             this.x_u.Location = new System.Drawing.Point(106, 82);
             this.x_u.Name = "x_u";
             this.x_u.Size = new System.Drawing.Size(15, 14);
@@ -374,6 +378,8 @@
             // w_g
             // 
             this.w_g.AutoSize = true;
+            this.w_g.Checked = true;
+            this.w_g.CheckState = System.Windows.Forms.CheckState.Checked;
             this.w_g.Location = new System.Drawing.Point(136, 61);
             this.w_g.Name = "w_g";
             this.w_g.Size = new System.Drawing.Size(15, 14);
@@ -383,6 +389,8 @@
             // w_u
             // 
             this.w_u.AutoSize = true;
+            this.w_u.Checked = true;
+            this.w_u.CheckState = System.Windows.Forms.CheckState.Checked;
             this.w_u.Location = new System.Drawing.Point(106, 61);
             this.w_u.Name = "w_u";
             this.w_u.Size = new System.Drawing.Size(15, 14);
@@ -401,6 +409,8 @@
             // r_g
             // 
             this.r_g.AutoSize = true;
+            this.r_g.Checked = true;
+            this.r_g.CheckState = System.Windows.Forms.CheckState.Checked;
             this.r_g.Location = new System.Drawing.Point(136, 40);
             this.r_g.Name = "r_g";
             this.r_g.Size = new System.Drawing.Size(15, 14);
@@ -410,6 +420,8 @@
             // r_u
             // 
             this.r_u.AutoSize = true;
+            this.r_u.Checked = true;
+            this.r_u.CheckState = System.Windows.Forms.CheckState.Checked;
             this.r_u.Location = new System.Drawing.Point(106, 40);
             this.r_u.Name = "r_u";
             this.r_u.Size = new System.Drawing.Size(15, 14);
