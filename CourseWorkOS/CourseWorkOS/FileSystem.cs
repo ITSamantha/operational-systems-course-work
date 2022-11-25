@@ -788,8 +788,8 @@ namespace CourseWorkOS
             {
                 long bytes_in_last_cluster = superblock.cluster_size * inode.size_in_clusters - inode.size_in_bytes;//Свободные байты в последнем кластере
 
-                int cluster_number = (int)Math.Ceiling(((double)new_bytes.Length / (double)superblock.cluster_size)) -
-                    (bytes_in_last_cluster <= new_bytes.Length ? 1 : 0);//РАЗБЕРИСЬ
+                int cluster_number = bytes_in_last_cluster < new_bytes.Length ? 
+                    (int)Math.Ceiling(((double)new_bytes.Length / (double)superblock.cluster_size)) : (int)Math.Floor(((double)new_bytes.Length / (double)superblock.cluster_size));
 
                 if (inode.size_in_clusters + cluster_number > MAX_CLUSTER_AMOUNT)
                 {
@@ -1134,6 +1134,7 @@ namespace CourseWorkOS
         }
 
 
+
         /*Работа с пользователями*/
         
         //Забрать или дать права администратора
@@ -1203,7 +1204,7 @@ namespace CourseWorkOS
         }
 
         //Удаление пользователя системы
-        public void deleteUserFS(ushort UID)//ОБРАТИ ВНИМАНИЕ НА ФАЙЛЫ ПОЛЬЗОВАТЕЛЯ ПРИ УДАЛЕНИИ
+        public void deleteUserFS(ushort UID)
         {
             var users = getUsersArray();
 
@@ -1305,6 +1306,8 @@ namespace CourseWorkOS
             }
             return null;
         }
+
+
 
         /*Работа с группами*/
 
@@ -1430,15 +1433,16 @@ namespace CourseWorkOS
             return -1;
         }
 
-
+        //Удаление группы
         public bool deleteGroup(ushort GUID)
         {
-            
             var groups = getGroupsArray();
 
             if (groups != null)
             {
                 BinaryWriter writer = new BinaryWriter(file_stream);
+
+                int position = 0;
 
                 for (int i = 0; i < groups.Length; i++)
                 {
@@ -1447,8 +1451,9 @@ namespace CourseWorkOS
                         superblock.amount_of_groups--;
                         continue;
                     }
-                    writer.BaseStream.Seek(calculateWhereToCome(writer.BaseStream.Position, superblock.groups_offset+i*Superblock.OS_GROUP_INFO_SIZE), SeekOrigin.Current);
+                    writer.BaseStream.Seek(calculateWhereToCome(writer.BaseStream.Position, superblock.groups_offset+position*Superblock.OS_GROUP_INFO_SIZE), SeekOrigin.Current);
                     groups[i].binaryWritingToFile(writer);
+                    position++;
                 }
                     
                 writer.BaseStream.Seek(calculateWhereToCome(writer.BaseStream.Position,
@@ -1465,21 +1470,24 @@ namespace CourseWorkOS
 
         }
 
+        //Получить пользователей группы
         public User[] getUsersInGroup(ushort GUID)
         {
-            var all_users = getUsersArray().ToList();
+            var all_users = getUsersArray();
 
+            List<User> users = new List<User>();
+            
             if (all_users != null)
             {
-                for (int i = 0; i < all_users.Count; i++)
+                for(int i = 0; i < all_users.Length; i++)
                 {
-                    if (all_users[i].ID_group != GUID)
+                    if (all_users[i].ID_group == GUID)
                     {
-                        all_users.Remove(all_users[i]);
+                        users.Add(all_users[i]);
                     }
                 }
             }
-            return all_users.ToArray();
+            return users.ToArray();
         }
     }
 }

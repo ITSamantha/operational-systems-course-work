@@ -29,14 +29,18 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.groups_B = new System.Windows.Forms.Button();
+            this.users_B = new System.Windows.Forms.Button();
+            this.info_B = new System.Windows.Forms.Button();
+            this.work_B = new System.Windows.Forms.Button();
             this.main_control = new System.Windows.Forms.TabControl();
             this.work_with_FS_TP = new System.Windows.Forms.TabPage();
             this.file_panel = new System.Windows.Forms.TableLayoutPanel();
@@ -78,9 +82,20 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.nameOS_TB = new System.Windows.Forms.TextBox();
             this.work_with_users_TP = new System.Windows.Forms.TabPage();
+            this.changeUserB = new System.Windows.Forms.Button();
+            this.setAdmin_B = new System.Windows.Forms.Button();
+            this.delete_user_B = new System.Windows.Forms.Button();
+            this.add_user_B = new System.Windows.Forms.Button();
             this.user_amount_L = new System.Windows.Forms.Label();
             this.user_DG = new System.Windows.Forms.DataGridView();
+            this.UID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GUID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LOGIN = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ADMIN = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.changeGroupB = new System.Windows.Forms.Button();
+            this.delete_group_B = new System.Windows.Forms.Button();
+            this.add_group_B = new System.Windows.Forms.Button();
             this.group_amount_L = new System.Windows.Forms.Label();
             this.group_DG = new System.Windows.Forms.DataGridView();
             this.MAIN_GUID = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -100,22 +115,8 @@
             this.сменитьПользователяToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.UID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GUID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LOGIN = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ADMIN = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.groups_B = new System.Windows.Forms.Button();
-            this.users_B = new System.Windows.Forms.Button();
-            this.info_B = new System.Windows.Forms.Button();
-            this.work_B = new System.Windows.Forms.Button();
             this.user_change_B = new System.Windows.Forms.Button();
-            this.changeUserB = new System.Windows.Forms.Button();
-            this.setAdmin_B = new System.Windows.Forms.Button();
-            this.delete_user_B = new System.Windows.Forms.Button();
-            this.add_user_B = new System.Windows.Forms.Button();
-            this.changeGroupB = new System.Windows.Forms.Button();
-            this.delete_group_B = new System.Windows.Forms.Button();
-            this.add_group_B = new System.Windows.Forms.Button();
+            this.показатьСкрытыеФайлыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.main_control.SuspendLayout();
             this.work_with_FS_TP.SuspendLayout();
@@ -160,6 +161,74 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(153, 639);
             this.panel1.TabIndex = 0;
+            // 
+            // groups_B
+            // 
+            this.groups_B.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groups_B.FlatAppearance.BorderSize = 0;
+            this.groups_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.groups_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.groups_B.Image = global::CourseWorkOS.Properties.Resources.groups;
+            this.groups_B.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.groups_B.Location = new System.Drawing.Point(0, 225);
+            this.groups_B.Name = "groups_B";
+            this.groups_B.Size = new System.Drawing.Size(153, 75);
+            this.groups_B.TabIndex = 3;
+            this.groups_B.Text = "Работа с группами";
+            this.groups_B.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.groups_B.UseVisualStyleBackColor = true;
+            this.groups_B.Click += new System.EventHandler(this.groups_B_Click);
+            // 
+            // users_B
+            // 
+            this.users_B.Dock = System.Windows.Forms.DockStyle.Top;
+            this.users_B.FlatAppearance.BorderSize = 0;
+            this.users_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.users_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.users_B.Image = ((System.Drawing.Image)(resources.GetObject("users_B.Image")));
+            this.users_B.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.users_B.Location = new System.Drawing.Point(0, 150);
+            this.users_B.Name = "users_B";
+            this.users_B.Size = new System.Drawing.Size(153, 75);
+            this.users_B.TabIndex = 2;
+            this.users_B.Text = "Работа с пользователями";
+            this.users_B.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.users_B.UseVisualStyleBackColor = true;
+            this.users_B.Click += new System.EventHandler(this.users_B_Click);
+            // 
+            // info_B
+            // 
+            this.info_B.Dock = System.Windows.Forms.DockStyle.Top;
+            this.info_B.FlatAppearance.BorderSize = 0;
+            this.info_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.info_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.info_B.Image = global::CourseWorkOS.Properties.Resources.info;
+            this.info_B.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.info_B.Location = new System.Drawing.Point(0, 75);
+            this.info_B.Name = "info_B";
+            this.info_B.Size = new System.Drawing.Size(153, 75);
+            this.info_B.TabIndex = 1;
+            this.info_B.Text = "Сведения о файловой системе";
+            this.info_B.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.info_B.UseVisualStyleBackColor = true;
+            this.info_B.Click += new System.EventHandler(this.info_B_Click);
+            // 
+            // work_B
+            // 
+            this.work_B.Dock = System.Windows.Forms.DockStyle.Top;
+            this.work_B.FlatAppearance.BorderSize = 0;
+            this.work_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.work_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.work_B.Image = global::CourseWorkOS.Properties.Resources.work;
+            this.work_B.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.work_B.Location = new System.Drawing.Point(0, 0);
+            this.work_B.Name = "work_B";
+            this.work_B.Size = new System.Drawing.Size(153, 75);
+            this.work_B.TabIndex = 0;
+            this.work_B.Text = "Работа с файловой системой";
+            this.work_B.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.work_B.UseVisualStyleBackColor = true;
+            this.work_B.Click += new System.EventHandler(this.work_B_Click);
             // 
             // main_control
             // 
@@ -208,14 +277,15 @@
             // 
             this.contextMenuFileSystem.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.contextMenuFileSystem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.createToolStripMenuItem});
+            this.createToolStripMenuItem,
+            this.показатьСкрытыеФайлыToolStripMenuItem});
             this.contextMenuFileSystem.Name = "contextMenuFileSystem";
-            this.contextMenuFileSystem.Size = new System.Drawing.Size(170, 28);
+            this.contextMenuFileSystem.Size = new System.Drawing.Size(249, 74);
             // 
             // createToolStripMenuItem
             // 
             this.createToolStripMenuItem.Name = "createToolStripMenuItem";
-            this.createToolStripMenuItem.Size = new System.Drawing.Size(169, 24);
+            this.createToolStripMenuItem.Size = new System.Drawing.Size(248, 24);
             this.createToolStripMenuItem.Text = "Создать файл";
             this.createToolStripMenuItem.Click += new System.EventHandler(this.createToolStripMenuItem_Click);
             // 
@@ -670,6 +740,70 @@
             this.work_with_users_TP.Text = "tabPage1";
             this.work_with_users_TP.UseVisualStyleBackColor = true;
             // 
+            // changeUserB
+            // 
+            this.changeUserB.BackColor = System.Drawing.Color.Transparent;
+            this.changeUserB.FlatAppearance.BorderSize = 0;
+            this.changeUserB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.changeUserB.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.changeUserB.Image = global::CourseWorkOS.Properties.Resources.edit;
+            this.changeUserB.Location = new System.Drawing.Point(633, 4);
+            this.changeUserB.Margin = new System.Windows.Forms.Padding(0);
+            this.changeUserB.Name = "changeUserB";
+            this.changeUserB.Size = new System.Drawing.Size(25, 25);
+            this.changeUserB.TabIndex = 14;
+            this.toolTip1.SetToolTip(this.changeUserB, "Изменить данные пользователя");
+            this.changeUserB.UseVisualStyleBackColor = false;
+            this.changeUserB.Click += new System.EventHandler(this.changeUserB_Click);
+            // 
+            // setAdmin_B
+            // 
+            this.setAdmin_B.BackColor = System.Drawing.Color.Transparent;
+            this.setAdmin_B.FlatAppearance.BorderSize = 0;
+            this.setAdmin_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.setAdmin_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.setAdmin_B.Image = global::CourseWorkOS.Properties.Resources.admin;
+            this.setAdmin_B.Location = new System.Drawing.Point(658, 4);
+            this.setAdmin_B.Margin = new System.Windows.Forms.Padding(0);
+            this.setAdmin_B.Name = "setAdmin_B";
+            this.setAdmin_B.Size = new System.Drawing.Size(25, 25);
+            this.setAdmin_B.TabIndex = 11;
+            this.toolTip1.SetToolTip(this.setAdmin_B, "Назначить пользователя администратором");
+            this.setAdmin_B.UseVisualStyleBackColor = false;
+            this.setAdmin_B.Click += new System.EventHandler(this.setAdmin_B_Click);
+            // 
+            // delete_user_B
+            // 
+            this.delete_user_B.BackColor = System.Drawing.Color.Transparent;
+            this.delete_user_B.FlatAppearance.BorderSize = 0;
+            this.delete_user_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.delete_user_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.delete_user_B.Image = global::CourseWorkOS.Properties.Resources.delete;
+            this.delete_user_B.Location = new System.Drawing.Point(685, 3);
+            this.delete_user_B.Margin = new System.Windows.Forms.Padding(0);
+            this.delete_user_B.Name = "delete_user_B";
+            this.delete_user_B.Size = new System.Drawing.Size(25, 25);
+            this.delete_user_B.TabIndex = 10;
+            this.toolTip1.SetToolTip(this.delete_user_B, "Удалить пользователя");
+            this.delete_user_B.UseVisualStyleBackColor = false;
+            this.delete_user_B.Click += new System.EventHandler(this.delete_user_B_Click);
+            // 
+            // add_user_B
+            // 
+            this.add_user_B.BackColor = System.Drawing.Color.Transparent;
+            this.add_user_B.FlatAppearance.BorderSize = 0;
+            this.add_user_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.add_user_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.add_user_B.Image = global::CourseWorkOS.Properties.Resources.add;
+            this.add_user_B.Location = new System.Drawing.Point(714, 3);
+            this.add_user_B.Margin = new System.Windows.Forms.Padding(0);
+            this.add_user_B.Name = "add_user_B";
+            this.add_user_B.Size = new System.Drawing.Size(25, 25);
+            this.add_user_B.TabIndex = 9;
+            this.toolTip1.SetToolTip(this.add_user_B, "Создать пользователя");
+            this.add_user_B.UseVisualStyleBackColor = false;
+            this.add_user_B.Click += new System.EventHandler(this.add_user_B_Click);
+            // 
             // user_amount_L
             // 
             this.user_amount_L.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -724,6 +858,30 @@
             this.user_DG.Size = new System.Drawing.Size(714, 507);
             this.user_DG.TabIndex = 0;
             // 
+            // UID
+            // 
+            this.UID.HeaderText = "UID";
+            this.UID.Name = "UID";
+            this.UID.ReadOnly = true;
+            // 
+            // GUID
+            // 
+            this.GUID.HeaderText = "GUID";
+            this.GUID.Name = "GUID";
+            this.GUID.ReadOnly = true;
+            // 
+            // LOGIN
+            // 
+            this.LOGIN.HeaderText = "LOGIN";
+            this.LOGIN.Name = "LOGIN";
+            this.LOGIN.ReadOnly = true;
+            // 
+            // ADMIN
+            // 
+            this.ADMIN.HeaderText = "ADMIN";
+            this.ADMIN.Name = "ADMIN";
+            this.ADMIN.ReadOnly = true;
+            // 
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.changeGroupB);
@@ -738,6 +896,52 @@
             this.tabPage1.TabIndex = 3;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // changeGroupB
+            // 
+            this.changeGroupB.BackColor = System.Drawing.Color.Transparent;
+            this.changeGroupB.FlatAppearance.BorderSize = 0;
+            this.changeGroupB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.changeGroupB.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.changeGroupB.Image = global::CourseWorkOS.Properties.Resources.edit;
+            this.changeGroupB.Location = new System.Drawing.Point(656, 3);
+            this.changeGroupB.Margin = new System.Windows.Forms.Padding(0);
+            this.changeGroupB.Name = "changeGroupB";
+            this.changeGroupB.Size = new System.Drawing.Size(25, 25);
+            this.changeGroupB.TabIndex = 13;
+            this.toolTip1.SetToolTip(this.changeGroupB, "Изменить");
+            this.changeGroupB.UseVisualStyleBackColor = false;
+            this.changeGroupB.Click += new System.EventHandler(this.changeGroupB_Click);
+            // 
+            // delete_group_B
+            // 
+            this.delete_group_B.BackColor = System.Drawing.Color.Transparent;
+            this.delete_group_B.FlatAppearance.BorderSize = 0;
+            this.delete_group_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.delete_group_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.delete_group_B.Image = global::CourseWorkOS.Properties.Resources.delete;
+            this.delete_group_B.Location = new System.Drawing.Point(684, 3);
+            this.delete_group_B.Margin = new System.Windows.Forms.Padding(0);
+            this.delete_group_B.Name = "delete_group_B";
+            this.delete_group_B.Size = new System.Drawing.Size(25, 25);
+            this.delete_group_B.TabIndex = 12;
+            this.delete_group_B.UseVisualStyleBackColor = false;
+            this.delete_group_B.Click += new System.EventHandler(this.delete_group_B_Click);
+            // 
+            // add_group_B
+            // 
+            this.add_group_B.BackColor = System.Drawing.Color.Transparent;
+            this.add_group_B.FlatAppearance.BorderSize = 0;
+            this.add_group_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.add_group_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.add_group_B.Image = global::CourseWorkOS.Properties.Resources.add;
+            this.add_group_B.Location = new System.Drawing.Point(713, 3);
+            this.add_group_B.Margin = new System.Windows.Forms.Padding(0);
+            this.add_group_B.Name = "add_group_B";
+            this.add_group_B.Size = new System.Drawing.Size(25, 25);
+            this.add_group_B.TabIndex = 11;
+            this.add_group_B.UseVisualStyleBackColor = false;
+            this.add_group_B.Click += new System.EventHandler(this.add_group_B_Click);
             // 
             // group_amount_L
             // 
@@ -917,98 +1121,6 @@
             this.выходToolStripMenuItem.Text = "Выход";
             this.выходToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // UID
-            // 
-            this.UID.HeaderText = "UID";
-            this.UID.Name = "UID";
-            this.UID.ReadOnly = true;
-            // 
-            // GUID
-            // 
-            this.GUID.HeaderText = "GUID";
-            this.GUID.Name = "GUID";
-            this.GUID.ReadOnly = true;
-            // 
-            // LOGIN
-            // 
-            this.LOGIN.HeaderText = "LOGIN";
-            this.LOGIN.Name = "LOGIN";
-            this.LOGIN.ReadOnly = true;
-            // 
-            // ADMIN
-            // 
-            this.ADMIN.HeaderText = "ADMIN";
-            this.ADMIN.Name = "ADMIN";
-            this.ADMIN.ReadOnly = true;
-            // 
-            // groups_B
-            // 
-            this.groups_B.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groups_B.FlatAppearance.BorderSize = 0;
-            this.groups_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.groups_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groups_B.Image = global::CourseWorkOS.Properties.Resources.groups;
-            this.groups_B.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.groups_B.Location = new System.Drawing.Point(0, 225);
-            this.groups_B.Name = "groups_B";
-            this.groups_B.Size = new System.Drawing.Size(153, 75);
-            this.groups_B.TabIndex = 3;
-            this.groups_B.Text = "Работа с группами";
-            this.groups_B.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.groups_B.UseVisualStyleBackColor = true;
-            this.groups_B.Click += new System.EventHandler(this.groups_B_Click);
-            // 
-            // users_B
-            // 
-            this.users_B.Dock = System.Windows.Forms.DockStyle.Top;
-            this.users_B.FlatAppearance.BorderSize = 0;
-            this.users_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.users_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.users_B.Image = ((System.Drawing.Image)(resources.GetObject("users_B.Image")));
-            this.users_B.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.users_B.Location = new System.Drawing.Point(0, 150);
-            this.users_B.Name = "users_B";
-            this.users_B.Size = new System.Drawing.Size(153, 75);
-            this.users_B.TabIndex = 2;
-            this.users_B.Text = "Работа с пользователями";
-            this.users_B.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.users_B.UseVisualStyleBackColor = true;
-            this.users_B.Click += new System.EventHandler(this.users_B_Click);
-            // 
-            // info_B
-            // 
-            this.info_B.Dock = System.Windows.Forms.DockStyle.Top;
-            this.info_B.FlatAppearance.BorderSize = 0;
-            this.info_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.info_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.info_B.Image = global::CourseWorkOS.Properties.Resources.info;
-            this.info_B.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.info_B.Location = new System.Drawing.Point(0, 75);
-            this.info_B.Name = "info_B";
-            this.info_B.Size = new System.Drawing.Size(153, 75);
-            this.info_B.TabIndex = 1;
-            this.info_B.Text = "Сведения о файловой системе";
-            this.info_B.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.info_B.UseVisualStyleBackColor = true;
-            this.info_B.Click += new System.EventHandler(this.info_B_Click);
-            // 
-            // work_B
-            // 
-            this.work_B.Dock = System.Windows.Forms.DockStyle.Top;
-            this.work_B.FlatAppearance.BorderSize = 0;
-            this.work_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.work_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.work_B.Image = global::CourseWorkOS.Properties.Resources.work;
-            this.work_B.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.work_B.Location = new System.Drawing.Point(0, 0);
-            this.work_B.Name = "work_B";
-            this.work_B.Size = new System.Drawing.Size(153, 75);
-            this.work_B.TabIndex = 0;
-            this.work_B.Text = "Работа с файловой системой";
-            this.work_B.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.work_B.UseVisualStyleBackColor = true;
-            this.work_B.Click += new System.EventHandler(this.work_B_Click);
-            // 
             // user_change_B
             // 
             this.user_change_B.BackColor = System.Drawing.SystemColors.ButtonHighlight;
@@ -1024,115 +1136,12 @@
             this.user_change_B.TabIndex = 11;
             this.user_change_B.UseVisualStyleBackColor = false;
             // 
-            // changeUserB
+            // показатьСкрытыеФайлыToolStripMenuItem
             // 
-            this.changeUserB.BackColor = System.Drawing.Color.Transparent;
-            this.changeUserB.FlatAppearance.BorderSize = 0;
-            this.changeUserB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.changeUserB.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.changeUserB.Image = global::CourseWorkOS.Properties.Resources.edit;
-            this.changeUserB.Location = new System.Drawing.Point(633, 4);
-            this.changeUserB.Margin = new System.Windows.Forms.Padding(0);
-            this.changeUserB.Name = "changeUserB";
-            this.changeUserB.Size = new System.Drawing.Size(25, 25);
-            this.changeUserB.TabIndex = 14;
-            this.toolTip1.SetToolTip(this.changeUserB, "Изменить данные пользователя");
-            this.changeUserB.UseVisualStyleBackColor = false;
-            this.changeUserB.Click += new System.EventHandler(this.changeUserB_Click);
-            // 
-            // setAdmin_B
-            // 
-            this.setAdmin_B.BackColor = System.Drawing.Color.Transparent;
-            this.setAdmin_B.FlatAppearance.BorderSize = 0;
-            this.setAdmin_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.setAdmin_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.setAdmin_B.Image = global::CourseWorkOS.Properties.Resources.admin;
-            this.setAdmin_B.Location = new System.Drawing.Point(658, 4);
-            this.setAdmin_B.Margin = new System.Windows.Forms.Padding(0);
-            this.setAdmin_B.Name = "setAdmin_B";
-            this.setAdmin_B.Size = new System.Drawing.Size(25, 25);
-            this.setAdmin_B.TabIndex = 11;
-            this.toolTip1.SetToolTip(this.setAdmin_B, "Назначить пользователя администратором");
-            this.setAdmin_B.UseVisualStyleBackColor = false;
-            this.setAdmin_B.Click += new System.EventHandler(this.setAdmin_B_Click);
-            // 
-            // delete_user_B
-            // 
-            this.delete_user_B.BackColor = System.Drawing.Color.Transparent;
-            this.delete_user_B.FlatAppearance.BorderSize = 0;
-            this.delete_user_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.delete_user_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.delete_user_B.Image = global::CourseWorkOS.Properties.Resources.delete;
-            this.delete_user_B.Location = new System.Drawing.Point(685, 3);
-            this.delete_user_B.Margin = new System.Windows.Forms.Padding(0);
-            this.delete_user_B.Name = "delete_user_B";
-            this.delete_user_B.Size = new System.Drawing.Size(25, 25);
-            this.delete_user_B.TabIndex = 10;
-            this.toolTip1.SetToolTip(this.delete_user_B, "Удалить пользователя");
-            this.delete_user_B.UseVisualStyleBackColor = false;
-            this.delete_user_B.Click += new System.EventHandler(this.delete_user_B_Click);
-            // 
-            // add_user_B
-            // 
-            this.add_user_B.BackColor = System.Drawing.Color.Transparent;
-            this.add_user_B.FlatAppearance.BorderSize = 0;
-            this.add_user_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.add_user_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.add_user_B.Image = global::CourseWorkOS.Properties.Resources.add;
-            this.add_user_B.Location = new System.Drawing.Point(714, 3);
-            this.add_user_B.Margin = new System.Windows.Forms.Padding(0);
-            this.add_user_B.Name = "add_user_B";
-            this.add_user_B.Size = new System.Drawing.Size(25, 25);
-            this.add_user_B.TabIndex = 9;
-            this.toolTip1.SetToolTip(this.add_user_B, "Создать пользователя");
-            this.add_user_B.UseVisualStyleBackColor = false;
-            this.add_user_B.Click += new System.EventHandler(this.add_user_B_Click);
-            // 
-            // changeGroupB
-            // 
-            this.changeGroupB.BackColor = System.Drawing.Color.Transparent;
-            this.changeGroupB.FlatAppearance.BorderSize = 0;
-            this.changeGroupB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.changeGroupB.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.changeGroupB.Image = global::CourseWorkOS.Properties.Resources.edit;
-            this.changeGroupB.Location = new System.Drawing.Point(656, 3);
-            this.changeGroupB.Margin = new System.Windows.Forms.Padding(0);
-            this.changeGroupB.Name = "changeGroupB";
-            this.changeGroupB.Size = new System.Drawing.Size(25, 25);
-            this.changeGroupB.TabIndex = 13;
-            this.toolTip1.SetToolTip(this.changeGroupB, "Изменить");
-            this.changeGroupB.UseVisualStyleBackColor = false;
-            this.changeGroupB.Click += new System.EventHandler(this.changeGroupB_Click);
-            // 
-            // delete_group_B
-            // 
-            this.delete_group_B.BackColor = System.Drawing.Color.Transparent;
-            this.delete_group_B.FlatAppearance.BorderSize = 0;
-            this.delete_group_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.delete_group_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.delete_group_B.Image = global::CourseWorkOS.Properties.Resources.delete;
-            this.delete_group_B.Location = new System.Drawing.Point(684, 3);
-            this.delete_group_B.Margin = new System.Windows.Forms.Padding(0);
-            this.delete_group_B.Name = "delete_group_B";
-            this.delete_group_B.Size = new System.Drawing.Size(25, 25);
-            this.delete_group_B.TabIndex = 12;
-            this.delete_group_B.UseVisualStyleBackColor = false;
-            this.delete_group_B.Click += new System.EventHandler(this.delete_group_B_Click);
-            // 
-            // add_group_B
-            // 
-            this.add_group_B.BackColor = System.Drawing.Color.Transparent;
-            this.add_group_B.FlatAppearance.BorderSize = 0;
-            this.add_group_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.add_group_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.add_group_B.Image = global::CourseWorkOS.Properties.Resources.add;
-            this.add_group_B.Location = new System.Drawing.Point(713, 3);
-            this.add_group_B.Margin = new System.Windows.Forms.Padding(0);
-            this.add_group_B.Name = "add_group_B";
-            this.add_group_B.Size = new System.Drawing.Size(25, 25);
-            this.add_group_B.TabIndex = 11;
-            this.add_group_B.UseVisualStyleBackColor = false;
-            this.add_group_B.Click += new System.EventHandler(this.add_group_B_Click);
+            this.показатьСкрытыеФайлыToolStripMenuItem.Name = "показатьСкрытыеФайлыToolStripMenuItem";
+            this.показатьСкрытыеФайлыToolStripMenuItem.Size = new System.Drawing.Size(248, 24);
+            this.показатьСкрытыеФайлыToolStripMenuItem.Text = "Показать скрытые файлы";
+            this.показатьСкрытыеФайлыToolStripMenuItem.Click += new System.EventHandler(this.показатьСкрытыеФайлыToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -1281,5 +1290,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn GUID;
         private System.Windows.Forms.DataGridViewTextBoxColumn LOGIN;
         private System.Windows.Forms.DataGridViewTextBoxColumn ADMIN;
+        private System.Windows.Forms.ToolStripMenuItem показатьСкрытыеФайлыToolStripMenuItem;
     }
 }
