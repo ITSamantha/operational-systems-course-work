@@ -51,12 +51,6 @@ namespace CourseWorkOS
 
             changeUser();
 
-            free_place = (uint)(FileSystem.superblock.OS_size - FileSystem.superblock.amount_of_groups * Superblock.OS_GROUP_INFO_SIZE
-                - FileSystem.superblock.amount_of_users * Superblock.OS_USER_INFO_SIZE - FileSystem.superblock.amount_of_inodes * Superblock.OS_INODE_SIZE +
-                FileSystem.superblock.amount_of_inodes / 4 - Superblock.OS_SUPERBLOCK_SIZE - FileSystem.superblock.amount_of_inodes * Superblock.OS_ROOT_ROW_SIZE) / MB_SIZE;
-
-            free_L.Text = $"Данные:{(uint)(FileSystem.superblock.amount_of_free_clusters * FileSystem.superblock.cluster_size) / MB_SIZE} Мб свободно из {free_place} Мб";
-           
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
@@ -119,6 +113,16 @@ namespace CourseWorkOS
         {
             var file_name = (((sender as ToolStripMenuItem).Owner as ContextMenuStrip).SourceControl as Button).Text;
 
+            var root = FileSystem.findRootRowByName(file_name);
+
+            var inode = FileSystem.getInodeByNumber(root.inode_number);
+            
+            if(!FileSystem.checkRules(FileSystem.COPY_FILE,new AccessRules(inode.access_rules), inode))
+            {
+                MessageBox.Show("Для чтения файла необходимо иметь права на r.");
+                return;
+            }
+
             OpenFile op = new OpenFile();
 
             op.file_name.Text = file_name;
@@ -129,7 +133,7 @@ namespace CourseWorkOS
 
             if (result != DialogResult.Cancel)
             {
-
+                FileSystem.editFile(file_name,Converter.convertFromCharIntoBytes( op.text_TB.Text.ToCharArray()));
             }
 
         }
@@ -601,9 +605,7 @@ namespace CourseWorkOS
                 file_panel.Controls.AddRange(buttons);
             };
             Invoke(action);
-
-            free_L.Text = $"Данные:{(uint)(FileSystem.superblock.amount_of_free_clusters * FileSystem.superblock.cluster_size) / MB_SIZE} Мб свободно из {free_place} Мб";
-
+            
         }
 
         private void showHiddenFiles()

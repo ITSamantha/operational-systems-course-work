@@ -322,7 +322,7 @@ namespace CourseWorkOS
             BinaryReader reader = new BinaryReader(file_stream);
             reader.BaseStream.Seek(calculateWhereToCome(reader.BaseStream.Position, superblock.cluster_bitmap_offset), SeekOrigin.Current);
 
-            for (int i = 0; i < superblock.amount_of_inodes; i++)
+            for (int i = 0; i < superblock.amount_of_inodes/8; i++)
             {
                 byte b = reader.ReadByte();
 
@@ -343,6 +343,23 @@ namespace CourseWorkOS
                 }
 
             }
+        }
+
+        public byte[] getByteByClusterNums(int[] ID_clusters)
+        {
+            BinaryReader reader = new BinaryReader(file_stream);
+
+            var bytes = new byte[ID_clusters.Length];
+
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                reader.BaseStream.Seek(calculateWhereToCome(reader.BaseStream.Position, superblock.cluster_bitmap_offset+ID_clusters[i]/8),
+                    SeekOrigin.Current);
+                bytes[i] = reader.ReadByte();
+  
+            }
+
+            return bytes;
         }
 
         //Установка значений битов в битовой карте кластеров
@@ -812,6 +829,8 @@ namespace CourseWorkOS
 
                 byte[] new_files_bytes;
 
+                superblock.amount_of_free_clusters += inode.size_in_clusters;
+
                 if (cluster_number != 0)
                 {
                     getFreeClustersAddressesAndBytes(cluster_number, out ID_clusters, out new_files_bytes);
@@ -828,14 +847,13 @@ namespace CourseWorkOS
 
                     return true;
                 }
-
-                //ТУТ ЧТО-ТО НЕ ТАК
+                
                 long new_size = bytes_in_last_cluster >= new_bytes.Length ? bytes_in_last_cluster - new_bytes.Length : new_bytes.Length - bytes_in_last_cluster;
                 byte[] bytes2 = new byte[new_size];
                 Array.Copy(new_bytes, bytes_in_last_cluster, bytes2, 0, new_size);
 
                 Cluster[] clusters = getClusterArrFromBytesArr(bytes2, (ushort)cluster_number);
-
+                
                 superblock.amount_of_free_clusters -= (uint)cluster_number;
 
                 writer.BaseStream.Seek(calculateWhereToCome(writer.BaseStream.Position, 0), SeekOrigin.Current);
@@ -1052,7 +1070,7 @@ namespace CourseWorkOS
 
                     for (int i = 0; i < ID_clusters.Length; i++)
                     {
-                        inode.addr[i + inode.size_in_bytes] = ID_clusters[i];
+                        inode.addr[i + inode.size_in_clusters] = ID_clusters[i];
                     }
 
                     superblock.amount_of_free_clusters -= (uint)ID_clusters.Length;
@@ -1061,11 +1079,16 @@ namespace CourseWorkOS
                 {
                     if(inode.size_in_clusters > cluster_number)//Удалить кластера
                     {
-                        
+                        int[] deleted_clusters = new int[inode.size_in_clusters - cluster_number];
+
+                        int pos = 0;
+
                         for (int i = 0; i < inode.size_in_clusters; i++)
                         {
-                            if (i > cluster_number)
+                            if ((i+1) > cluster_number)
                             {
+                                deleted_clusters[pos] = inode.addr[i];
+                                pos++;
                                 inode.addr[i] = -1;
                             }
                             else
@@ -1074,7 +1097,18 @@ namespace CourseWorkOS
                             }
                         }
 
+                        new_files_bytes = getByteByClusterNums(deleted_clusters);
+
+                        setStateOfClustersInBitmap(ID_clusters, false, new_files_bytes);
+
                         superblock.amount_of_free_clusters += (uint)(inode.size_in_clusters- cluster_number);
+                    }
+                    else
+                    {
+                        for(int i = 0; i < cluster_number; i++)
+                        {
+                            ID_clusters[i] = inode.addr[i];
+                        }
                     }
                 }
 
@@ -1093,10 +1127,10 @@ namespace CourseWorkOS
 
                 inode.binaryWritingToFile(writer);
 
-                for (int i = 0; i < ID_clusters.Length; i++)
+                for (int i = 0; i < inode.size_in_clusters; i++)
                 {
                     writer.BaseStream.Seek(calculateWhereToCome(writer.BaseStream.Position,
-                            superblock.data_offset + ID_clusters[i] * superblock.cluster_size), SeekOrigin.Current);
+                            superblock.data_offset + inode.addr[i] * superblock.cluster_size), SeekOrigin.Current);
 
                     clusters[i].binaryWritingToFile(writer);
                 }
@@ -1142,7 +1176,7 @@ namespace CourseWorkOS
                 }
             }
         }
-
+        
 
 
         /*Работа с пользователями*/
