@@ -33,6 +33,8 @@ namespace CourseWorkOS
 
         public const byte COPY_FILE = 3;
 
+        public const byte OPEN_AND_WRITE = 4;
+
         //Создать ФС
         public void createFileSystem(ushort cluster_size = 512, uint fs_size = 4294967295)
         {
@@ -230,29 +232,7 @@ namespace CourseWorkOS
             }
             return bytes;
         }
-
-        //Изменение файла, зная номер айнода ДОДЕЛАТЬ
-        public void editFileWithInode(uint inode_number, byte[] new_bytes)
-        {
-            if (isInodeBusy(inode_number, true))
-            {
-                BinaryReader reader = new BinaryReader(file_stream);
-                reader.BaseStream.Seek(calculateWhereToCome(reader.BaseStream.Position,
-                        superblock.ilist_offset + Superblock.OS_INODE_SIZE * inode_number), SeekOrigin.Current);
-
-                Inode inode = Inode.loadInodeFromBinaryFile(reader);
-
-                //setStateOfClustersInBitmap()
-
-                //createFile()
-            }
-            else
-            {
-                MessageBox.Show("Такого файла не существует.");
-                return;
-            }
-        }
-
+        
         //Получить список всех пользователей
         public User[] getUsersArray()
         {
@@ -1058,49 +1038,79 @@ namespace CourseWorkOS
                     return false;
                 }
 
-                var position = 0;
-
-                BinaryReader reader = new BinaryReader(file_stream);
-                BinaryWriter writer = new BinaryWriter(file_stream);
-
-
-                int[] ID_clusters = null;
+                int[] ID_clusters= new int[cluster_number];
 
                 byte[] new_files_bytes;
 
-                getFreeClustersAddressesAndBytes(cluster_number, out ID_clusters, out new_files_bytes);
+                Cluster[] clusters;
 
-                setStateOfClustersInBitmap(ID_clusters, true, new_files_bytes);
+                if (inode.size_in_clusters < cluster_number)//Добавить кластера
+                {
+                    getFreeClustersAddressesAndBytes(cluster_number - (int)inode.size_in_clusters , out ID_clusters, out new_files_bytes);
 
+                    setStateOfClustersInBitmap(ID_clusters, true, new_files_bytes);
 
+                    for (int i = 0; i < ID_clusters.Length; i++)
+                    {
+                        inode.addr[i + inode.size_in_bytes] = ID_clusters[i];
+                    }
 
-                Cluster[] clusters = getClusterArrFromBytesArr(new_bytes, (ushort)cluster_number);
+                    superblock.amount_of_free_clusters -= (uint)ID_clusters.Length;
+                }
+                else
+                {
+                    if(inode.size_in_clusters > cluster_number)//Удалить кластера
+                    {
+                        
+                        for (int i = 0; i < inode.size_in_clusters; i++)
+                        {
+                            if (i > cluster_number)
+                            {
+                                inode.addr[i] = -1;
+                            }
+                            else
+                            {
+                                ID_clusters[i] = inode.addr[i];
+                            }
+                        }
 
-                superblock.amount_of_free_clusters -= (uint)cluster_number;
+                        superblock.amount_of_free_clusters += (uint)(inode.size_in_clusters- cluster_number);
+                    }
+                }
 
-                writer.BaseStream.Seek(calculateWhereToCome(writer.BaseStream.Position, 0), SeekOrigin.Current);
+                clusters = getClusterArrFromBytesArr(new_bytes, (ushort)cluster_number);
 
-                superblock.binaryWritingToFile(writer);
+                inode.size_in_bytes = (uint)new_bytes.Length;
+
+                inode.size_in_clusters = (uint)cluster_number;
+
+                inode.datetime_of_last_modification = Converter.getSeconds(DateTime.Now);
+
+                BinaryWriter writer = new BinaryWriter(file_stream);
+                
+                writer.BaseStream.Seek(calculateWhereToCome(writer.BaseStream.Position, superblock.ilist_offset + 
+                    root.inode_number * Superblock.OS_INODE_SIZE), SeekOrigin.Current);
+
+                inode.binaryWritingToFile(writer);
 
                 for (int i = 0; i < ID_clusters.Length; i++)
                 {
                     writer.BaseStream.Seek(calculateWhereToCome(writer.BaseStream.Position,
-                                 superblock.data_offset + ID_clusters[i] * superblock.cluster_size), SeekOrigin.Current);
+                            superblock.data_offset + ID_clusters[i] * superblock.cluster_size), SeekOrigin.Current);
 
                     clusters[i].binaryWritingToFile(writer);
                 }
 
-                writer.BaseStream.Seek(calculateWhereToCome(writer.BaseStream.Position, superblock.ilist_offset + root.inode_number * Superblock.OS_INODE_SIZE), SeekOrigin.Current);
+                writer.BaseStream.Seek(calculateWhereToCome(writer.BaseStream.Position, 0), SeekOrigin.Current);
 
-                inode = formChangesInode(inode, (uint)cluster_number, (uint)new_bytes.Length, ID_clusters);
-
-                inode.binaryWritingToFile(writer);
-
+                superblock.binaryWritingToFile(writer);
+                
                 return true;
             }
             else
             {
-                MessageBox.Show("Ваши права не позволяют провести операцию. Для дозаписи необходимо иметь права на w. Возможно файл имеет атрибут read_only", "Error");
+                MessageBox.Show("Ваши права не позволяют провести операцию. Для перезаписи необходимо иметь права на w. Для чтения необходимо иметь права на r." +
+                    " Возможно файл имеет атрибут read_only", "Error");
                 return false;
             }
         }

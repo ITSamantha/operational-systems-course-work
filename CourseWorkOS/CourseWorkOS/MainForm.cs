@@ -35,6 +35,8 @@ namespace CourseWorkOS
 
         public uint free_place;
 
+        public bool isHiddenShown = false;
+
 
 
         /*Инициализация формы*/
@@ -54,7 +56,14 @@ namespace CourseWorkOS
                 FileSystem.superblock.amount_of_inodes / 4 - Superblock.OS_SUPERBLOCK_SIZE - FileSystem.superblock.amount_of_inodes * Superblock.OS_ROOT_ROW_SIZE) / MB_SIZE;
 
             free_L.Text = $"Данные:{(uint)(FileSystem.superblock.amount_of_free_clusters * FileSystem.superblock.cluster_size) / MB_SIZE} Мб свободно из {free_place} Мб";
+           
+        }
 
+        private void MainForm_Shown(object sender, EventArgs e)
+        {
+            main_control.SelectedIndex = 0;
+
+            showFiles();
         }
 
         //Событие закрытия формы
@@ -71,6 +80,8 @@ namespace CourseWorkOS
         private void work_B_Click(object sender, EventArgs e)
         {
             main_control.SelectedIndex = 0;
+
+            isHiddenShown = false;
 
             showFiles();
         }
@@ -170,6 +181,11 @@ namespace CourseWorkOS
                 var access = formAccess(fl.r_u.Checked, fl.w_u.Checked, fl.x_u.Checked, fl.r_g.Checked, fl.w_g.Checked,
                     fl.x_g.Checked, fl.r_o.Checked, fl.w_o.Checked, fl.x_o.Checked, fl.onlyReadCB.Checked, fl.hidenCB.Checked, fl.systemCB.Checked);
 
+                if(!FileSystem.user.user_role&& fl.systemCB.Checked)
+                {
+                    MessageBox.Show("Атрибут \"Системный\" может назначать только администратор.");
+                    return;
+                }
                 string _ext;
 
                 string _base;
@@ -198,18 +214,21 @@ namespace CourseWorkOS
         private void propertiesItem_Click(object sender, EventArgs e)
         {
             workWithProperties((((sender as ToolStripMenuItem).Owner as ContextMenuStrip).SourceControl as Button).Text);
+            showFiles();
         }
 
         //Смена прав доступа
         private void workWithRulesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             workWithProperties((((sender as ToolStripMenuItem).Owner as ContextMenuStrip).SourceControl as Button).Text);
+            showFiles();
         }
 
         //Обработка события нажатия на кнопку "Перименовать файл"
         private void renameItem_Click(object sender, EventArgs e)
         {
             workWithProperties((((sender as ToolStripMenuItem).Owner as ContextMenuStrip).SourceControl as Button).Text);
+            showFiles();
         }
         
         //Смена пользователя
@@ -218,6 +237,8 @@ namespace CourseWorkOS
             formRegistarionOrAutorizationUser(1);
 
             changeUser();
+            
+            showFiles();
         }
 
         //Выход из системы
@@ -285,12 +306,18 @@ namespace CourseWorkOS
 
             var fl = createPropertyFileForm(inode.size_in_bytes, Converter.GetDateTime(inode.datetime_of_creation),
                 Converter.GetDateTime(inode.datetime_of_last_modification), inode.ID_owner, inode.ID_group, RootCatalogRow.createFileName(root), new AccessRules(inode.access_rules));
-
+            
             var access1 = formAccess(fl.r_u.Checked, fl.w_u.Checked, fl.x_u.Checked, fl.r_g.Checked, fl.w_g.Checked,
                     fl.x_g.Checked, fl.r_o.Checked, fl.w_o.Checked, fl.x_o.Checked, fl.onlyReadCB.Checked,
                     fl.hidenCB.Checked, fl.systemCB.Checked).getAccessRulesForFile();
-
+            
             var result = fl.ShowDialog();
+
+            if (!FileSystem.user.user_role && fl.systemCB.Checked)
+            {
+                MessageBox.Show("Атрибут \"Системный\" может назначать только администратор.");
+                return;
+            }
 
             if (result != DialogResult.Cancel)
             {
@@ -318,7 +345,13 @@ namespace CourseWorkOS
 
                     if (position != -1)
                     {
-                        file_panel.Controls[position].Text = fl.file_name_TB.Text;
+                        foreach(Button control in file_panel.Controls)
+                        {
+                            if (control.Text.SequenceEqual(file_name))
+                            {
+                                control.Text =  fl.file_name_TB.Text;
+                            }
+                        }
                     }
                 }
 
@@ -489,11 +522,29 @@ namespace CourseWorkOS
         }
 
         //Создание объекта файла
-        private Button createFileObj(string text = "default")
+        private Button createFileObj(byte file_type,string text = "default")
         {
             var file_obj = new Button();
 
-            file_obj.Image = Resources.file;
+            switch (file_type)
+            {
+                case 0://Системный
+                    {
+                        file_obj.Image = Resources.system_file;
+                        break;
+                    }
+                case 1://Обычный
+                    {
+                        file_obj.Image = Resources.file;
+                        break;
+                    }
+                case 2://Скрытый
+                    {
+                        file_obj.Image = Resources.hidden_file;
+                        break;
+                    }
+            }
+            
 
             file_obj.ImageAlign = ContentAlignment.TopCenter;
 
@@ -515,9 +566,10 @@ namespace CourseWorkOS
         //Показать файлы
         private void showFiles()
         {
+            isHiddenShown = false;
 
             var files = FileSystem.getAllRootCatalogRows();
-
+            
             file_panel.Controls.Clear();
 
             file_panel.RowCount = (int)Math.Ceiling((double)files.Length / 5.0);
@@ -528,7 +580,15 @@ namespace CourseWorkOS
 
             for (int i = 0; i < files.Length; i++)
             {
-                Button file_obj = createFileObj();
+                var inode = FileSystem.getInodeByNumber(files[i].inode_number);
+
+                var access = new AccessRules(inode.access_rules);
+
+                if (access.hidden_file) { continue; }
+
+                if (access.system_file && !FileSystem.user.user_role) { continue; }
+
+                Button file_obj = access.system_file && FileSystem.user.user_role?createFileObj(0): createFileObj(1);
 
                 file_obj.ContextMenuStrip = contextMenuForFile;
 
@@ -544,6 +604,43 @@ namespace CourseWorkOS
 
             free_L.Text = $"Данные:{(uint)(FileSystem.superblock.amount_of_free_clusters * FileSystem.superblock.cluster_size) / MB_SIZE} Мб свободно из {free_place} Мб";
 
+        }
+
+        private void showHiddenFiles()
+        {
+            var files = FileSystem.getAllRootCatalogRows();
+
+            List<Button> buttons = new List<Button>();
+
+            for (int i = 0; i < files.Length; i++)
+            {
+                var inode = FileSystem.getInodeByNumber(files[i].inode_number);
+
+                var access = new AccessRules(inode.access_rules);
+
+                if (access.hidden_file&&(FileSystem.user.ID_owner==inode.ID_owner||FileSystem.user.user_role))
+                {
+                    Button file_obj = createFileObj(2);
+
+                    file_obj.ContextMenuStrip = contextMenuForFile;
+
+                    file_obj.Text = RootCatalogRow.createFileName(files[i]);
+
+                    buttons.Add(file_obj);
+                }
+                else
+                {
+                    continue;
+                }
+            }
+
+            if (buttons.Count != 0)
+            {
+                Action action = () => {
+                    file_panel.Controls.AddRange(buttons.ToArray());
+                };
+                Invoke(action);
+            }
         }
 
         //Загрузить группы в таблицу
@@ -1060,9 +1157,15 @@ namespace CourseWorkOS
             }
         }
 
-        private void показатьСкрытыеФайлыToolStripMenuItem_Click(object sender, EventArgs e)
+        private void showHiddenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            if (!isHiddenShown)
+            {
+                showHiddenFiles();
+                isHiddenShown = true;
+            }
         }
+
+        
     }
 }

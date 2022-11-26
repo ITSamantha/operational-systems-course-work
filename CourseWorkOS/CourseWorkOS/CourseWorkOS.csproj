@@ -200,5 +200,11 @@
   <ItemGroup>
     <None Include="Sources\edit.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Sources\hidden_file.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Sources\system_file.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
