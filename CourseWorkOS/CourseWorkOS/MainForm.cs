@@ -45,11 +45,42 @@ namespace CourseWorkOS
         public MainForm()
         {
 
-            firstWorkWithSystem();
+            if (!firstWorkWithSystem())
+            {
+                Close();
+            }
 
             InitializeComponent();
 
             changeUser();
+
+            helpL.Text = "1. \"Создание системы\" - создание файловой системы (createfs).\n2.\"Войти в систему\" - загрузить существующую файловую систему(loadfs).\n" +
+                "3.\"Авторизоваться\" - зайти в систему с определенного пользоватователя(login).\n4.\"Просмотр информации о системе\" - просмотр информации о суперблока.\n" +
+                "При нажатии на файл ПКМ откроется меню.\n" +
+                "   1.\"Открыть\" - открыть файл на чтение(openfile).\n" +
+                "   2.\"Изменить\" - изменить содержимое файла.\n" +
+                "   3.\"Свойства\" - просмотр/смена свойств файла.\n" +
+                "   4.\"Копировать\" - копировать файл с заданием нового имени.\n" +
+                "   5.\"Удалить\" - удалить файл. \n" +
+                "   6.\"Переименовать\" - переименовать файл.\n" +
+                "   7.\"Изменить права доступа\" - сменить права доступа для файла.\n" +
+                "   8.\"Дописать в конец\" - дописать в конец файла определенную информацию.\n" +
+                "При нажатии на пользователя ПКМ откроется меню.\n" +
+                "   1.\"Сменить пользователя\" - зайти с другого пользователя.\n" +
+                "   2.\"Выход\" - выход  на форму загрузки/создания системы.\n" +
+                "При нажатии ПКМ на область расположения файлов откроется панель.\n" +
+                "   1.\"Создать файл\" - создать новый файл.\n" +
+                "   2.\"Показать скрытые файлы\" - показать скрытые файлы пользователя.\n" +
+                 "Для работы с пользователями предусмотрены действия:\n" +
+                "   1.\"Добавить\" - создать нового пользователя.\n" +
+                "   2.\"Удалить\" - удаление пользователя.\n" +
+                "   3.\"Изменить\" - изменение информации о пользователе.\n" +
+                "   4.\"Назначить администратором\" - передача прав администратора.\n" +
+                "Для работы с группами предусмотрены действия:\n" +
+                "   1.\"Добавить\" - создать новую группу.\n" +
+                "   2.\"Удалить\" - удалить группу.\n" +
+                "   3.\"Изменить\" - изменение информации о группе.\n";
+
 
         }
 
@@ -250,11 +281,17 @@ namespace CourseWorkOS
         {
             Hide();
 
-            firstWorkWithSystem();
+            if (!firstWorkWithSystem())
+            {
+                Close();
+                return;
+            }
 
             changeUser();
 
             Show();
+
+            main_control.SelectedIndex = 0;
         }
 
         //Удаление файла
@@ -473,7 +510,7 @@ namespace CourseWorkOS
         }
 
         //Создание или загрузка файловой системы
-        public void firstWorkWithSystem()
+        public bool firstWorkWithSystem()
         {
             bool isNew = true;
 
@@ -483,12 +520,10 @@ namespace CourseWorkOS
 
                 entry.ShowDialog();
 
-                work_mode = entry.work_mode;
-
-                switch (work_mode)
+                switch (entry.DialogResult)
                 {
                     //Продолжить работу с существующей ФС
-                    case 1:
+                    case DialogResult.OK:
                         {
                             FileSystem.loadFileSystemFromFile();
 
@@ -501,7 +536,7 @@ namespace CourseWorkOS
                         }
 
                     //Создать новую ФС
-                    case 2:
+                    case DialogResult.Yes:
                         {
                             var result = MessageBox.Show("Вы уверены? Все данные предыдущей ФС будут удалены.", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
@@ -515,14 +550,13 @@ namespace CourseWorkOS
                         }
 
                     //Выход
-                    case 0:
+                    case DialogResult.Cancel:
                         {
-                            return;
+                            return false;
                         }
-
-
                 }
             }
+            return true;
         }
 
         //Создание объекта файла
@@ -979,6 +1013,9 @@ namespace CourseWorkOS
                             return;
                         }
                         temp_user.ID_group = (ushort)group_id;
+
+                        FileSystem.changeGroupInInodes(temp_user.ID_owner, temp_user.ID_group);
+                        
                         isChanged = true;
                     }
 
@@ -1000,12 +1037,14 @@ namespace CourseWorkOS
                         changeUser();
                         
                         loadUsersToTable();
+
+                        
                     }
                 }
             }
             else
             {
-                MessageBox.Show("Для изменения профиля пользователя неоьходимо либо быть влдельцем аккаунта, либо администратором.");
+                MessageBox.Show("Для изменения профиля пользователя необходимо быть администратором.");
             }
         }
         
@@ -1142,7 +1181,10 @@ namespace CourseWorkOS
 
                             users[i].binaryWritingToFile(writer);
 
+                            FileSystem.changeGroupInInodes(users[i].ID_owner, users[i].ID_group);
+
                         }
+                        
                         FileSystem.user = FileSystem.getUserByName(new string(FileSystem.user.user_login));
                         
                     }
@@ -1168,6 +1210,9 @@ namespace CourseWorkOS
             }
         }
 
-        
+        private void helpB_Click(object sender, EventArgs e)
+        {
+            main_control.SelectedIndex = 4;
+        }
     }
 }

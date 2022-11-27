@@ -29,18 +29,14 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.groups_B = new System.Windows.Forms.Button();
-            this.users_B = new System.Windows.Forms.Button();
-            this.info_B = new System.Windows.Forms.Button();
-            this.work_B = new System.Windows.Forms.Button();
             this.main_control = new System.Windows.Forms.TabControl();
             this.work_with_FS_TP = new System.Windows.Forms.TabPage();
             this.file_panel = new System.Windows.Forms.TableLayoutPanel();
@@ -83,10 +79,6 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.nameOS_TB = new System.Windows.Forms.TextBox();
             this.work_with_users_TP = new System.Windows.Forms.TabPage();
-            this.changeUserB = new System.Windows.Forms.Button();
-            this.setAdmin_B = new System.Windows.Forms.Button();
-            this.delete_user_B = new System.Windows.Forms.Button();
-            this.add_user_B = new System.Windows.Forms.Button();
             this.user_amount_L = new System.Windows.Forms.Label();
             this.user_DG = new System.Windows.Forms.DataGridView();
             this.UID = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -94,9 +86,6 @@
             this.LOGIN = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ADMIN = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.changeGroupB = new System.Windows.Forms.Button();
-            this.delete_group_B = new System.Windows.Forms.Button();
-            this.add_group_B = new System.Windows.Forms.Button();
             this.group_amount_L = new System.Windows.Forms.Label();
             this.group_DG = new System.Windows.Forms.DataGridView();
             this.MAIN_GUID = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -114,7 +103,21 @@
             this.сменитьПользователяToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.helpB = new System.Windows.Forms.Button();
+            this.groups_B = new System.Windows.Forms.Button();
+            this.users_B = new System.Windows.Forms.Button();
+            this.info_B = new System.Windows.Forms.Button();
+            this.work_B = new System.Windows.Forms.Button();
             this.user_change_B = new System.Windows.Forms.Button();
+            this.changeUserB = new System.Windows.Forms.Button();
+            this.setAdmin_B = new System.Windows.Forms.Button();
+            this.delete_user_B = new System.Windows.Forms.Button();
+            this.add_user_B = new System.Windows.Forms.Button();
+            this.changeGroupB = new System.Windows.Forms.Button();
+            this.delete_group_B = new System.Windows.Forms.Button();
+            this.add_group_B = new System.Windows.Forms.Button();
+            this.helpL = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.main_control.SuspendLayout();
             this.work_with_FS_TP.SuspendLayout();
@@ -143,11 +146,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.group_DG)).BeginInit();
             this.contextMenuForFile.SuspendLayout();
             this.contextMenuForUser.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Lavender;
+            this.panel1.Controls.Add(this.helpB);
             this.panel1.Controls.Add(this.groups_B);
             this.panel1.Controls.Add(this.users_B);
             this.panel1.Controls.Add(this.info_B);
@@ -159,80 +164,13 @@
             this.panel1.Size = new System.Drawing.Size(153, 598);
             this.panel1.TabIndex = 0;
             // 
-            // groups_B
-            // 
-            this.groups_B.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groups_B.FlatAppearance.BorderSize = 0;
-            this.groups_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.groups_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groups_B.Image = global::CourseWorkOS.Properties.Resources.groups;
-            this.groups_B.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.groups_B.Location = new System.Drawing.Point(0, 225);
-            this.groups_B.Name = "groups_B";
-            this.groups_B.Size = new System.Drawing.Size(153, 75);
-            this.groups_B.TabIndex = 3;
-            this.groups_B.Text = "Работа с группами";
-            this.groups_B.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.groups_B.UseVisualStyleBackColor = true;
-            this.groups_B.Click += new System.EventHandler(this.groups_B_Click);
-            // 
-            // users_B
-            // 
-            this.users_B.Dock = System.Windows.Forms.DockStyle.Top;
-            this.users_B.FlatAppearance.BorderSize = 0;
-            this.users_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.users_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.users_B.Image = ((System.Drawing.Image)(resources.GetObject("users_B.Image")));
-            this.users_B.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.users_B.Location = new System.Drawing.Point(0, 150);
-            this.users_B.Name = "users_B";
-            this.users_B.Size = new System.Drawing.Size(153, 75);
-            this.users_B.TabIndex = 2;
-            this.users_B.Text = "Работа с пользователями";
-            this.users_B.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.users_B.UseVisualStyleBackColor = true;
-            this.users_B.Click += new System.EventHandler(this.users_B_Click);
-            // 
-            // info_B
-            // 
-            this.info_B.Dock = System.Windows.Forms.DockStyle.Top;
-            this.info_B.FlatAppearance.BorderSize = 0;
-            this.info_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.info_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.info_B.Image = global::CourseWorkOS.Properties.Resources.info;
-            this.info_B.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.info_B.Location = new System.Drawing.Point(0, 75);
-            this.info_B.Name = "info_B";
-            this.info_B.Size = new System.Drawing.Size(153, 75);
-            this.info_B.TabIndex = 1;
-            this.info_B.Text = "Сведения о файловой системе";
-            this.info_B.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.info_B.UseVisualStyleBackColor = true;
-            this.info_B.Click += new System.EventHandler(this.info_B_Click);
-            // 
-            // work_B
-            // 
-            this.work_B.Dock = System.Windows.Forms.DockStyle.Top;
-            this.work_B.FlatAppearance.BorderSize = 0;
-            this.work_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.work_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.work_B.Image = global::CourseWorkOS.Properties.Resources.work;
-            this.work_B.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.work_B.Location = new System.Drawing.Point(0, 0);
-            this.work_B.Name = "work_B";
-            this.work_B.Size = new System.Drawing.Size(153, 75);
-            this.work_B.TabIndex = 0;
-            this.work_B.Text = "Работа с файловой системой";
-            this.work_B.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.work_B.UseVisualStyleBackColor = true;
-            this.work_B.Click += new System.EventHandler(this.work_B_Click);
-            // 
             // main_control
             // 
             this.main_control.Controls.Add(this.work_with_FS_TP);
             this.main_control.Controls.Add(this.info_about_FS);
             this.main_control.Controls.Add(this.work_with_users_TP);
             this.main_control.Controls.Add(this.tabPage1);
+            this.main_control.Controls.Add(this.tabPage2);
             this.main_control.Location = new System.Drawing.Point(149, 12);
             this.main_control.Name = "main_control";
             this.main_control.Padding = new System.Drawing.Point(0, 0);
@@ -744,70 +682,6 @@
             this.work_with_users_TP.Text = "tabPage1";
             this.work_with_users_TP.UseVisualStyleBackColor = true;
             // 
-            // changeUserB
-            // 
-            this.changeUserB.BackColor = System.Drawing.Color.Transparent;
-            this.changeUserB.FlatAppearance.BorderSize = 0;
-            this.changeUserB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.changeUserB.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.changeUserB.Image = global::CourseWorkOS.Properties.Resources.edit;
-            this.changeUserB.Location = new System.Drawing.Point(633, 4);
-            this.changeUserB.Margin = new System.Windows.Forms.Padding(0);
-            this.changeUserB.Name = "changeUserB";
-            this.changeUserB.Size = new System.Drawing.Size(25, 25);
-            this.changeUserB.TabIndex = 14;
-            this.toolTip1.SetToolTip(this.changeUserB, "Изменить данные пользователя");
-            this.changeUserB.UseVisualStyleBackColor = false;
-            this.changeUserB.Click += new System.EventHandler(this.changeUserB_Click);
-            // 
-            // setAdmin_B
-            // 
-            this.setAdmin_B.BackColor = System.Drawing.Color.Transparent;
-            this.setAdmin_B.FlatAppearance.BorderSize = 0;
-            this.setAdmin_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.setAdmin_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.setAdmin_B.Image = global::CourseWorkOS.Properties.Resources.admin;
-            this.setAdmin_B.Location = new System.Drawing.Point(658, 4);
-            this.setAdmin_B.Margin = new System.Windows.Forms.Padding(0);
-            this.setAdmin_B.Name = "setAdmin_B";
-            this.setAdmin_B.Size = new System.Drawing.Size(25, 25);
-            this.setAdmin_B.TabIndex = 11;
-            this.toolTip1.SetToolTip(this.setAdmin_B, "Назначить пользователя администратором");
-            this.setAdmin_B.UseVisualStyleBackColor = false;
-            this.setAdmin_B.Click += new System.EventHandler(this.setAdmin_B_Click);
-            // 
-            // delete_user_B
-            // 
-            this.delete_user_B.BackColor = System.Drawing.Color.Transparent;
-            this.delete_user_B.FlatAppearance.BorderSize = 0;
-            this.delete_user_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.delete_user_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.delete_user_B.Image = global::CourseWorkOS.Properties.Resources.delete;
-            this.delete_user_B.Location = new System.Drawing.Point(685, 3);
-            this.delete_user_B.Margin = new System.Windows.Forms.Padding(0);
-            this.delete_user_B.Name = "delete_user_B";
-            this.delete_user_B.Size = new System.Drawing.Size(25, 25);
-            this.delete_user_B.TabIndex = 10;
-            this.toolTip1.SetToolTip(this.delete_user_B, "Удалить пользователя");
-            this.delete_user_B.UseVisualStyleBackColor = false;
-            this.delete_user_B.Click += new System.EventHandler(this.delete_user_B_Click);
-            // 
-            // add_user_B
-            // 
-            this.add_user_B.BackColor = System.Drawing.Color.Transparent;
-            this.add_user_B.FlatAppearance.BorderSize = 0;
-            this.add_user_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.add_user_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.add_user_B.Image = global::CourseWorkOS.Properties.Resources.add;
-            this.add_user_B.Location = new System.Drawing.Point(714, 3);
-            this.add_user_B.Margin = new System.Windows.Forms.Padding(0);
-            this.add_user_B.Name = "add_user_B";
-            this.add_user_B.Size = new System.Drawing.Size(25, 25);
-            this.add_user_B.TabIndex = 9;
-            this.toolTip1.SetToolTip(this.add_user_B, "Создать пользователя");
-            this.add_user_B.UseVisualStyleBackColor = false;
-            this.add_user_B.Click += new System.EventHandler(this.add_user_B_Click);
-            // 
             // user_amount_L
             // 
             this.user_amount_L.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -827,35 +701,35 @@
             this.user_DG.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders;
             this.user_DG.BackgroundColor = System.Drawing.Color.Lavender;
             this.user_DG.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.user_DG.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.user_DG.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.user_DG.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.user_DG.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.UID,
             this.GUID,
             this.LOGIN,
             this.ADMIN});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.user_DG.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.user_DG.DefaultCellStyle = dataGridViewCellStyle8;
             this.user_DG.Location = new System.Drawing.Point(25, 29);
             this.user_DG.MultiSelect = false;
             this.user_DG.Name = "user_DG";
             this.user_DG.ReadOnly = true;
             this.user_DG.RowHeadersWidth = 75;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.user_DG.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.user_DG.RowsDefaultCellStyle = dataGridViewCellStyle9;
             this.user_DG.RowTemplate.Height = 40;
             this.user_DG.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.user_DG.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -901,52 +775,6 @@
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // changeGroupB
-            // 
-            this.changeGroupB.BackColor = System.Drawing.Color.Transparent;
-            this.changeGroupB.FlatAppearance.BorderSize = 0;
-            this.changeGroupB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.changeGroupB.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.changeGroupB.Image = global::CourseWorkOS.Properties.Resources.edit;
-            this.changeGroupB.Location = new System.Drawing.Point(656, 3);
-            this.changeGroupB.Margin = new System.Windows.Forms.Padding(0);
-            this.changeGroupB.Name = "changeGroupB";
-            this.changeGroupB.Size = new System.Drawing.Size(25, 25);
-            this.changeGroupB.TabIndex = 13;
-            this.toolTip1.SetToolTip(this.changeGroupB, "Изменить");
-            this.changeGroupB.UseVisualStyleBackColor = false;
-            this.changeGroupB.Click += new System.EventHandler(this.changeGroupB_Click);
-            // 
-            // delete_group_B
-            // 
-            this.delete_group_B.BackColor = System.Drawing.Color.Transparent;
-            this.delete_group_B.FlatAppearance.BorderSize = 0;
-            this.delete_group_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.delete_group_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.delete_group_B.Image = global::CourseWorkOS.Properties.Resources.delete;
-            this.delete_group_B.Location = new System.Drawing.Point(684, 3);
-            this.delete_group_B.Margin = new System.Windows.Forms.Padding(0);
-            this.delete_group_B.Name = "delete_group_B";
-            this.delete_group_B.Size = new System.Drawing.Size(25, 25);
-            this.delete_group_B.TabIndex = 12;
-            this.delete_group_B.UseVisualStyleBackColor = false;
-            this.delete_group_B.Click += new System.EventHandler(this.delete_group_B_Click);
-            // 
-            // add_group_B
-            // 
-            this.add_group_B.BackColor = System.Drawing.Color.Transparent;
-            this.add_group_B.FlatAppearance.BorderSize = 0;
-            this.add_group_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.add_group_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.add_group_B.Image = global::CourseWorkOS.Properties.Resources.add;
-            this.add_group_B.Location = new System.Drawing.Point(713, 3);
-            this.add_group_B.Margin = new System.Windows.Forms.Padding(0);
-            this.add_group_B.Name = "add_group_B";
-            this.add_group_B.Size = new System.Drawing.Size(25, 25);
-            this.add_group_B.TabIndex = 11;
-            this.add_group_B.UseVisualStyleBackColor = false;
-            this.add_group_B.Click += new System.EventHandler(this.add_group_B_Click);
-            // 
             // group_amount_L
             // 
             this.group_amount_L.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -966,33 +794,33 @@
             this.group_DG.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders;
             this.group_DG.BackgroundColor = System.Drawing.Color.Lavender;
             this.group_DG.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.group_DG.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.group_DG.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
             this.group_DG.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.group_DG.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.MAIN_GUID,
             this.GROUP_NAME});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.group_DG.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.group_DG.DefaultCellStyle = dataGridViewCellStyle11;
             this.group_DG.Location = new System.Drawing.Point(24, 29);
             this.group_DG.MultiSelect = false;
             this.group_DG.Name = "group_DG";
             this.group_DG.ReadOnly = true;
             this.group_DG.RowHeadersWidth = 100;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.group_DG.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.group_DG.RowsDefaultCellStyle = dataGridViewCellStyle12;
             this.group_DG.RowTemplate.Height = 40;
             this.group_DG.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.group_DG.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -1105,6 +933,102 @@
             this.выходToolStripMenuItem.Text = "Выход";
             this.выходToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.helpL);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(747, 564);
+            this.tabPage2.TabIndex = 4;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // helpB
+            // 
+            this.helpB.Dock = System.Windows.Forms.DockStyle.Top;
+            this.helpB.FlatAppearance.BorderSize = 0;
+            this.helpB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.helpB.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.helpB.Image = global::CourseWorkOS.Properties.Resources.help;
+            this.helpB.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.helpB.Location = new System.Drawing.Point(0, 300);
+            this.helpB.Name = "helpB";
+            this.helpB.Size = new System.Drawing.Size(153, 75);
+            this.helpB.TabIndex = 4;
+            this.helpB.Text = "Помощь";
+            this.helpB.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.helpB.UseVisualStyleBackColor = true;
+            this.helpB.Click += new System.EventHandler(this.helpB_Click);
+            // 
+            // groups_B
+            // 
+            this.groups_B.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groups_B.FlatAppearance.BorderSize = 0;
+            this.groups_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.groups_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.groups_B.Image = global::CourseWorkOS.Properties.Resources.groups;
+            this.groups_B.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.groups_B.Location = new System.Drawing.Point(0, 225);
+            this.groups_B.Name = "groups_B";
+            this.groups_B.Size = new System.Drawing.Size(153, 75);
+            this.groups_B.TabIndex = 3;
+            this.groups_B.Text = "Работа с группами";
+            this.groups_B.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.groups_B.UseVisualStyleBackColor = true;
+            this.groups_B.Click += new System.EventHandler(this.groups_B_Click);
+            // 
+            // users_B
+            // 
+            this.users_B.Dock = System.Windows.Forms.DockStyle.Top;
+            this.users_B.FlatAppearance.BorderSize = 0;
+            this.users_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.users_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.users_B.Image = ((System.Drawing.Image)(resources.GetObject("users_B.Image")));
+            this.users_B.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.users_B.Location = new System.Drawing.Point(0, 150);
+            this.users_B.Name = "users_B";
+            this.users_B.Size = new System.Drawing.Size(153, 75);
+            this.users_B.TabIndex = 2;
+            this.users_B.Text = "Работа с пользователями";
+            this.users_B.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.users_B.UseVisualStyleBackColor = true;
+            this.users_B.Click += new System.EventHandler(this.users_B_Click);
+            // 
+            // info_B
+            // 
+            this.info_B.Dock = System.Windows.Forms.DockStyle.Top;
+            this.info_B.FlatAppearance.BorderSize = 0;
+            this.info_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.info_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.info_B.Image = global::CourseWorkOS.Properties.Resources.info;
+            this.info_B.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.info_B.Location = new System.Drawing.Point(0, 75);
+            this.info_B.Name = "info_B";
+            this.info_B.Size = new System.Drawing.Size(153, 75);
+            this.info_B.TabIndex = 1;
+            this.info_B.Text = "Сведения о файловой системе";
+            this.info_B.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.info_B.UseVisualStyleBackColor = true;
+            this.info_B.Click += new System.EventHandler(this.info_B_Click);
+            // 
+            // work_B
+            // 
+            this.work_B.Dock = System.Windows.Forms.DockStyle.Top;
+            this.work_B.FlatAppearance.BorderSize = 0;
+            this.work_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.work_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.work_B.Image = global::CourseWorkOS.Properties.Resources.work;
+            this.work_B.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.work_B.Location = new System.Drawing.Point(0, 0);
+            this.work_B.Name = "work_B";
+            this.work_B.Size = new System.Drawing.Size(153, 75);
+            this.work_B.TabIndex = 0;
+            this.work_B.Text = "Работа с файловой системой";
+            this.work_B.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.work_B.UseVisualStyleBackColor = true;
+            this.work_B.Click += new System.EventHandler(this.work_B_Click);
+            // 
             // user_change_B
             // 
             this.user_change_B.BackColor = System.Drawing.SystemColors.ButtonHighlight;
@@ -1119,6 +1043,126 @@
             this.user_change_B.Size = new System.Drawing.Size(237, 36);
             this.user_change_B.TabIndex = 11;
             this.user_change_B.UseVisualStyleBackColor = false;
+            // 
+            // changeUserB
+            // 
+            this.changeUserB.BackColor = System.Drawing.Color.Transparent;
+            this.changeUserB.FlatAppearance.BorderSize = 0;
+            this.changeUserB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.changeUserB.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.changeUserB.Image = global::CourseWorkOS.Properties.Resources.edit;
+            this.changeUserB.Location = new System.Drawing.Point(633, 4);
+            this.changeUserB.Margin = new System.Windows.Forms.Padding(0);
+            this.changeUserB.Name = "changeUserB";
+            this.changeUserB.Size = new System.Drawing.Size(25, 25);
+            this.changeUserB.TabIndex = 14;
+            this.toolTip1.SetToolTip(this.changeUserB, "Изменить данные пользователя");
+            this.changeUserB.UseVisualStyleBackColor = false;
+            this.changeUserB.Click += new System.EventHandler(this.changeUserB_Click);
+            // 
+            // setAdmin_B
+            // 
+            this.setAdmin_B.BackColor = System.Drawing.Color.Transparent;
+            this.setAdmin_B.FlatAppearance.BorderSize = 0;
+            this.setAdmin_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.setAdmin_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.setAdmin_B.Image = global::CourseWorkOS.Properties.Resources.admin;
+            this.setAdmin_B.Location = new System.Drawing.Point(658, 4);
+            this.setAdmin_B.Margin = new System.Windows.Forms.Padding(0);
+            this.setAdmin_B.Name = "setAdmin_B";
+            this.setAdmin_B.Size = new System.Drawing.Size(25, 25);
+            this.setAdmin_B.TabIndex = 11;
+            this.toolTip1.SetToolTip(this.setAdmin_B, "Назначить пользователя администратором");
+            this.setAdmin_B.UseVisualStyleBackColor = false;
+            this.setAdmin_B.Click += new System.EventHandler(this.setAdmin_B_Click);
+            // 
+            // delete_user_B
+            // 
+            this.delete_user_B.BackColor = System.Drawing.Color.Transparent;
+            this.delete_user_B.FlatAppearance.BorderSize = 0;
+            this.delete_user_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.delete_user_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.delete_user_B.Image = global::CourseWorkOS.Properties.Resources.delete;
+            this.delete_user_B.Location = new System.Drawing.Point(685, 3);
+            this.delete_user_B.Margin = new System.Windows.Forms.Padding(0);
+            this.delete_user_B.Name = "delete_user_B";
+            this.delete_user_B.Size = new System.Drawing.Size(25, 25);
+            this.delete_user_B.TabIndex = 10;
+            this.toolTip1.SetToolTip(this.delete_user_B, "Удалить пользователя");
+            this.delete_user_B.UseVisualStyleBackColor = false;
+            this.delete_user_B.Click += new System.EventHandler(this.delete_user_B_Click);
+            // 
+            // add_user_B
+            // 
+            this.add_user_B.BackColor = System.Drawing.Color.Transparent;
+            this.add_user_B.FlatAppearance.BorderSize = 0;
+            this.add_user_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.add_user_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.add_user_B.Image = global::CourseWorkOS.Properties.Resources.add;
+            this.add_user_B.Location = new System.Drawing.Point(714, 3);
+            this.add_user_B.Margin = new System.Windows.Forms.Padding(0);
+            this.add_user_B.Name = "add_user_B";
+            this.add_user_B.Size = new System.Drawing.Size(25, 25);
+            this.add_user_B.TabIndex = 9;
+            this.toolTip1.SetToolTip(this.add_user_B, "Создать пользователя");
+            this.add_user_B.UseVisualStyleBackColor = false;
+            this.add_user_B.Click += new System.EventHandler(this.add_user_B_Click);
+            // 
+            // changeGroupB
+            // 
+            this.changeGroupB.BackColor = System.Drawing.Color.Transparent;
+            this.changeGroupB.FlatAppearance.BorderSize = 0;
+            this.changeGroupB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.changeGroupB.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.changeGroupB.Image = global::CourseWorkOS.Properties.Resources.edit;
+            this.changeGroupB.Location = new System.Drawing.Point(656, 3);
+            this.changeGroupB.Margin = new System.Windows.Forms.Padding(0);
+            this.changeGroupB.Name = "changeGroupB";
+            this.changeGroupB.Size = new System.Drawing.Size(25, 25);
+            this.changeGroupB.TabIndex = 13;
+            this.toolTip1.SetToolTip(this.changeGroupB, "Изменить");
+            this.changeGroupB.UseVisualStyleBackColor = false;
+            this.changeGroupB.Click += new System.EventHandler(this.changeGroupB_Click);
+            // 
+            // delete_group_B
+            // 
+            this.delete_group_B.BackColor = System.Drawing.Color.Transparent;
+            this.delete_group_B.FlatAppearance.BorderSize = 0;
+            this.delete_group_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.delete_group_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.delete_group_B.Image = global::CourseWorkOS.Properties.Resources.delete;
+            this.delete_group_B.Location = new System.Drawing.Point(684, 3);
+            this.delete_group_B.Margin = new System.Windows.Forms.Padding(0);
+            this.delete_group_B.Name = "delete_group_B";
+            this.delete_group_B.Size = new System.Drawing.Size(25, 25);
+            this.delete_group_B.TabIndex = 12;
+            this.delete_group_B.UseVisualStyleBackColor = false;
+            this.delete_group_B.Click += new System.EventHandler(this.delete_group_B_Click);
+            // 
+            // add_group_B
+            // 
+            this.add_group_B.BackColor = System.Drawing.Color.Transparent;
+            this.add_group_B.FlatAppearance.BorderSize = 0;
+            this.add_group_B.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.add_group_B.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.add_group_B.Image = global::CourseWorkOS.Properties.Resources.add;
+            this.add_group_B.Location = new System.Drawing.Point(713, 3);
+            this.add_group_B.Margin = new System.Windows.Forms.Padding(0);
+            this.add_group_B.Name = "add_group_B";
+            this.add_group_B.Size = new System.Drawing.Size(25, 25);
+            this.add_group_B.TabIndex = 11;
+            this.add_group_B.UseVisualStyleBackColor = false;
+            this.add_group_B.Click += new System.EventHandler(this.add_group_B_Click);
+            // 
+            // helpL
+            // 
+            this.helpL.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.helpL.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.helpL.Location = new System.Drawing.Point(3, 3);
+            this.helpL.Name = "helpL";
+            this.helpL.Size = new System.Drawing.Size(741, 558);
+            this.helpL.TabIndex = 0;
+            this.helpL.Text = "1. \"Создание системы\" - создание файловой системы (createfs).";
             // 
             // MainForm
             // 
@@ -1180,6 +1224,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.group_DG)).EndInit();
             this.contextMenuForFile.ResumeLayout(false);
             this.contextMenuForUser.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1265,5 +1310,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn LOGIN;
         private System.Windows.Forms.DataGridViewTextBoxColumn ADMIN;
         private System.Windows.Forms.ToolStripMenuItem showHiddenToolStripMenuItem;
+        private System.Windows.Forms.Button helpB;
+        private System.Windows.Forms.TabPage tabPage2;
+        public System.Windows.Forms.Label helpL;
     }
 }

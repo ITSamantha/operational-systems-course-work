@@ -414,8 +414,7 @@ namespace CourseWorkOS
         public void getFreeInodeId(out uint ID_inode, out byte inode_byte)
         {
             ID_inode = inode_byte = 0;
-
-            ////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            
             BinaryReader reader = new BinaryReader(file_stream);
             reader.BaseStream.Seek(calculateWhereToCome(reader.BaseStream.Position, superblock.inode_bitmap_offset), SeekOrigin.Current);
 
@@ -1099,7 +1098,7 @@ namespace CourseWorkOS
 
                         new_files_bytes = getByteByClusterNums(deleted_clusters);
 
-                        setStateOfClustersInBitmap(ID_clusters, false, new_files_bytes);
+                        setStateOfClustersInBitmap(deleted_clusters, false, new_files_bytes);
 
                         superblock.amount_of_free_clusters += (uint)(inode.size_in_clusters- cluster_number);
                     }
@@ -1202,6 +1201,28 @@ namespace CourseWorkOS
                     users[i].binaryWritingToFile(writer);
 
                     break;
+                }
+            }
+        }
+
+        public void changeGroupInInodes(uint ID_owner,ushort ID_group)
+        {
+            var roots = getAllRootCatalogRows();
+
+            BinaryWriter writer = new BinaryWriter(file_stream);
+
+            for (int i = 0; i < roots.Length; i++)
+            {
+                var inode = getInodeByNumber(roots[i].inode_number);
+
+                if (inode.ID_owner == ID_owner)
+                {
+                    inode.ID_group = ID_group;
+
+                    writer.BaseStream.Seek(calculateWhereToCome(writer.BaseStream.Position,
+                       superblock.ilist_offset + roots[i].inode_number * Superblock.OS_INODE_SIZE), SeekOrigin.Current);
+
+                    inode.binaryWritingToFile(writer);
                 }
             }
         }
