@@ -1214,5 +1214,14 @@ namespace CourseWorkOS
         {
             main_control.SelectedIndex = 4;
         }
+
+        private void processB_Click(object sender, EventArgs e)
+        {
+            ProcessForm pr = new ProcessForm();
+
+            pr.loadUser(FileSystem.user);
+
+            pr.ShowDialog();
+        }
     }
 }

@@ -94,6 +94,14 @@
     <Compile Include="OpenFile.Designer.cs">
       <DependentUpon>OpenFile.cs</DependentUpon>
     </Compile>
+    <Compile Include="Processes\Process.cs" />
+    <Compile Include="ProcessForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProcessForm.Designer.cs">
+      <DependentUpon>ProcessForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Processes\ProcessStructure.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RootCatalogRow.cs" />
@@ -131,6 +139,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="OpenFile.resx">
       <DependentUpon>OpenFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProcessForm.resx">
+      <DependentUpon>ProcessForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -208,6 +219,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Sources\help.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Sources\process.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Sources\add_proces.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Sources\kill_process.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
