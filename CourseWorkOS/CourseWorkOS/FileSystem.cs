@@ -771,7 +771,7 @@ namespace CourseWorkOS
             return false;
         }
 
-        //Дописать в конец файла РАЗБЕРИСЬ
+        //Дописать в конец файла 
         public bool writeEndFile(string file_name, byte[] new_bytes)
         {
             var root = findRootRowByName(file_name);
@@ -827,8 +827,6 @@ namespace CourseWorkOS
                 int[] ID_clusters = null;
 
                 byte[] new_files_bytes;
-
-                superblock.amount_of_free_clusters += inode.size_in_clusters;
 
                 if (cluster_number != 0)
                 {
