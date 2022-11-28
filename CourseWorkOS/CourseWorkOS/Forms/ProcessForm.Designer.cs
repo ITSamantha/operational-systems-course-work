@@ -55,7 +55,7 @@
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.svoppingDG = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -65,7 +65,7 @@
             this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.waitingDG = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -90,9 +90,9 @@
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.readyDG)).BeginInit();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.svoppingDG)).BeginInit();
             this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.waitingDG)).BeginInit();
             this.SuspendLayout();
             // 
             // runningDG
@@ -122,7 +122,6 @@
             this.runningDG.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.runningDG.RowTemplate.Height = 40;
             this.runningDG.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.runningDG.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.runningDG.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.runningDG.Size = new System.Drawing.Size(814, 92);
             this.runningDG.TabIndex = 4;
@@ -232,7 +231,6 @@
             this.readyDG.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.readyDG.RowTemplate.Height = 40;
             this.readyDG.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.readyDG.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.readyDG.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.readyDG.Size = new System.Drawing.Size(814, 175);
             this.readyDG.TabIndex = 4;
@@ -295,7 +293,7 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.dataGridView1);
+            this.groupBox3.Controls.Add(this.svoppingDG);
             this.groupBox3.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox3.Location = new System.Drawing.Point(12, 527);
             this.groupBox3.Name = "groupBox3";
@@ -304,16 +302,16 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Свопинг";
             // 
-            // dataGridView1
+            // svoppingDG
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AllowUserToOrderColumns = true;
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.Lavender;
-            this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.svoppingDG.AllowUserToAddRows = false;
+            this.svoppingDG.AllowUserToDeleteRows = false;
+            this.svoppingDG.AllowUserToOrderColumns = true;
+            this.svoppingDG.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            this.svoppingDG.BackgroundColor = System.Drawing.Color.Lavender;
+            this.svoppingDG.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.svoppingDG.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.svoppingDG.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn9,
             this.dataGridViewTextBoxColumn10,
             this.dataGridViewTextBoxColumn11,
@@ -322,19 +320,18 @@
             this.dataGridViewTextBoxColumn14,
             this.dataGridViewTextBoxColumn15,
             this.dataGridViewTextBoxColumn16});
-            this.dataGridView1.Location = new System.Drawing.Point(6, 22);
-            this.dataGridView1.MultiSelect = false;
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowHeadersWidth = 10;
+            this.svoppingDG.Location = new System.Drawing.Point(6, 22);
+            this.svoppingDG.MultiSelect = false;
+            this.svoppingDG.Name = "svoppingDG";
+            this.svoppingDG.ReadOnly = true;
+            this.svoppingDG.RowHeadersWidth = 10;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle3;
-            this.dataGridView1.RowTemplate.Height = 40;
-            this.dataGridView1.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(814, 122);
-            this.dataGridView1.TabIndex = 4;
+            this.svoppingDG.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            this.svoppingDG.RowTemplate.Height = 40;
+            this.svoppingDG.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.svoppingDG.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.svoppingDG.Size = new System.Drawing.Size(814, 122);
+            this.svoppingDG.TabIndex = 4;
             // 
             // dataGridViewTextBoxColumn9
             // 
@@ -394,7 +391,7 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.dataGridView2);
+            this.groupBox4.Controls.Add(this.waitingDG);
             this.groupBox4.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox4.Location = new System.Drawing.Point(12, 361);
             this.groupBox4.Name = "groupBox4";
@@ -403,16 +400,16 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Ожидающие";
             // 
-            // dataGridView2
+            // waitingDG
             // 
-            this.dataGridView2.AllowUserToAddRows = false;
-            this.dataGridView2.AllowUserToDeleteRows = false;
-            this.dataGridView2.AllowUserToOrderColumns = true;
-            this.dataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
-            this.dataGridView2.BackgroundColor = System.Drawing.Color.Lavender;
-            this.dataGridView2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.waitingDG.AllowUserToAddRows = false;
+            this.waitingDG.AllowUserToDeleteRows = false;
+            this.waitingDG.AllowUserToOrderColumns = true;
+            this.waitingDG.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            this.waitingDG.BackgroundColor = System.Drawing.Color.Lavender;
+            this.waitingDG.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.waitingDG.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.waitingDG.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn17,
             this.dataGridViewTextBoxColumn18,
             this.dataGridViewTextBoxColumn19,
@@ -421,19 +418,18 @@
             this.dataGridViewTextBoxColumn22,
             this.dataGridViewTextBoxColumn23,
             this.dataGridViewTextBoxColumn24});
-            this.dataGridView2.Location = new System.Drawing.Point(6, 22);
-            this.dataGridView2.MultiSelect = false;
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.ReadOnly = true;
-            this.dataGridView2.RowHeadersWidth = 10;
+            this.waitingDG.Location = new System.Drawing.Point(6, 22);
+            this.waitingDG.MultiSelect = false;
+            this.waitingDG.Name = "waitingDG";
+            this.waitingDG.ReadOnly = true;
+            this.waitingDG.RowHeadersWidth = 10;
             dataGridViewCellStyle4.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.dataGridView2.RowsDefaultCellStyle = dataGridViewCellStyle4;
-            this.dataGridView2.RowTemplate.Height = 40;
-            this.dataGridView2.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView2.Size = new System.Drawing.Size(814, 138);
-            this.dataGridView2.TabIndex = 4;
+            this.waitingDG.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            this.waitingDG.RowTemplate.Height = 40;
+            this.waitingDG.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.waitingDG.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.waitingDG.Size = new System.Drawing.Size(814, 138);
+            this.waitingDG.TabIndex = 4;
             // 
             // dataGridViewTextBoxColumn17
             // 
@@ -505,6 +501,7 @@
             this.generateProcess.TabIndex = 23;
             this.toolTip1.SetToolTip(this.generateProcess, "Сгенерировать процессы");
             this.generateProcess.UseVisualStyleBackColor = false;
+            this.generateProcess.Click += new System.EventHandler(this.generateProcess_Click);
             // 
             // killProcessV
             // 
@@ -671,9 +668,9 @@
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.readyDG)).EndInit();
             this.groupBox3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.svoppingDG)).EndInit();
             this.groupBox4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.waitingDG)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -701,7 +698,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
         private System.Windows.Forms.GroupBox groupBox3;
-        public System.Windows.Forms.DataGridView dataGridView1;
+        public System.Windows.Forms.DataGridView svoppingDG;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
@@ -711,7 +708,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn15;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn16;
         private System.Windows.Forms.GroupBox groupBox4;
-        public System.Windows.Forms.DataGridView dataGridView2;
+        public System.Windows.Forms.DataGridView waitingDG;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn17;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn19;

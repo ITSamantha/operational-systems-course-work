@@ -6,14 +6,7 @@ using System.Threading.Tasks;
 
 namespace CourseWorkOS
 {
-    public enum PROCESS_STATES
-    {
-        WAIT = 'S',
-        RUNNING = 'R',
-        SVOPPING ='V',
-        READY_TO_EXECUTE='E'
-    }
-
+    
     public class Process
     {
         public ulong PID { get; private set; }
@@ -43,11 +36,6 @@ namespace CourseWorkOS
             TIME_START = tIME_START;
             COMMAND = cOMMAND;
         }
-
-        public static Process[] generateProcesses(int count)
-        {
-
-        }
-
+        
     }
 }
