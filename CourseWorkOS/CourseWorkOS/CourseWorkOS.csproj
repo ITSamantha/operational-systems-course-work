@@ -49,6 +49,12 @@
     <Compile Include="FileSystem\AccessRules.cs" />
     <Compile Include="FileSystem\Cluster.cs" />
     <Compile Include="FileSystem\Converter.cs" />
+    <Compile Include="Forms\AddProcessForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddProcessForm.Designer.cs">
+      <DependentUpon>AddProcessForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FileInformation.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -119,6 +125,9 @@
     <Compile Include="Forms\UserForm.Designer.cs">
       <DependentUpon>UserForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Forms\AddProcessForm.resx">
+      <DependentUpon>AddProcessForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Entry.resx">
       <DependentUpon>Entry.cs</DependentUpon>
     </EmbeddedResource>

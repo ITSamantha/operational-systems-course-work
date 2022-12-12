@@ -55,7 +55,7 @@ namespace CourseWorkOS
         //Квант - 3000 мс
         public bool processContext()
         {
-            for(int i = 1000; i < 3001; i += 1000)
+            for(int i = 1000; i < 1001; i += 1000)
             {
                 if (TIME_FOR_EXECUTE > 0)
                 {

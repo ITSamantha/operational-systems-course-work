@@ -153,6 +153,7 @@ namespace CourseWorkOS.Processes
 
         public void processAlgorythm()
         {
+            Random rand = new Random();
             while (true)
             {
                 if (ready_to_execute_processes.Count != 0&& !isRunning)
@@ -163,7 +164,16 @@ namespace CourseWorkOS.Processes
                     isRunning = true;
                     if (running_process.processContext())
                     {
-                        ready_to_execute_processes_temp.Add(running_process);
+                        if (rand.Next(-1, 5) >= 0)
+                        {
+                            running_process.STAT = temp_states[2];
+                            ready_to_execute_processes_temp.Add(running_process);
+                        }
+                        else
+                        {
+                            running_process.STAT = temp_states[0];
+                            waiting_processes.Add(running_process);
+                        }
                     }
                     else
                     {
@@ -177,8 +187,29 @@ namespace CourseWorkOS.Processes
                         ready_to_execute_processes.Add(proc);
                     }
                     ready_to_execute_processes_temp.Clear();
+                    running_process = null;
+                    if (rand.Next(0, 2) == 1)
+                    {
+                        if (svopping_processes.Count != 0)
+                        {
+                            var temp = svopping_processes[0];
+                            temp.STAT = temp_states[2];
+                            ready_to_execute_processes.Add(temp);
+                            svopping_processes.RemoveAt(0);
+                        }
+                    }
+                    if (rand.Next(0, 2) == 1)
+                    {
+                        if (waiting_processes.Count != 0)
+                        {
+                            var temp = waiting_processes[0];
+                            temp.STAT = temp_states[2];
+                            ready_to_execute_processes.Add(temp);
+                            waiting_processes.RemoveAt(0);
+                        }
+                    }
+                    ready_to_execute_processes.Sort();
                 }
-                
             }
         }
         
