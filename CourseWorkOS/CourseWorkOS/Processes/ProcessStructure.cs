@@ -34,7 +34,7 @@ namespace CourseWorkOS.Processes
 
         public bool isRunning = false;
 
-        private char[] temp_states = new char[] { (char)PROCESS_STATES.WAIT, 
+        public char[] temp_states = new char[] { (char)PROCESS_STATES.WAIT, 
                 (char)PROCESS_STATES.SVOPPING, (char)PROCESS_STATES.READY_TO_EXECUTE,(char)PROCESS_STATES.RUNNING };
 
         public ProcessStructure()
