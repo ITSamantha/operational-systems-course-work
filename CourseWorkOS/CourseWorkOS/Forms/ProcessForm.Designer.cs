@@ -85,6 +85,7 @@
             this.changePriS = new System.Windows.Forms.Button();
             this.changePriE = new System.Windows.Forms.Button();
             this.changePriR = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.runningDG)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -639,12 +640,28 @@
             this.toolTip1.SetToolTip(this.changePriR, "Изменить приоритет процесса");
             this.changePriR.UseVisualStyleBackColor = false;
             // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.Maroon;
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button1.Location = new System.Drawing.Point(80, 3);
+            this.button1.Margin = new System.Windows.Forms.Padding(0);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(25, 25);
+            this.button1.TabIndex = 24;
+            this.toolTip1.SetToolTip(this.button1, "Сгенерировать процессы");
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // ProcessForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.ClientSize = new System.Drawing.Size(909, 690);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.generateProcess);
             this.Controls.Add(this.killProcessV);
             this.Controls.Add(this.killProcessS);
@@ -663,6 +680,7 @@
             this.Name = "ProcessForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Samantha:Процессы";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ProcessForm_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.runningDG)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
@@ -728,5 +746,6 @@
         public System.Windows.Forms.Button killProcessS;
         public System.Windows.Forms.Button killProcessV;
         public System.Windows.Forms.Button generateProcess;
+        public System.Windows.Forms.Button button1;
     }
 }

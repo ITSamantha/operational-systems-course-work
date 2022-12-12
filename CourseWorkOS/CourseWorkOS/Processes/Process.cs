@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CourseWorkOS
 {
     
-    public class Process
+    public class Process:IComparable<Process>
     {
         public ulong PID { get; private set; }
 
@@ -36,6 +37,38 @@ namespace CourseWorkOS
             TIME_START = tIME_START;
             COMMAND = cOMMAND;
         }
-        
+
+        public int CompareTo(Process next)
+        {
+            if (next.NI.Equals(this.NI)) { return 0; }
+
+            if (next.NI > this.NI)
+            {
+                return -1;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+
+        //Квант - 3000 мс
+        public bool processContext()
+        {
+            for(int i = 1000; i < 3001; i += 1000)
+            {
+                if (TIME_FOR_EXECUTE > 0)
+                {
+                    Thread.Sleep(1000);
+                    TIME_FOR_EXECUTE--;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return true;
+            
+        }
     }
 }
