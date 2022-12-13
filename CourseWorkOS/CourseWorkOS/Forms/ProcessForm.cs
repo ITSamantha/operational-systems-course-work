@@ -208,5 +208,66 @@ namespace CourseWorkOS
 
             }
         }
+
+        //Изменение приоритета для выполняемого процесса
+        private void changePriR_Click(object sender, EventArgs e)
+        {
+            AddProcessForm form = new AddProcessForm();
+
+            form.groupBox1.Visible = form.groupBox3.Visible = false;
+
+            form.enter_B.Text = "Изменить приоритет";
+
+            if (form.ShowDialog() != DialogResult.Cancel)
+            {
+                var priority = int.Parse(form.priority_TB.Text);
+
+                if (!(priority <= 20 && priority >= -20))
+                {
+                    MessageBox.Show("Приоритет должен находиться в интервале [-20;20].");
+                    return;
+                }
+
+                process_structure.running_process.NI = (short)priority;
+            }
+        }
+
+        //Изменение приоритета для готового к исполнению процесса
+        private void changePriE_Click(object sender, EventArgs e)
+        {
+            int PID = int.Parse(readyDG.SelectedRows[0].Cells[0].Value.ToString());
+
+            AddProcessForm form = new AddProcessForm();
+
+            form.groupBox1.Visible = form.groupBox3.Visible = false;
+
+            form.enter_B.Text = "Изменить приоритет";
+
+            if (form.ShowDialog() != DialogResult.Cancel)
+            {
+                var priority = int.Parse(form.priority_TB.Text);
+
+                if (!(priority <= 20 && priority >= -20))
+                {
+                    MessageBox.Show("Приоритет должен находиться в интервале [-20;20].");
+                    return;
+                }
+
+                foreach(var proc in process_structure.ready_to_execute_processes)
+                {
+                    if (proc.PID == (ulong)PID)
+                    {
+                        proc.NI= (short)priority;
+                    }
+                }
+                foreach (var proc in process_structure.ready_to_execute_processes_temp)
+                {
+                    if (proc.PID == (ulong)PID)
+                    {
+                        proc.NI = (short)priority;
+                    }
+                }
+            }
+        }
     }
 }

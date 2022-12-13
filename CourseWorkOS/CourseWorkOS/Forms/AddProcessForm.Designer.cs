@@ -164,14 +164,13 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.GroupBox groupBox1;
         public System.Windows.Forms.TextBox name_TB;
         private System.Windows.Forms.GroupBox groupBox2;
         public System.Windows.Forms.TextBox priority_TB;
-        private System.Windows.Forms.GroupBox groupBox3;
         public System.Windows.Forms.TextBox time_TB;
         private System.Windows.Forms.Button cancel_B;
-        private System.Windows.Forms.Button enter_B;
+        public System.Windows.Forms.GroupBox groupBox1;
+        public System.Windows.Forms.GroupBox groupBox3;
+        public System.Windows.Forms.Button enter_B;
     }
 }

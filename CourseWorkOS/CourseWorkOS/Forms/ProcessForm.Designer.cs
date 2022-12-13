@@ -624,6 +624,7 @@
             this.changePriE.TabIndex = 15;
             this.toolTip1.SetToolTip(this.changePriE, "Изменить приоритет процесса");
             this.changePriE.UseVisualStyleBackColor = false;
+            this.changePriE.Click += new System.EventHandler(this.changePriE_Click);
             // 
             // changePriR
             // 
@@ -639,6 +640,7 @@
             this.changePriR.TabIndex = 14;
             this.toolTip1.SetToolTip(this.changePriR, "Изменить приоритет процесса");
             this.changePriR.UseVisualStyleBackColor = false;
+            this.changePriR.Click += new System.EventHandler(this.changePriR_Click);
             // 
             // button1
             // 

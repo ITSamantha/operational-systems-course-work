@@ -14,7 +14,8 @@ namespace CourseWorkOS.Processes
         WAIT = 'S',
         RUNNING = 'R',
         SVOPPING = 'V',
-        READY_TO_EXECUTE = 'E'
+        READY_TO_EXECUTE = 'E',
+        COMPLETED = 'C'
     }
 
     public class ProcessStructure
@@ -35,7 +36,7 @@ namespace CourseWorkOS.Processes
         public bool isRunning = false;
 
         public char[] temp_states = new char[] { (char)PROCESS_STATES.WAIT, 
-                (char)PROCESS_STATES.SVOPPING, (char)PROCESS_STATES.READY_TO_EXECUTE,(char)PROCESS_STATES.RUNNING };
+                (char)PROCESS_STATES.SVOPPING, (char)PROCESS_STATES.READY_TO_EXECUTE,(char)PROCESS_STATES.RUNNING,(char)PROCESS_STATES.COMPLETED };
 
         public ProcessStructure()
         {
@@ -71,7 +72,7 @@ namespace CourseWorkOS.Processes
             for(int i = 0; i < number; i++)
             {
                 processes[i] = new Process((ulong)(i+1), user.ID_owner, user.ID_group, temp_states[rand.Next(0, 3)], 
-                    (short)rand.Next(-20, 21),(uint)rand.Next(1, 30), DateTime.Now, process_names[rand.Next(1, 10)]);
+                    (short)rand.Next(-20, 21),(uint)rand.Next(1, 50), DateTime.Now, process_names[rand.Next(1, 10)]);
             }
             //ПОДУМАТЬ НАД СВОПИНГОМ
 
@@ -177,7 +178,7 @@ namespace CourseWorkOS.Processes
                     }
                     else
                     {
-                        MessageBox.Show("Процесс завершен.");
+                        running_process.STAT = temp_states[4];
                     }
                 }
                 else
